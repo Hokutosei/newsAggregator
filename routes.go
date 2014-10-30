@@ -3,25 +3,26 @@ package main
 import(
 	"net/http"
 	"html/template"
-	"path"
 	"log"
+	"fmt"
 
 )
 
+type IndexVars struct {
+	Ipaddress   string
+	WebAppTitle string
+	CurrentUser interface{}
+}
 
 func index(w http.ResponseWriter, r *http.Request) {
 	log.Println("handled --> index")
 
-	profile := Profile{"jeane", []string{"programming", "gaming"} }
+	indexTemplate := "index.html"
+	t := template.New(indexTemplate).Delims("{{%", "%}}")
+	indexVars := IndexVars{"", "", nil}
 
-	fp := path.Join("public", "index.html")
-	tmp, err := template.ParseFiles(fp)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	parsed_template_str := fmt.Sprintf("public/%s", indexTemplate)
+	t, _ = t.ParseFiles(parsed_template_str)
+	t.Execute(w, indexVars)
 
-	if err := tmp.Execute(w, profile); err !=nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
 }
