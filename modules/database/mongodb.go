@@ -8,15 +8,17 @@ import(
 )
 
 var(
-	mongodbSession mongodb.Session
+	mongodbSession *mongodb.Session
 )
 
 
-func mongodbStart() {
+func MongodbStart() {
+	fmt.Println("starting mongodb..")
 	session, err := mongodb.Dial("130.211.246.179:49181")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+	fmt.Println("connected to mongodb...")
 	mongodbSession = session
 }

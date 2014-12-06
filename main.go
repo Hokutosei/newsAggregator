@@ -30,7 +30,7 @@ func main() {
 
 	news_getter.StartHackerNews()
 
-	database.mongodbStart()
+	database.MongodbStart()
 
 	assetsToHandle := []string{"images", "css", "js", "fonts"}
 	go handleAssets(assetsToHandle...)
