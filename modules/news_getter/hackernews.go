@@ -5,7 +5,11 @@ import(
 	"encoding/json"
 	"time"
 
-	_ "web_apps/news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/database"
+)
+
+var (
+	loop_counter_delay = 10
 )
 
 type HackerNewsTopStoriesId []int
@@ -21,28 +25,51 @@ type jsonNewsBody struct {
 	Type	string
 	Url		string
 	CreatedAt	string
-
-
 }
 
 func StartHackerNews() {
-	top_stories := topStoriesId()
+	top_stories_ids := topStoriesId()
 	content_out := make(chan jsonNewsBody)
-	for _, id := range top_stories {
-		go func(id int, content_out chan jsonNewsBody) {
-			news_content := hackerNewsReader(id)
-			content_out <- news_content
-		}(id, content_out)
-	}
+	time_profiler := make(chan string)
+//	for _, id := range top_stories_ids {
+//		go func(id int, content_out chan jsonNewsBody) {
+//			news_content := hackerNewsReader(id)
+//			content_out <- news_content
+//		}(id, content_out)
+//	}
+
+	go func() {
+		for t := range time.Tick(time.Duration(loop_counter_delay) * time.Second) {
+			fmt.Println("running the loop")
+			_ = t
+			for _, id := range top_stories_ids {
+				go func(id int, content_out chan jsonNewsBody, time_profiler chan string) {
+					start := time.Now()
+					news_content := hackerNewsReader(id)
+					content_out <- news_content
+					time_profiler <- fmt.Sprintf("%v", time.Since(start))
+				}(id, content_out, time_profiler)
+			}
+		}
+	}()
+
 	go func() {
 		for {
 			content_out_msg := <- content_out
+			time_profiler_out := <- time_profiler
 			fmt.Println(content_out_msg.Title)
+			fmt.Println(content_out_msg.Url)
 			time_f := content_out_msg.Time
-			content_out_msg.CreatedAt = time.Now().Local()
-			fmt.Println(time.Unix(int64(time_f), 0))
-			fmt.Println(content_out_msg.Score)
-			//database.HackerNewsInsert(content_out_msg)
+			content_out_msg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
+			//fmt.Println(time.Unix(int64(time_f), 0))
+			_ = time_f
+			can_save := database.HackerNewsFindIfExist(content_out_msg.Title)
+			if can_save {
+				database.HackerNewsInsert(content_out_msg)
+			} else {
+				fmt.Println("did not save!")
+			}
+			fmt.Println(time_profiler_out)
 			fmt.Println("----------------------------")
 		}
 	}()
@@ -68,7 +95,6 @@ func topStoriesId() []int {
 func hackerNewsReader(id int) jsonNewsBody{
 	news_url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
 	var news_content jsonNewsBody
-	//fmt.Println(news_url)
 	response, err := httpGet(news_url)
 	if err != nil {
 		//fmt.Println(err)

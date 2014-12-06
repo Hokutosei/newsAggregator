@@ -2,6 +2,7 @@ package database
 
 import(
 	"fmt"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type HackerNews interface {}
@@ -18,4 +19,13 @@ func HackerNewsInsert(hn HackerNews) {
 		return
 	}
 	fmt.Println("saved!")
+}
+func HackerNewsFindIfExist(title string) bool {
+	c := mongodbSession.DB(Db).C(hackerNewsCollection)
+	var result map[string]interface{}
+	c.Find(bson.M{"title": title}).One(&result)
+	if result["title"] != nil {
+		return false
+	}
+	return true
 }
