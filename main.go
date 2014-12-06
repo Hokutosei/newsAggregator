@@ -7,6 +7,8 @@ import (
 	"log"
 
 	"web_apps/news_aggregator/modules/news_getter"
+
+	"web_apps/news_aggregator/modules/database"
 )
 
 type Profile struct {
@@ -27,6 +29,8 @@ func handleAssets(assets ...string) {
 func main() {
 
 	news_getter.StartHackerNews()
+
+	database.mongodbStart()
 
 	assetsToHandle := []string{"images", "css", "js", "fonts"}
 	go handleAssets(assetsToHandle...)
