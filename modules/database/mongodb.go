@@ -9,6 +9,9 @@ import(
 
 var(
 	mongodbSession *mongodb.Session
+
+	Db	= "news_aggregator"
+
 )
 
 

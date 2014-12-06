@@ -4,6 +4,8 @@ import(
 	"fmt"
 	"encoding/json"
 	"time"
+
+	_ "web_apps/news_aggregator/modules/database"
 )
 
 type HackerNewsTopStoriesId []int
@@ -18,6 +20,8 @@ type jsonNewsBody struct {
 	Title	string
 	Type	string
 	Url		string
+	CreatedAt	string
+
 
 }
 
@@ -33,10 +37,12 @@ func StartHackerNews() {
 	go func() {
 		for {
 			content_out_msg := <- content_out
-			fmt.Println(content_out_msg)
+			fmt.Println(content_out_msg.Title)
 			time_f := content_out_msg.Time
+			content_out_msg.CreatedAt = time.Now().Local()
 			fmt.Println(time.Unix(int64(time_f), 0))
 			fmt.Println(content_out_msg.Score)
+			//database.HackerNewsInsert(content_out_msg)
 			fmt.Println("----------------------------")
 		}
 	}()
