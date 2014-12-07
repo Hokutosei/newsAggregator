@@ -9,7 +9,7 @@ import(
 )
 
 var (
-	loop_counter_delay = 10
+	loop_counter_delay = 60
 )
 
 type HackerNewsTopStoriesId []int
@@ -31,12 +31,6 @@ func StartHackerNews() {
 	top_stories_ids := topStoriesId()
 	content_out := make(chan jsonNewsBody)
 	time_profiler := make(chan string)
-//	for _, id := range top_stories_ids {
-//		go func(id int, content_out chan jsonNewsBody) {
-//			news_content := hackerNewsReader(id)
-//			content_out <- news_content
-//		}(id, content_out)
-//	}
 
 	go func() {
 		for t := range time.Tick(time.Duration(loop_counter_delay) * time.Second) {
@@ -63,6 +57,9 @@ func StartHackerNews() {
 			content_out_msg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
 			//fmt.Println(time.Unix(int64(time_f), 0))
 			_ = time_f
+
+			// check if can save
+			// then save
 			can_save := database.HackerNewsFindIfExist(content_out_msg.Title)
 			if can_save {
 				database.HackerNewsInsert(content_out_msg)
@@ -83,7 +80,6 @@ func topStoriesId() []int {
 	defer response.Body.Close()
 
 	contents, _ := responseReader(response)
-	//top_stories_id, _ := unmarshalResponseContent(contents, id_containers)
 	if err := json.Unmarshal(contents, &id_containers); err != nil {
 		return id_containers
 	}

@@ -32,10 +32,12 @@ func main() {
 
 	database.MongodbStart()
 
+	startRoutes()
+
 	assetsToHandle := []string{"images", "css", "js", "fonts"}
 	go handleAssets(assetsToHandle...)
 
 	log.Println("now servering to port 3000...")
-	http.HandleFunc("/", index)
+	//http.HandleFunc("/", index)
 	http.ListenAndServe(":3000", nil)
 }
