@@ -9,7 +9,7 @@ import(
 )
 
 var (
-	loop_counter_delay = 60
+	loop_counter_delay = 300
 )
 
 type HackerNewsTopStoriesId []int
