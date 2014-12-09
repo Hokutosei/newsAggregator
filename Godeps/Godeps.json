@@ -1,0 +1,10 @@
+{
+	"ImportPath": "web_apps/news_aggregator",
+	"GoVersion": "go1.2.2",
+	"Deps": [
+		{
+			"ImportPath": "gopkg.in/mgo.v2",
+			"Rev": "dc255bb679efa273b6544a03261c4053505498a4"
+		}
+	]
+}

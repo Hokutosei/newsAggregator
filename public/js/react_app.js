@@ -1,0 +1,2 @@
+var IndexNewsList = React.createClass({
+})
