@@ -18,9 +18,11 @@ func indexNews() {
 }
 
 func GetIndexNews(w http.ResponseWriter, r *http.Request) {
-	test := TestStruct{200}
+	aggregated_news, err := database.IndexNews()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	database.IndexNews()
-
-	respondToJson(w, test)
+	respondToJson(w, aggregated_news)
 }

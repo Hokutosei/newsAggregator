@@ -6,8 +6,7 @@ app.factory('httpService', function($http) {
     return {
         getIndexNews: function(callback) {
             $http.get('/get_index_news').success(function(data, status) {
-                log(data)
-                log(status)
+                callback(data, status)
             })
         }
     }

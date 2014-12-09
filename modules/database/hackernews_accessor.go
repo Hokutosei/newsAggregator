@@ -7,8 +7,11 @@ import(
 
 type HackerNews interface {}
 
+type AggregatedNews []interface {}
+
 var (
 	hackerNewsCollection = "hackernews"
+	searchLimitItems	= 30
 )
 
 func HackerNewsInsert(hn HackerNews) {
@@ -30,6 +33,14 @@ func HackerNewsFindIfExist(title string) bool {
 	return true
 }
 
-func IndexNews() {
-	fmt.Println("called")
+func IndexNews() (AggregatedNews, error){
+	c := MongodbSession.DB(Db).C(hackerNewsCollection)
+	var aggregated_news AggregatedNews
+	err := c.Find(bson.M{"Url": bson.M{"$ne": "null"}}).Sort("-_id").Limit(searchLimitItems).All(&aggregated_news)
+
+	if err != nil {
+		fmt.Println(err)
+		return aggregated_news, err
+	}
+	return aggregated_news, nil
 }

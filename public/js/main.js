@@ -11,5 +11,8 @@ app.controller("HeaderCtrl", ["$scope", function($scope) {
 
 
 app.controller("MainCtrl", ["$scope", "$window", "httpService", function($scope, $window, httpService) {
-    httpService.getIndexNews()
+    httpService.getIndexNews(function(data, status) {
+        log(data)
+        $scope.main_index_news = data
+    })
 }]);
