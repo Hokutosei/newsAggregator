@@ -29,3 +29,7 @@ func HackerNewsFindIfExist(title string) bool {
 	}
 	return true
 }
+
+func IndexNews() {
+	fmt.Println("called")
+}
