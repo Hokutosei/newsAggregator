@@ -27,7 +27,6 @@ func handleAssets(assets ...string) {
 }
 
 func main() {
-
 	news_getter.StartHackerNews()
 
 	database.MongodbStart()
@@ -38,6 +37,5 @@ func main() {
 	go handleAssets(assetsToHandle...)
 
 	log.Println("now servering to port 3000...")
-	//http.HandleFunc("/", index)
 	http.ListenAndServe(":3000", nil)
 }

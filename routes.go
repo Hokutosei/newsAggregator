@@ -11,6 +11,7 @@ func startRoutes() {
 
 
 	http.HandleFunc("/", http_handlers.Index)
+	http.HandleFunc("/get_index_news", http_handlers.GetIndexNews)
 }
 
 //type IndexVars struct {

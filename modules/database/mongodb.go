@@ -8,7 +8,7 @@ import(
 )
 
 var(
-	mongodbSession *mongodb.Session
+	MongodbSession *mongodb.Session
 
 	Db	= "news_aggregator"
 
@@ -23,5 +23,5 @@ func MongodbStart() {
 		return
 	}
 	fmt.Println("connected to mongodb...")
-	mongodbSession = session
+	MongodbSession = session
 }

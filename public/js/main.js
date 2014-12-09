@@ -1,14 +1,15 @@
 'use strict';
 
-var app = angular.module("learnJap", ["ngTouch"]);
+var app = angular.module("newsAggregator", ["ngTouch"]);
 
-console.log(app);
+var log = function(str) { console.log(str) };
 
 app.controller("HeaderCtrl", ["$scope", function($scope) {
     $scope.project_name = "learnJap";
 
-}])
+}]);
 
 
-app.controller("MainCtrl", ["$scope", "$window", function($scope, $window) {
+app.controller("MainCtrl", ["$scope", "$window", "httpService", function($scope, $window, httpService) {
+    httpService.getIndexNews()
 }]);

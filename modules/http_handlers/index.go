@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"html/template"
 	"log"
-
+	"web_apps/news_aggregator/modules/database"
 )
 
 type IndexVars struct {
@@ -13,6 +13,10 @@ type IndexVars struct {
 	WebAppTitle string
 	CurrentUser interface{}
 }
+
+var (
+	db = database.MongodbSession
+)
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	log.Println("handled --> index")
@@ -24,5 +28,4 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	parsed_template_str := fmt.Sprintf("public/%s", indexTemplate)
 	t, _ = t.ParseFiles(parsed_template_str)
 	t.Execute(w, indexVars)
-
 }

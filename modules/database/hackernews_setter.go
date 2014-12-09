@@ -12,7 +12,7 @@ var (
 )
 
 func HackerNewsInsert(hn HackerNews) {
-	c := mongodbSession.DB(Db).C(hackerNewsCollection)
+	c := MongodbSession.DB(Db).C(hackerNewsCollection)
 	err := c.Insert(hn)
 	if err != nil {
 		fmt.Println(err)
@@ -21,7 +21,7 @@ func HackerNewsInsert(hn HackerNews) {
 	fmt.Println("saved!")
 }
 func HackerNewsFindIfExist(title string) bool {
-	c := mongodbSession.DB(Db).C(hackerNewsCollection)
+	c := MongodbSession.DB(Db).C(hackerNewsCollection)
 	var result map[string]interface{}
 	c.Find(bson.M{"title": title}).One(&result)
 	if result["title"] != nil {
