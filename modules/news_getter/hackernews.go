@@ -10,21 +10,25 @@ import(
 
 var (
 	loop_counter_delay = 300
+	hacker_news_provider = "https://news.ycombinator.com"
+	hacker_news_name	= "hackernews"
 )
 
 type HackerNewsTopStoriesId []int
 
 type jsonNewsBody struct {
-	By		string
-	Id		int
-	//Kids 	[]int
-	Score	int
-	Text	string
-	Time	int
-	Title	string
-	Type	string
-	Url		string
-	CreatedAt	string
+	By				string
+	Id				int
+	//Kids 			[]int
+	Score			int
+	Text			string
+	Time			int
+	Title			string
+	Type			string
+	Url				string
+	ProviderName	string
+	ProviderUrl		string
+	CreatedAt		string
 }
 
 func StartHackerNews() {
@@ -55,6 +59,8 @@ func StartHackerNews() {
 			fmt.Println(content_out_msg.Url)
 			time_f := content_out_msg.Time
 			content_out_msg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
+			content_out_msg.ProviderUrl = hacker_news_provider
+			content_out_msg.ProviderName = hacker_news_name
 			//fmt.Println(time.Unix(int64(time_f), 0))
 			_ = time_f
 

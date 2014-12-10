@@ -15,4 +15,8 @@ app.controller("MainCtrl", ["$scope", "$window", "httpService", function($scope,
         log(data)
         $scope.main_index_news = data
     })
+
+    $scope.timeToLocal = function(unix_time) {
+    	return new Date(unix_time * 1000)
+    }
 }]);

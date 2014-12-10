@@ -23,16 +23,41 @@
 
 
     <div id="main_stage" style="height: {{window_height}}">
-        <div class="news_feeds">
-            <h4 class="main_nav_header">kedoyo</h4>
+        <div class="news_feeds">            
+            <table class="site_table_header">
+                <tbody>
+                    <tr>
+                        <td class="site_name" style="padding-left: 5px; ">Kedoyo</td>
+                        <td class="news_categories">New</td>
+                        <td class="news_categories">Topics</td>
+                        <td class="news_categories">Post</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr width="100%" class="site_table_header_border">
             <br class="clearfloat" />
 
             <div id="news_category">
-                <ul id="news_list">
-                    <li ng-repeat="news_item in main_index_news">
-                        <a href="{{ news_item.url }}" target="_blank">{{ news_item.title }}</a>
-                    </li>
-                </ul>
+                <table id="news_list">
+                    <tr ng-repeat="news_item in main_index_news track by $index">
+                        <td class="index_number">{{ $index }}</td>
+                        <td class="rank_pos"> <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> </td>
+                        <td class="headline_link">
+                            <a href="{{ news_item.url }}" target="_blank">{{ news_item.title }}</a> 
+                            <span class="provider_name">
+                                <a href="{{ news_item.providerurl }}"><{{ news_item.providername }}></a>
+                            </span>
+                            <table class="post_info">
+                                <tbody>
+                                    <tr>
+                                        <td>created_at: {{ timeToLocal(news_item.time) | date:"yyyy-MM-dd hh:mm" }}</td>
+                                        <td>score: {{ news_item.score }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

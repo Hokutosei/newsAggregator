@@ -11,7 +11,7 @@ type AggregatedNews []interface {}
 
 var (
 	hackerNewsCollection = "hackernews"
-	searchLimitItems	= 30
+	searchLimitItems	= 50
 )
 
 func HackerNewsInsert(hn HackerNews) {
@@ -33,10 +33,10 @@ func HackerNewsFindIfExist(title string) bool {
 	return true
 }
 
-func IndexNews() (AggregatedNews, error){
+func HackerNewsIndexNews() (AggregatedNews, error){
 	c := MongodbSession.DB(Db).C(hackerNewsCollection)
 	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"Url": bson.M{"$ne": "null"}}).Sort("-_id").Limit(searchLimitItems).All(&aggregated_news)
+	err := c.Find(bson.M{"url": bson.M{"$ne": "null"}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
 
 	if err != nil {
 		fmt.Println(err)
