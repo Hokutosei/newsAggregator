@@ -44,3 +44,16 @@ func HackerNewsIndexNews() (AggregatedNews, error){
 	}
 	return aggregated_news, nil
 }
+
+func HackerNewsLatestNews() (AggregatedNews, error) {
+	c := MongodbSession.DB(Db).C(hackerNewsCollection)
+	var aggregated_news AggregatedNews
+	err := c.Find(nil).Sort("-_id").Limit(searchLimitItems).All(&aggregated_news)
+
+	if err != nil {
+		fmt.Println(err)
+		return aggregated_news, err
+	}
+	return aggregated_news, nil
+}
+

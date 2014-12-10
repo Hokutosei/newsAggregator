@@ -28,9 +28,18 @@
                 <tbody>
                     <tr>
                         <td class="site_name" style="padding-left: 5px; ">Kedoyo</td>
-                        <td class="news_categories">New</td>
-                        <td class="news_categories">Topics</td>
-                        <td class="news_categories">Post</td>
+                        <td class="news_categories">
+                            <a href ng-click="news_content('latest_news')">Latest</a>
+                        </td>
+                        <td class="news_categories">
+                            <a ng-click="news_content('top_score_news')">Top Score</a>
+                        </td>                        
+                        <td class="news_categories">
+                            <a href="#">Topics</a>
+                        </td>
+                        <td class="news_categories">
+                            <a href="#">Post</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

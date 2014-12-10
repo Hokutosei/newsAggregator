@@ -26,3 +26,17 @@ func GetIndexNews(w http.ResponseWriter, r *http.Request) {
 
 	respondToJson(w, aggregated_news)
 }
+
+func LatestNews(w http.ResponseWriter, r *http.Request) {
+	aggregated_news, err := database.HackerNewsLatestNews()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	respondToJson(w, aggregated_news)
+}
+
+// func TopScoreNews(w http.ResponseWriter, r *http.Request) {
+
+// }

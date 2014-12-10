@@ -8,6 +8,12 @@ app.factory('httpService', function($http) {
             $http.get('/get_index_news').success(function(data, status) {
                 callback(data, status)
             })
+        },
+
+        getNewsContent: function(content_type, callback) {
+        	$http.get('/' + content_type).success(function(data, status) {
+        		callback(data, status)
+        	})
         }
     }
 
