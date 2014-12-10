@@ -52,7 +52,7 @@
                         <td class="index_number">{{ $index }}</td>
                         <td class="rank_pos"> <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> </td>
                         <td class="headline_link">
-                            <a href="{{ news_item.url }}" target="_blank">{{ news_item.title }}</a> 
+                            <a href="{{ news_item.url }}" target="_blank" ng-click="ga_event(news_item.title)">{{ news_item.title }}</a>
                             <span class="provider_name">
                                 <a href="{{ news_item.providerurl }}"><{{ news_item.providername }}></a>
                             </span>

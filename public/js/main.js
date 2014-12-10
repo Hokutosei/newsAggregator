@@ -23,15 +23,19 @@ app.controller("MainCtrl", ["$scope", "$window", "httpService", function($scope,
     	})
     };
 
+
     $scope.feed_more = function(length) {
-        log(length);
         httpService.feedMoreNews($scope.news_content_type, length, function(data, status) {
-            log(data)
             for(var i = 0; i < data.length; i++) {
                 $scope.main_index_news.push(data[i])
             }
 
         })
+    };
+
+
+    $scope.ga_event = function(news_title) {
+        ga(news_title, 'click')
     };
 
     $scope.timeToLocal = function(unix_time) {
