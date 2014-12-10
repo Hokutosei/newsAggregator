@@ -36,7 +36,7 @@ func HackerNewsFindIfExist(title string) bool {
 func HackerNewsIndexNews() (AggregatedNews, error){
 	c := MongodbSession.DB(Db).C(hackerNewsCollection)
 	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": "null"}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
 
 	if err != nil {
 		fmt.Println(err)
