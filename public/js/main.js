@@ -35,7 +35,7 @@ app.controller("MainCtrl", ["$scope", "$window", "httpService", function($scope,
 
 
     $scope.ga_event = function(news_title) {
-        ga(news_title, 'click')
+        ga('_TrackEvent', news_title, 'click')
     };
 
     $scope.timeToLocal = function(unix_time) {
