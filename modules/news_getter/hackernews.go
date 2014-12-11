@@ -9,7 +9,7 @@ import(
 )
 
 var (
-	loop_counter_delay = 300
+	loop_counter_delay = 5
 	hacker_news_provider = "https://news.ycombinator.com"
 	hacker_news_name	= "hackernews"
 )
@@ -55,8 +55,8 @@ func StartHackerNews() {
 		for {
 			content_out_msg := <- content_out
 			time_profiler_out := <- time_profiler
-			fmt.Println(content_out_msg.Title)
-			fmt.Println(content_out_msg.Url)
+			//fmt.Println(content_out_msg.Title)
+			//fmt.Println(content_out_msg.Url)
 			time_f := content_out_msg.Time
 			content_out_msg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
 			content_out_msg.ProviderUrl = hacker_news_provider
@@ -70,10 +70,11 @@ func StartHackerNews() {
 			if can_save {
 				database.HackerNewsInsert(content_out_msg)
 			} else {
-				fmt.Println("did not save!")
+				//fmt.Println("did not save!")
 			}
-			fmt.Println(time_profiler_out)
-			fmt.Println("----------------------------")
+			_ = time_profiler_out
+			//fmt.Println(time_profiler_out)
+			//fmt.Println("----------------------------")
 		}
 	}()
 

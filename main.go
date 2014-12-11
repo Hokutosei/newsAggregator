@@ -27,7 +27,8 @@ func handleAssets(assets ...string) {
 }
 
 func main() {
-	news_getter.StartHackerNews()
+	//news_getter.StartHackerNews()
+	news_getter.StartGoogleNews()
 
 	database.MongodbStart()
 
