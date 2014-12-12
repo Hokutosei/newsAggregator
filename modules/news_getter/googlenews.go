@@ -54,7 +54,7 @@ type RelatedStories struct {
 }
 
 var (
-	google_loop_counter_delay = 10
+	google_loop_counter_delay = 300
 	google_news_provider = "https://news.ycombinator.com"
 	google_news_name	= "googlenew"
 

@@ -25,6 +25,8 @@ func indexNews() {
 
 func GetIndexNews(w http.ResponseWriter, r *http.Request) {
 	aggregated_news, err := database.HackerNewsIndexNews()
+	//aggregated_gn, err := database.GoogleNewsIndexNews()
+	//main
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

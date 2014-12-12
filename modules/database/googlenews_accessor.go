@@ -31,3 +31,15 @@ func GoogleNewsFindIfExist(title string) bool {
 	}
 	return true
 }
+
+func GoogleNewsIndexNews() (AggregatedNews, error){
+	c := MongodbSession.DB(Db).C(googleNewsCollection)
+	var aggregated_news AggregatedNews
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
+
+	if err != nil {
+		fmt.Println(err)
+		return aggregated_news, err
+	}
+	return aggregated_news, nil
+}
