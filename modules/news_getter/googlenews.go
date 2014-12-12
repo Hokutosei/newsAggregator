@@ -3,7 +3,8 @@ package news_getter
 import(
 	"fmt"
 	"encoding/json"
-	_ "time"
+	"time"
+	"web_apps/news_aggregator/modules/database"
 )
 
 // type jsonNewsBody struct {
@@ -53,17 +54,36 @@ type RelatedStories struct {
 }
 
 var (
-	//loop_counter_delay = 300
+	google_loop_counter_delay = 10
 	google_news_provider = "https://news.ycombinator.com"
 	google_news_name	= "googlenew"
+
 )
 
 
 func StartGoogleNews() {
 	url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=t&ned=jp&userip=192.168.0.1")
-	// var google_news GoogleNews
+	output_chan := make(chan GoogleNewsResults)
+
+	go func() {
+		for t := range time.Tick(time.Duration(google_loop_counter_delay) * time.Second) {
+			_ = t
+			go GoogleNewsRequester(url, output_chan)
+		}
+	}()
+
+	go func() {
+		for {
+			output := <- output_chan
+			GoogleNewsDataSetter(output)
+			fmt.Println("-------------------------")
+		}
+	}()
+
+}
+
+func GoogleNewsRequester(url string, output_chan chan GoogleNewsResults) {
 	var google_news GoogleNewsResponseData
-	//var testN map[string]interface{}
 	response, _ := httpGet(url)
 	defer response.Body.Close()
 
@@ -73,26 +93,36 @@ func StartGoogleNews() {
 		fmt.Println(err)
 	}
 
-	//fmt.Println(testN)
-
-
 	GNResponse := google_news.ResponseData
-	for _, n := range GNResponse.Results {
-		fmt.Println(n.RelatedStories)
-		fmt.Println("-------------------------")
+	for _, gn := range GNResponse.Results {
+		output_chan <- gn
 	}
-	//r := GoogleNewsResponseData{google_news}
-	//fmt.Println(r.Results)
-	//fmt.Println(google_news)
-	//response_data := google_news.ResponseData
-	//fmt.Println(response_data.Results)
-//	for _, s:= range response_data.Results {
-//		fmt.Println(s.Title)
-//	}
-	//fmt.Println(google_news["responseData"]["results"])
 
-
-	fmt.Println("start google news")
 }
 
 
+
+func GoogleNewsDataSetter(google_news GoogleNewsResults) {
+
+	can_save := database.GoogleNewsFindIfExist(google_news.Title)
+
+	jsonNews := &jsonNewsBody{
+		Title			: google_news.Title,
+		By				: "GoogleNews",
+		Score			: 0,
+		Time			: int(time.Now().Unix()),
+		Url				: google_news.Url,
+		ProviderName	: "GoogleNews",
+		RelatedStories	: google_news.RelatedStories,
+		CreatedAt		: fmt.Sprintf("%v", time.Now().Local()),
+	}
+
+	if can_save {
+		saved := database.GoogleNewsInsert(jsonNews)
+		if saved {
+			fmt.Println("saved!!")
+			return
+		}
+		fmt.Println("did not save!")
+	}
+}

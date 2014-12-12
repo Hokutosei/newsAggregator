@@ -9,27 +9,12 @@ import(
 )
 
 var (
-	loop_counter_delay = 5
+	loop_counter_delay = 10
 	hacker_news_provider = "https://news.ycombinator.com"
 	hacker_news_name	= "hackernews"
 )
 
 type HackerNewsTopStoriesId []int
-
-type jsonNewsBody struct {
-	By				string
-	Id				int
-	//Kids 			[]int
-	Score			int
-	Text			string
-	Time			int
-	Title			string
-	Type			string
-	Url				string
-	ProviderName	string
-	ProviderUrl		string
-	CreatedAt		string
-}
 
 func StartHackerNews() {
 	top_stories_ids := topStoriesId()
@@ -74,7 +59,7 @@ func StartHackerNews() {
 			}
 			_ = time_profiler_out
 			//fmt.Println(time_profiler_out)
-			//fmt.Println("----------------------------")
+			fmt.Println("----------------------------")
 		}
 	}()
 
