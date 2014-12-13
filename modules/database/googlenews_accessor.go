@@ -9,7 +9,7 @@ type GoogleNews interface {}
 
 
 var(
-	googleNewsCollection = "googleNews"
+	googleNewsCollection = "news_main"
 )
 
 func GoogleNewsInsert(hn GoogleNews) bool {
