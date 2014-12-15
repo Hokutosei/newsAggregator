@@ -17,12 +17,12 @@ var (
 type HackerNewsTopStoriesId []int
 
 func StartHackerNews() {
-	top_stories_ids := topStoriesId()
 	content_out := make(chan jsonNewsBody)
 	time_profiler := make(chan string)
 
 	go func() {
 		for t := range time.Tick(time.Duration(loop_counter_delay) * time.Second) {
+			top_stories_ids := topStoriesId()
 			fmt.Println("running the loop")
 			_ = t
 			for _, id := range top_stories_ids {
