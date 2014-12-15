@@ -1,14 +1,13 @@
 package main
 
-import(
-	"net/http"
+import (
 	"fmt"
+	"net/http"
 	"web_apps/news_aggregator/modules/http_handlers"
 )
 
 func startRoutes() {
 	fmt.Println("load routes..")
-
 
 	http.HandleFunc("/", http_handlers.Index)
 	http.HandleFunc("/get_index_news", http_handlers.LatestNews)

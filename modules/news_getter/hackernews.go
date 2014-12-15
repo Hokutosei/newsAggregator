@@ -1,17 +1,17 @@
 package news_getter
 
-import(
-	"fmt"
+import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"web_apps/news_aggregator/modules/database"
 )
 
 var (
-	loop_counter_delay = 300
+	loop_counter_delay   = 300
 	hacker_news_provider = "https://news.ycombinator.com"
-	hacker_news_name	= "HackerNews"
+	hacker_news_name     = "HackerNews"
 )
 
 type HackerNewsTopStoriesId []int
@@ -38,8 +38,8 @@ func StartHackerNews() {
 
 	go func() {
 		for {
-			content_out_msg := <- content_out
-			time_profiler_out := <- time_profiler
+			content_out_msg := <-content_out
+			time_profiler_out := <-time_profiler
 			//fmt.Println(content_out_msg.Title)
 			//fmt.Println(content_out_msg.Url)
 			time_f := content_out_msg.Time
@@ -80,7 +80,7 @@ func topStoriesId() []int {
 	return id_containers
 }
 
-func hackerNewsReader(id int) jsonNewsBody{
+func hackerNewsReader(id int) jsonNewsBody {
 	news_url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
 	var news_content jsonNewsBody
 	response, err := httpGet(news_url)

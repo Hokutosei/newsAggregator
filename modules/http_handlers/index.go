@@ -2,9 +2,9 @@ package http_handlers
 
 import (
 	"fmt"
-	"net/http"
 	"html/template"
 	"log"
+	"net/http"
 	"web_apps/news_aggregator/modules/database"
 )
 

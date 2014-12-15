@@ -1,11 +1,11 @@
 package http_handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	_ "net/url"
-	"encoding/json"
-	
+
 	_ "gopkg.in/mgo.v2/bson"
 	"web_apps/news_aggregator/modules/database"
 )
@@ -16,7 +16,7 @@ type TestStruct struct {
 
 type FeedMoreParams struct {
 	ContentType string
-	Skip	int
+	Skip        int
 }
 
 func indexNews() {

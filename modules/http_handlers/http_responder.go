@@ -1,9 +1,8 @@
 package http_handlers
 
-import(
-	"net/http"
+import (
 	"encoding/json"
-
+	"net/http"
 )
 
 func respondToJson(w http.ResponseWriter, data interface{}) {

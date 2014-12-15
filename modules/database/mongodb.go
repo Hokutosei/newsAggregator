@@ -1,19 +1,17 @@
 package database
 
-import(
+import (
 	"fmt"
 
 	mongodb "gopkg.in/mgo.v2"
 	_ "gopkg.in/mgo.v2/bson"
 )
 
-var(
+var (
 	MongodbSession *mongodb.Session
 
-	Db	= "news_aggregator"
-
+	Db = "news_aggregator"
 )
-
 
 func MongodbStart() {
 	fmt.Println("starting mongodb..")

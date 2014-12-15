@@ -1,10 +1,10 @@
 package main
 
 import (
-	"net/http"
-	"path"
 	"fmt"
 	"log"
+	"net/http"
+	"path"
 
 	"web_apps/news_aggregator/modules/news_getter"
 
@@ -12,7 +12,7 @@ import (
 )
 
 type Profile struct {
-	Name string
+	Name    string
 	Hobbies []string
 }
 

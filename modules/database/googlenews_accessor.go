@@ -5,10 +5,9 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-type GoogleNews interface {}
+type GoogleNews interface{}
 
-
-var(
+var (
 	googleNewsCollection = "news_main"
 )
 
@@ -20,7 +19,7 @@ func GoogleNewsInsert(hn GoogleNews) bool {
 		return false
 	}
 	return true
-//	fmt.Println("saved!")
+	//	fmt.Println("saved!")
 }
 func GoogleNewsFindIfExist(title string) bool {
 	c := MongodbSession.DB(Db).C(googleNewsCollection)
@@ -32,7 +31,7 @@ func GoogleNewsFindIfExist(title string) bool {
 	return true
 }
 
-func GoogleNewsIndexNews() (AggregatedNews, error){
+func GoogleNewsIndexNews() (AggregatedNews, error) {
 	c := MongodbSession.DB(Db).C(googleNewsCollection)
 	var aggregated_news AggregatedNews
 	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
