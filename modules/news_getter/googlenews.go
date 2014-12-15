@@ -55,8 +55,8 @@ type RelatedStories struct {
 
 var (
 	google_loop_counter_delay = 300
-	google_news_provider = "https://news.ycombinator.com"
-	google_news_name	= "news_main"
+	google_news_provider = "https://news.google.com/"
+	google_news_name	= "GoogleNews"
 
 )
 
