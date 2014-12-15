@@ -24,7 +24,10 @@ func indexNews() {
 }
 
 func GetIndexNews(w http.ResponseWriter, r *http.Request) {
-	aggregated_news, err := database.HackerNewsIndexNews()
+	aggregated_news, err := database.NewsMainIndexNews()
+	//aggregated_news, err := database.HackerNewsIndexNews()
+	//aggregated_gn, err := database.GoogleNewsIndexNews()
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -34,7 +37,8 @@ func GetIndexNews(w http.ResponseWriter, r *http.Request) {
 }
 
 func LatestNews(w http.ResponseWriter, r *http.Request) {
-	aggregated_news, err := database.HackerNewsLatestNews()
+	//aggregated_news, err := database.HackerNewsLatestNews()
+	aggregated_news, err := database.NewsMainIndexNews()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

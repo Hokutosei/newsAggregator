@@ -10,7 +10,7 @@ type HackerNews interface {}
 type AggregatedNews []interface {}
 
 var (
-	hackerNewsCollection = "hackernews"
+	hackerNewsCollection = "news_main"
 	searchLimitItems	= 50
 )
 

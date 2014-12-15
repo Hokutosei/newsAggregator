@@ -54,9 +54,9 @@ type RelatedStories struct {
 }
 
 var (
-	google_loop_counter_delay = 10
+	google_loop_counter_delay = 300
 	google_news_provider = "https://news.ycombinator.com"
-	google_news_name	= "googlenew"
+	google_news_name	= "news_main"
 
 )
 
@@ -68,6 +68,7 @@ func StartGoogleNews() {
 	go func() {
 		for t := range time.Tick(time.Duration(google_loop_counter_delay) * time.Second) {
 			_ = t
+			//news_counter = 0
 			go GoogleNewsRequester(url, output_chan)
 		}
 	}()

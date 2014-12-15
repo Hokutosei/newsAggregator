@@ -38,6 +38,11 @@ app.controller("MainCtrl", ["$scope", "$window", "httpService", function($scope,
         ga('_TrackEvent', news_title, 'click')
     };
 
+    $scope.decodeURL = function(url) {
+        console.log(decodeURIComponent(url))
+        return decodeURIComponent(url)
+    }
+
     $scope.timeToLocal = function(unix_time) {
     	return new Date(unix_time * 1000)
     }

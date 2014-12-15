@@ -9,9 +9,9 @@ import(
 )
 
 var (
-	loop_counter_delay = 10
+	loop_counter_delay = 300
 	hacker_news_provider = "https://news.ycombinator.com"
-	hacker_news_name	= "hackernews"
+	hacker_news_name	= "news_main"
 )
 
 type HackerNewsTopStoriesId []int
