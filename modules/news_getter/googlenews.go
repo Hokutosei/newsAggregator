@@ -76,7 +76,7 @@ func StartGoogleNews() {
 		for {
 			output := <- output_chan
 			GoogleNewsDataSetter(output)
-			fmt.Println("-------------------------")
+			//fmt.Println("-------------------------")
 		}
 	}()
 

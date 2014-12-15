@@ -59,7 +59,7 @@ func StartHackerNews() {
 			}
 			_ = time_profiler_out
 			//fmt.Println(time_profiler_out)
-			fmt.Println("----------------------------")
+			//fmt.Println("----------------------------")
 		}
 	}()
 
