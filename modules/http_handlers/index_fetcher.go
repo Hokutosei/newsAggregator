@@ -46,6 +46,17 @@ func LatestNews(w http.ResponseWriter, r *http.Request) {
 	respondToJson(w, aggregated_news)
 }
 
+func TopScoreNews(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
+	aggregated_news, err := database.GetterNewsMainTopScore()
+	fmt.Println("FETCH topScoreNews took: ", time.Since(start))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	respondToJson(w, aggregated_news)
+}
+
 func FeedMore(w http.ResponseWriter, r *http.Request) {
 	var feedMore FeedMoreParams
 	if err := json.NewDecoder(r.Body).Decode(&feedMore); err != nil {
