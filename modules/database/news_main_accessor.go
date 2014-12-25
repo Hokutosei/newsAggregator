@@ -32,3 +32,17 @@ func GetterNewsMainTopScore() (AggregatedNews, error) {
 	}
 	return aggregated_news, nil
 }
+
+func IncrementNewsScore(params_id string) {
+	c := MongodbSession.DB(Db).C(NewsMainCollection)
+	var aggregated_news interface {}
+	fmt.Println(params_id)
+	err := c.Find(bson.M{"_id": bson.ObjectIdHex(params_id)}).One(&aggregated_news)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(aggregated_news)
+}
