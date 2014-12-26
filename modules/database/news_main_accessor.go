@@ -3,6 +3,8 @@ package database
 import (
 	"fmt"
 	"gopkg.in/mgo.v2/bson"
+
+	"web_apps/news_aggregator/modules/utils"
 )
 
 var (
@@ -37,12 +39,14 @@ func IncrementNewsScore(params_id string) {
 	c := MongodbSession.DB(Db).C(NewsMainCollection)
 	var aggregated_news interface {}
 	fmt.Println(params_id)
-	err := c.Find(bson.M{"_id": bson.ObjectIdHex(params_id)}).One(&aggregated_news)
 
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	err := c.Update(bson.M{"_id": bson.ObjectIdHex(params_id)},
+		bson.M{ "$inc": bson.M{"score": 1}, "$currentDate": bson.M{"lastModified": true} })
+
+	utils.HandleError(err)
+
+	err = c.Find(bson.M{"_id": bson.ObjectIdHex(params_id)}).One(&aggregated_news)
+	utils.HandleError(err)
 
 	fmt.Println(aggregated_news)
 }
