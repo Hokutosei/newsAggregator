@@ -15,7 +15,7 @@ var (
 
 func MongodbStart() {
 	fmt.Println("starting mongodb..")
-	session, err := mongodb.Dial("130.211.246.179:49181")
+	session, err := mongodb.Dial("107.167.180.219:27017")
 	if err != nil {
 		fmt.Println(err)
 		return
