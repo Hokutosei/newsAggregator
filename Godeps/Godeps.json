@@ -1,7 +1,22 @@
 {
 	"ImportPath": "web_apps/news_aggregator",
-	"GoVersion": "go1.2.2",
+	"GoVersion": "go1.4",
 	"Deps": [
+		{
+			"ImportPath": "github.com/coreos/etcd/etcdserver/etcdhttp/httptypes",
+			"Comment": "v2.0.4-403-gf480a8b",
+			"Rev": "f480a8b051591a6b053bd9ad643fed5787b3acb0"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/pkg/types",
+			"Comment": "v2.0.4-403-gf480a8b",
+			"Rev": "f480a8b051591a6b053bd9ad643fed5787b3acb0"
+		},
+		{
+			"ImportPath": "github.com/coreos/go-etcd/etcd",
+			"Comment": "v0.4.6-14-g6c0c031",
+			"Rev": "6c0c031546a10bafb185c792b0b05cf7dccd2754"
+		},
 		{
 			"ImportPath": "gopkg.in/mgo.v2",
 			"Rev": "dc255bb679efa273b6544a03261c4053505498a4"
