@@ -5,6 +5,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
+)
+
+var (
+	getTimeout = time.Duration(5) * time.Second
 )
 
 type unMarshalledContent map[string]interface{}
@@ -19,7 +24,10 @@ type unMarshalledContent map[string]interface{}
 // }
 
 func httpGet(urlString string) (*http.Response, error) {
-	client := &http.Client{}
+
+	client := &http.Client{
+		Timeout: getTimeout,
+	}
 
 	req, err := http.NewRequest("GET", urlString, nil)
 	if err != nil {
