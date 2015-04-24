@@ -68,7 +68,11 @@ func StartHackerNews() {
 func topStoriesId() []int {
 	var top_stories_id_url string = "https://hacker-news.firebaseio.com/v0/topstories.json"
 	var id_containers HackerNewsTopStoriesId
-	response, _ := httpGet(top_stories_id_url)
+	response, err := httpGet(top_stories_id_url)
+	if err != nil {
+		return
+	}
+
 	defer response.Body.Close()
 
 	contents, _ := responseReader(response)
@@ -85,7 +89,7 @@ func hackerNewsReader(id int) jsonNewsBody {
 	var news_content jsonNewsBody
 	response, err := httpGet(news_url)
 	if err != nil {
-		//fmt.Println(err)
+		fmt.Println(err)
 		return news_content
 	}
 	defer response.Body.Close()

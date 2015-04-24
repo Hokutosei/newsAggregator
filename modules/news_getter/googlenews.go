@@ -83,7 +83,11 @@ func StartGoogleNews() {
 
 func GoogleNewsRequester(url string, output_chan chan GoogleNewsResults) {
 	var google_news GoogleNewsResponseData
-	response, _ := httpGet(url)
+	response, err := httpGet(url)
+	if err != nil {
+		return
+	}
+
 	defer response.Body.Close()
 
 	contents, _ := responseReader(response)

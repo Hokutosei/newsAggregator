@@ -12,6 +12,7 @@ type unMarshalledContent map[string]interface{}
 func httpGet(url_string string) (*http.Response, error) {
 	response, err := http.Get(url_string)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	return response, nil
