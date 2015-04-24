@@ -8,6 +8,7 @@ import (
 
 	"web_apps/news_aggregator/modules/news_getter"
 
+	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
 	_ "web_apps/news_aggregator/modules/utils"
 )
@@ -28,6 +29,8 @@ func handleAssets(assets ...string) {
 }
 
 func main() {
+	go config.StartEtcd()
+
 	news_getter.StartHackerNews()
 	news_getter.StartGoogleNews()
 
