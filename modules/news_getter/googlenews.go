@@ -3,8 +3,8 @@ package news_getter
 import (
 	"encoding/json"
 	"fmt"
-	"news_aggregator/modules/database"
 	"time"
+	"web_apps/news_aggregator/modules/database"
 )
 
 // type jsonNewsBody struct {

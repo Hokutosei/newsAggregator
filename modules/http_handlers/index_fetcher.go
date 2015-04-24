@@ -8,7 +8,7 @@ import (
 	"time"
 
 	_ "gopkg.in/mgo.v2/bson"
-	"news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/database"
 )
 
 type TestStruct struct {

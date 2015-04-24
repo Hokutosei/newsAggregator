@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"path"
 
-	"news_aggregator/modules/news_getter"
+	"web_apps/news_aggregator/modules/news_getter"
 
-	"news_aggregator/modules/database"
-	_ "news_aggregator/modules/utils"
+	"web_apps/news_aggregator/modules/database"
+	_ "web_apps/news_aggregator/modules/utils"
 )
 
 type Profile struct {

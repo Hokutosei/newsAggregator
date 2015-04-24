@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/database"
 )
 
 var (

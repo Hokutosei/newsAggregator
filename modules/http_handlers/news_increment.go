@@ -6,9 +6,9 @@ import (
 	"net/http"
 
 	_ "gopkg.in/mgo.v2/bson"
-	"news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/database"
 
-	_ "news_aggregator/modules/news_getter"
+	_ "web_apps/news_aggregator/modules/news_getter"
 )
 
 type NewsIncrementParameter struct {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gopkg.in/mgo.v2/bson"
 
-	"news_aggregator/modules/utils"
+	"web_apps/news_aggregator/modules/utils"
 )
 
 var (
