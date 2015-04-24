@@ -5,8 +5,10 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// HackerNews interface for hn news item
 type HackerNews interface{}
 
+// AggregatedNews interface struct for AggregatedNews
 type AggregatedNews []interface{}
 
 var (
@@ -14,8 +16,12 @@ var (
 	searchLimitItems     = 50
 )
 
+// HackerNewsInsert insert data to mongodb
 func HackerNewsInsert(hn HackerNews) {
-	c := MongodbSession.DB(Db).C(hackerNewsCollection)
+	sc := SessionCopy()
+	c := sc.DB(Db).C(hackerNewsCollection)
+	defer sc.Close()
+
 	err := c.Insert(hn)
 	if err != nil {
 		fmt.Println(err)
@@ -23,8 +29,13 @@ func HackerNewsInsert(hn HackerNews) {
 	}
 	fmt.Println("saved!")
 }
+
+// HackerNewsFindIfExist check if data exists already before saving
 func HackerNewsFindIfExist(title string) bool {
-	c := MongodbSession.DB(Db).C(hackerNewsCollection)
+	sc := SessionCopy()
+	c := sc.DB(Db).C(hackerNewsCollection)
+	defer sc.Close()
+
 	var result map[string]interface{}
 	c.Find(bson.M{"title": title}).One(&result)
 	if result["title"] != nil {
@@ -33,8 +44,12 @@ func HackerNewsFindIfExist(title string) bool {
 	return true
 }
 
+// HackerNewsIndexNews index page data
 func HackerNewsIndexNews() (AggregatedNews, error) {
-	c := MongodbSession.DB(Db).C(hackerNewsCollection)
+	sc := SessionCopy()
+	c := sc.DB(Db).C(hackerNewsCollection)
+	defer sc.Close()
+
 	var aggregated_news AggregatedNews
 	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
 
@@ -45,8 +60,12 @@ func HackerNewsIndexNews() (AggregatedNews, error) {
 	return aggregated_news, nil
 }
 
+// HackerNewsLatestNews aggregate latest news
 func HackerNewsLatestNews() (AggregatedNews, error) {
-	c := MongodbSession.DB(Db).C(hackerNewsCollection)
+	sc := SessionCopy()
+	c := sc.DB(Db).C(hackerNewsCollection)
+	defer sc.Close()
+
 	var aggregated_news AggregatedNews
 	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id").Limit(searchLimitItems).All(&aggregated_news)
 
@@ -57,9 +76,13 @@ func HackerNewsLatestNews() (AggregatedNews, error) {
 	return aggregated_news, nil
 }
 
+// HackerNewsFeedMore feed more data on index list
 func HackerNewsFeedMore(content_type string, length int) (AggregatedNews, error) {
 	q := map[string]string{"latest_news": "-_id", "top_score_news": "-score"}
-	c := MongodbSession.DB(Db).C(hackerNewsCollection)
+	sc := SessionCopy()
+	c := sc.DB(Db).C(hackerNewsCollection)
+	defer sc.Close()
+
 	var aggregated_news AggregatedNews
 	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Skip(length).Sort(q[content_type]).Limit(searchLimitItems).All(&aggregated_news)
 
