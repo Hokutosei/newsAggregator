@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"web_apps/news_aggregator/modules/database"
+	"news_aggregator/modules/database"
 )
 
 type IndexVars struct {

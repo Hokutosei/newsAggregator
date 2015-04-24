@@ -1,20 +1,19 @@
 package http_handlers
 
-import(
+import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"encoding/json"
 
 	_ "gopkg.in/mgo.v2/bson"
-	"web_apps/news_aggregator/modules/database"
+	"news_aggregator/modules/database"
 
-	_ "web_apps/news_aggregator/modules/news_getter"
+	_ "news_aggregator/modules/news_getter"
 )
 
 type NewsIncrementParameter struct {
-	Id	string
+	Id string
 }
-
 
 func IncrementNews(rw http.ResponseWriter, req *http.Request) {
 	decoder := json.NewDecoder(req.Body)
@@ -29,8 +28,6 @@ func IncrementNews(rw http.ResponseWriter, req *http.Request) {
 	fmt.Println(parameter.Id)
 	database.IncrementNewsScore(parameter.Id)
 }
-
-
 
 //func test(rw http.ResponseWriter, req *http.Request) {
 //	decoder := json.NewDecoder(req.Body)

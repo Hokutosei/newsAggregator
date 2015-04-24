@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 	_ "net/url"
+	"time"
 
 	_ "gopkg.in/mgo.v2/bson"
-	"web_apps/news_aggregator/modules/database"
+	"news_aggregator/modules/database"
 )
 
 type TestStruct struct {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gopkg.in/mgo.v2/bson"
 
-	"web_apps/news_aggregator/modules/utils"
+	"news_aggregator/modules/utils"
 )
 
 var (
@@ -37,11 +37,11 @@ func GetterNewsMainTopScore() (AggregatedNews, error) {
 
 func IncrementNewsScore(params_id string) {
 	c := MongodbSession.DB(Db).C(NewsMainCollection)
-	var aggregated_news interface {}
+	var aggregated_news interface{}
 	fmt.Println(params_id)
 
 	err := c.Update(bson.M{"_id": bson.ObjectIdHex(params_id)},
-		bson.M{ "$inc": bson.M{"score": 1}, "$currentDate": bson.M{"lastModified": true} })
+		bson.M{"$inc": bson.M{"score": 1}, "$currentDate": bson.M{"lastModified": true}})
 
 	utils.HandleError(err)
 

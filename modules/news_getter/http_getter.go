@@ -9,13 +9,31 @@ import (
 
 type unMarshalledContent map[string]interface{}
 
-func httpGet(url_string string) (*http.Response, error) {
-	response, err := http.Get(url_string)
+// func httpGet(url_string string) (*http.Response, error) {
+// 	response, err := http.Get(url_string)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return nil, err
+// 	}
+// 	return response, nil
+// }
+
+func httpGet(urlString string) (*http.Response, error) {
+	client := &http.Client{}
+
+	req, err := http.NewRequest("GET", urlString, nil)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
-	return response, nil
+
+	req.Header.Add("If-None-Match", `W/"wyzzy"`)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	return resp, nil
 }
 
 func responseReader(response *http.Response) ([]byte, error) {
