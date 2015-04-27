@@ -121,7 +121,7 @@ func GoogleNewsDataSetter(google_news GoogleNewsResults) {
 	if can_save {
 		saved := database.GoogleNewsInsert(jsonNews)
 		if saved {
-			fmt.Println("saved!!")
+			fmt.Println("saved!! google news!")
 			return
 		}
 		fmt.Println("did not save!")

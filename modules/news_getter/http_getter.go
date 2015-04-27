@@ -37,7 +37,7 @@ func httpGet(urlString string) (*http.Response, error) {
 
 	req.Header.Add("If-None-Match", `W/"wyzzy"`)
 	resp, err := client.Do(req)
-	if err != nil {
+	if err != nil || resp.StatusCode != 200 {
 		fmt.Println(err)
 		return nil, err
 	}

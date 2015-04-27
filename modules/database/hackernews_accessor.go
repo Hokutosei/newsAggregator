@@ -27,7 +27,7 @@ func HackerNewsInsert(hn HackerNews) {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("saved!")
+	fmt.Println("saved! hackernews!")
 }
 
 // HackerNewsFindIfExist check if data exists already before saving
