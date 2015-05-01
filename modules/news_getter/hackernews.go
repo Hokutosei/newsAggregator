@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	loop_counter_delay   = 30
+	loop_counter_delay   = 300
 	hacker_news_provider = "https://news.ycombinator.com"
 	hacker_news_name     = "HackerNews"
 )
