@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	getTimeout = time.Duration(5) * time.Second
+	getTimeout = time.Duration(5 * time.Second)
 )
 
 type unMarshalledContent map[string]interface{}
@@ -35,10 +35,11 @@ func httpGet(urlString string) (*http.Response, error) {
 		return nil, err
 	}
 
-	req.Header.Add("If-None-Match", `W/"wyzzy"`)
 	resp, err := client.Do(req)
 	if err != nil || resp.StatusCode != 200 {
-		fmt.Println(err)
+		fmt.Println("status code: ", resp)
+		fmt.Println("err: ", err)
+		fmt.Println("-----------------------------------")
 		return nil, err
 	}
 	return resp, nil

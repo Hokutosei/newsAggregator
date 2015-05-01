@@ -27,45 +27,42 @@ func StartHackerNews() {
 			if err != nil {
 				return
 			}
-			fmt.Println("running the loop")
-			_ = t
+			fmt.Println("running the loop: ", t)
+
 			for _, id := range top_stories_ids {
 				go func(id int, content_out chan jsonNewsBody, time_profiler chan string) {
 					start := time.Now()
 					news_content := hackerNewsReader(id)
 					content_out <- news_content
-					time_profiler <- fmt.Sprintf("%v", time.Since(start))
+					time_profiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
 				}(id, content_out, time_profiler)
 			}
 		}
 	}()
 
-	go func() {
-		for {
-			content_out_msg := <-content_out
-			time_profiler_out := <-time_profiler
+	for {
+		content_out_msg := <-content_out
+		time_profiler_out := <-time_profiler
 
-			time_f := content_out_msg.Time
-			content_out_msg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
-			content_out_msg.ProviderUrl = hacker_news_provider
-			content_out_msg.ProviderName = hacker_news_name
+		time_f := content_out_msg.Time
+		content_out_msg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
+		content_out_msg.ProviderUrl = hacker_news_provider
+		content_out_msg.ProviderName = hacker_news_name
 
-			_ = time_f
+		_ = time_f
 
-			// check if can save
-			// then save
-			can_save := database.HackerNewsFindIfExist(content_out_msg.Title)
-			if can_save {
-				database.HackerNewsInsert(content_out_msg)
-			} else {
-				//fmt.Println("did not save!")
-			}
-			_ = time_profiler_out
-			//fmt.Println(time_profiler_out)
-			//fmt.Println("----------------------------")
+		// check if can save
+		// then save
+		can_save := database.HackerNewsFindIfExist(content_out_msg.Title)
+		if can_save {
+			database.HackerNewsInsert(content_out_msg)
+		} else {
+			//fmt.Println("did not save!")
 		}
-	}()
-
+		_ = time_profiler_out
+		fmt.Println(time_profiler_out)
+		fmt.Println("----------------------------")
+	}
 }
 
 func topStoriesId() ([]int, error) {
@@ -83,7 +80,7 @@ func topStoriesId() ([]int, error) {
 	if err := json.Unmarshal(contents, &id_containers); err != nil {
 		return id_containers, nil
 	}
-	fmt.Println(id_containers)
+	fmt.Printf("got %v ids:", len(id_containers))
 
 	// make error handler
 	return id_containers, nil

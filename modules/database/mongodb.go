@@ -36,7 +36,8 @@ func MongodbStart() {
 	host := <-mongodbCluster
 	session, err := mongodb.Dial(host)
 	if err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
+		panic(err)
 		return
 	}
 	fmt.Println("connected to mongodb...")

@@ -29,12 +29,11 @@ func handleAssets(assets ...string) {
 }
 
 func main() {
-	go config.StartEtcd()
+	config.StartEtcd()
+	database.MongodbStart()
 
 	news_getter.StartHackerNews()
 	news_getter.StartGoogleNews()
-
-	database.MongodbStart()
 
 	startRoutes()
 
