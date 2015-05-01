@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	loop_counter_delay   = 300
+	loop_counter_delay   = 30
 	hacker_news_provider = "https://news.ycombinator.com"
 	hacker_news_name     = "HackerNews"
 )
@@ -17,7 +17,7 @@ var (
 type HackerNewsTopStoriesId []int
 
 func StartHackerNews() {
-	fmt.Println("starting hn")
+	fmt.Println("starthacker news launched!")
 	content_out := make(chan jsonNewsBody)
 	time_profiler := make(chan string)
 

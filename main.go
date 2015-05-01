@@ -29,17 +29,20 @@ func handleAssets(assets ...string) {
 }
 
 func main() {
-	config.StartEtcd()
-	database.MongodbStart()
+	go func() {
+		config.StartEtcd()
+		go database.MongodbStart()
 
-	news_getter.StartHackerNews()
-	news_getter.StartGoogleNews()
+		startRoutes()
 
-	startRoutes()
+		assetsToHandle := []string{"images", "css", "js", "fonts"}
+		handleAssets(assetsToHandle...)
 
-	assetsToHandle := []string{"images", "css", "js", "fonts"}
-	handleAssets(assetsToHandle...)
+		go news_getter.StartHackerNews()
+		go news_getter.StartGoogleNews()
+
+	}()
 
 	log.Println("now servering to port 3000...")
-	http.ListenAndServe(":3000", nil)
+	http.ListenAndServe(":3001", nil)
 }

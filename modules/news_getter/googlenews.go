@@ -60,6 +60,7 @@ var (
 )
 
 func StartGoogleNews() {
+	fmt.Println("startgoogle news launched!")
 	url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=t&ned=jp&userip=192.168.0.1")
 	output_chan := make(chan GoogleNewsResults)
 
