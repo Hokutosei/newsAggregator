@@ -13,6 +13,10 @@ import (
 	_ "web_apps/news_aggregator/modules/utils"
 )
 
+var (
+	serverPort = ":3000"
+)
+
 type Profile struct {
 	Name    string
 	Hobbies []string
@@ -43,6 +47,6 @@ func main() {
 
 	}()
 
-	log.Println("now servering to port 3000...")
-	http.ListenAndServe(":3001", nil)
+	log.Println("now servering to port: ...", serverPort)
+	http.ListenAndServe(serverPort, nil)
 }
