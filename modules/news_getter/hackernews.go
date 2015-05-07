@@ -25,7 +25,8 @@ func StartHackerNews() {
 		for t := range time.Tick(time.Duration(loop_counter_delay) * time.Second) {
 			top_stories_ids, err := topStoriesId()
 			if err != nil {
-				return
+				fmt.Println("skipping, err from topStoriesId")
+				continue
 			}
 			fmt.Println("running the loop: ", t)
 
