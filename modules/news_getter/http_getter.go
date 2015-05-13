@@ -23,6 +23,7 @@ type unMarshalledContent map[string]interface{}
 // 	return response, nil
 // }
 
+// TODO add aditional flag if resp err is nil but fail
 func httpGet(urlString string) (*http.Response, error) {
 
 	client := &http.Client{
