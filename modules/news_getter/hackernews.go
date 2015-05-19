@@ -61,8 +61,8 @@ func StartHackerNews() {
 			//fmt.Println("did not save!")
 		}
 		_ = time_profiler_out
-		fmt.Println(time_profiler_out)
-		fmt.Println("----------------------------")
+		// fmt.Println(time_profiler_out)
+		// fmt.Println("----------------------------")
 	}
 }
 
