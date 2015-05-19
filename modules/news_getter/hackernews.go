@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	loop_counter_delay   = 300
+	loop_counter_delay   = 10
 	hacker_news_provider = "https://news.ycombinator.com"
 	hacker_news_name     = "HackerNews"
 )
@@ -29,6 +29,7 @@ func StartHackerNews() {
 				continue
 			}
 			fmt.Println("running the loop: ", t)
+			fmt.Println(top_stories_ids)
 
 			for _, id := range top_stories_ids {
 				go func(id int, content_out chan jsonNewsBody, time_profiler chan string) {
@@ -61,8 +62,8 @@ func StartHackerNews() {
 			//fmt.Println("did not save!")
 		}
 		_ = time_profiler_out
-		// fmt.Println(time_profiler_out)
-		// fmt.Println("----------------------------")
+		fmt.Println(time_profiler_out)
+		fmt.Println("----------------------------")
 	}
 }
 
