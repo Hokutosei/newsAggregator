@@ -38,26 +38,12 @@ func httpGet(urlString string) (*http.Response, error) {
 
 	resp, err := client.Do(req)
 
-	defer resp.Body.Close()
-
-	fmt.Println(resp.StatusCode)
-	fmt.Println(resp.StatusCode != 200)
-	fmt.Println("debug------")
-
-	if resp.StatusCode != 200 {
+	if err != nil || resp == nil || resp.StatusCode != 200 {
 		fmt.Println("status code: ", resp)
 		fmt.Println("err: ", err)
 		fmt.Println("-----------------------------------")
 		return nil, err
 	}
-
-	if err != nil {
-		fmt.Println("status code: ", resp)
-		fmt.Println("err: ", err)
-		fmt.Println("-----------------------------------")
-		return nil, err
-	}
-	fmt.Println("finish!")
 	return resp, nil
 }
 
