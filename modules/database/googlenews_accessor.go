@@ -5,6 +5,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// GoogleNews interface for google news
 type GoogleNews interface{}
 
 var (
@@ -46,12 +47,12 @@ func GoogleNewsIndexNews() (AggregatedNews, error) {
 	c := sc.DB(Db).C(googleNewsCollection)
 	defer sc.Close()
 
-	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
-		return aggregated_news, err
+		return aggregatedNews, err
 	}
-	return aggregated_news, nil
+	return aggregatedNews, nil
 }
