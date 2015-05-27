@@ -18,6 +18,9 @@
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
         //$analytics.eventTrack('news_item_clicked', { category: 'news_clicks', label: 'news_item_clicked' })
 
+        // conect to SSE Backend
+        NewsBgQueue.connectSSE()
+
 
         httpService.getIndexNews(function(data, status) {
             $scope.main_index_news = data;

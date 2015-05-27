@@ -10,6 +10,7 @@ import (
 
 	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/realtimeServer"
 	_ "web_apps/news_aggregator/modules/utils"
 )
 
@@ -41,6 +42,8 @@ func main() {
 		go news_getter.StartGoogleNews()
 
 	}()
+
+	realtimeServer.Init()
 
 	log.Println("now servering to port: ...", serverPort)
 	http.ListenAndServe(serverPort, nil)
