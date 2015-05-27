@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"net/http"
 
-	_ "gopkg.in/mgo.v2/bson"
 	"web_apps/news_aggregator/modules/database"
 
-	_ "web_apps/news_aggregator/modules/news_getter"
+	_ "gopkg.in/mgo.v2/bson"
+
+	_ "web_apps/news_aggregator/modules/newsGetter"
 )
 
 type NewsIncrementParameter struct {

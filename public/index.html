@@ -19,12 +19,13 @@
         <link rel="stylesheet" href="css/mobile_main.css" media="screen and (max-device-width: 480px)">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script> var app; </script>
     </head>
     <body ng-app="newsAggregator" ng-controller="MainCtrl">
 
 
     <div id="main_stage" style="height: {{window_height}}">
-        <div class="news_feeds">            
+        <div class="news_feeds">
             <table class="site_table_header">
                 <tbody>
                     <tr>
@@ -34,7 +35,7 @@
                         </td>
                         <td class="news_categories">
                             <a ng-click="news_content('top_score_news')">Top Score</a>
-                        </td>                        
+                        </td>
                         <td class="news_categories">
                             <a href="#">Topics</a>
                         </td>
@@ -86,6 +87,7 @@
     <!--<script src="http://fb.me/react-0.12.1.js"></script>-->
     <script src="js/main.js"></script>
     <script src="js/services/services.js"></script>
+    <script src="js/services/newsBgQueue.js"></script>
     <script src="js/angulartics.js"></script>
     <script src="js/angulartics-ga.js"></script>
     <script>
