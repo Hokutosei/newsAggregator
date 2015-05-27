@@ -50,14 +50,14 @@ func HackerNewsIndexNews() (AggregatedNews, error) {
 	c := sc.DB(Db).C(hackerNewsCollection)
 	defer sc.Close()
 
-	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
-		return aggregated_news, err
+		return aggregatedNews, err
 	}
-	return aggregated_news, nil
+	return aggregatedNews, nil
 }
 
 // HackerNewsLatestNews aggregate latest news
@@ -66,29 +66,29 @@ func HackerNewsLatestNews() (AggregatedNews, error) {
 	c := sc.DB(Db).C(hackerNewsCollection)
 	defer sc.Close()
 
-	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id").Limit(searchLimitItems).All(&aggregated_news)
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
-		return aggregated_news, err
+		return aggregatedNews, err
 	}
-	return aggregated_news, nil
+	return aggregatedNews, nil
 }
 
 // HackerNewsFeedMore feed more data on index list
-func HackerNewsFeedMore(content_type string, length int) (AggregatedNews, error) {
+func HackerNewsFeedMore(contentType string, length int) (AggregatedNews, error) {
 	q := map[string]string{"latest_news": "-_id", "top_score_news": "-score"}
 	sc := SessionCopy()
 	c := sc.DB(Db).C(hackerNewsCollection)
 	defer sc.Close()
 
-	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Skip(length).Sort(q[content_type]).Limit(searchLimitItems).All(&aggregated_news)
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Skip(length).Sort(q[contentType]).Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
-		return aggregated_news, err
+		return aggregatedNews, err
 	}
-	return aggregated_news, nil
+	return aggregatedNews, nil
 }

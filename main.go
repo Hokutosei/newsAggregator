@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	serverPort = ":3000"
+	serverPort = ":8000"
 )
 
 func handleAssets(assets ...string) {
