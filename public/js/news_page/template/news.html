@@ -21,6 +21,14 @@
             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
+
+        // callback new comment
+        function disqus_config() {
+            this.callbacks.onNewComment = [function(comment) {
+            //   alert(comment.id);
+            }];
+        }
+
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
