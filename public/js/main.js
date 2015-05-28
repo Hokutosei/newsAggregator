@@ -27,6 +27,8 @@
 
         $scope.news_content = function(content_type) {
             $rootScope.content_type = content_type;
+            $analytics.eventTrack('index', { category: 'index_main', label: content_type });
+
             if($location.path() != "/") {
                 window.location.href = "/";
             } else {

@@ -3,10 +3,11 @@
 
     var log = function(str) { console.log(str); };
 
-    app.controller('NewsPageCtrl', function($routeParams, newsPageService, $scope) {
+    app.controller('NewsPageCtrl', function($routeParams, newsPageService, $scope, $analytics) {
         newsPageService.getNewsItem($routeParams.id).then(function(resp, status) {
             $scope.news_item = resp.data
-            log($scope.news_item)
+
+            $analytics.eventTrack('news_item', { category: 'news_item', label: $scope.news_item.title });
 
         })
 
