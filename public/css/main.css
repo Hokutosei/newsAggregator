@@ -106,6 +106,9 @@ span.provider_name a {
     color: #ccc;
 }
 
+.news_item_page_discuss {
+    padding: 5px;
+}
 
 /* UTILS */
 .clearfloat {
