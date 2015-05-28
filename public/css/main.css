@@ -110,6 +110,13 @@ span.provider_name a {
     padding: 5px;
 }
 
+
+/* OVERRIDE DISQUS THREAD LAYOUT */
+#disqus_thread {
+    width: 80%;
+    margin: 0 auto;
+}
+
 /* UTILS */
 .clearfloat {
     clear: both;
