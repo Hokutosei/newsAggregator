@@ -24,7 +24,7 @@
     </head>
     <body ng-app="newsAggregator" ng-controller="MainCtrl">
 
-    <div id="main_stage" style="height: {{window_height}}">
+    <div id="main_stage" style="height: {{window_height}}" onload="loadCommentCount()">
         <div ng-view></div>
     </div>
 

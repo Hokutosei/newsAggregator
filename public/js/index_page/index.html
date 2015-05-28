@@ -21,7 +21,13 @@
                             <tr>
                                 <td>created_at: {{ timeToLocal(news_item.time) | date:"yyyy-MM-dd hh:mm" }}</td>
                                 <td>score: {{ news_item.score }}</td>
-                                <td><a href="/news/{{ news_item._id }}">discuss</a></td>
+                                <td>
+                                    <a ng-href="/news/{{ news_item._id }}#disqus_thread" data-disqus-identifier="news_item_{{ news_item._id }}_identifier" title="{{ news_item.title }}">
+                                        discuss
+
+                                    </a>
+                                    <span class="disqus-comment-count" data-disqus-identifier="news_item_{{ news_item._id }}_identifier">g</span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -31,3 +37,28 @@
     </div>
     <a href="" class="more_feeds" ng-click="feed_more(main_index_news.length)">More..</a>
 </div>
+
+
+
+
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'kedoyo';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    // function loadCommentCount() {
+    //     console.log("loaded")
+    //     var s = document.createElement('script'); s.async = true;
+    //     s.type = 'text/javascript';
+    //     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    //     console.log(s);
+    //     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    // }
+    // setTimeout(loadCommentCount, 3000)
+</script>
