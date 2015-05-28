@@ -8,9 +8,12 @@ import (
 )
 
 var (
+
+	// NewsMainCollection collection name
 	NewsMainCollection = "news_main"
 )
 
+// NewsMainIndexNews responder for index news query
 func NewsMainIndexNews() (AggregatedNews, error) {
 	sc := SessionCopy()
 	c := sc.DB(Db).C(NewsMainCollection)
@@ -52,4 +55,20 @@ func IncrementNewsScore(params_id string) {
 	utils.HandleError(err)
 
 	fmt.Println(aggregated_news)
+}
+
+// NewsItemPage get news item data
+func NewsItemPage(paramsID string) (interface{}, error) {
+	sc := SessionCopy()
+	c := sc.DB(Db).C(NewsMainCollection)
+	defer sc.Close()
+
+	var newsItem interface{}
+	err := c.Find(bson.M{"_id": bson.ObjectIdHex(paramsID)}).One(&newsItem)
+
+	if err != nil {
+		return newsItem, err
+	}
+
+	return newsItem, nil
 }
