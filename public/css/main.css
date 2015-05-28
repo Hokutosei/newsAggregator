@@ -108,6 +108,7 @@ span.provider_name a {
 
 .news_item_page_discuss {
     padding: 5px;
+    min-height: 200px;
 }
 
 
