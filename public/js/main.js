@@ -63,5 +63,11 @@
         $scope.timeToLocal = function(unix_time) {
         	return new Date(unix_time * 1000)
         };
+
+        $scope.absURL = function(news_item_id) {
+            var protocol = $location.protocol()
+                , port = $location.port()
+            return protocol + '://' + location.host + '/news/' + news_item_id + '#disqus_thread'
+        }
     }]);
 }());

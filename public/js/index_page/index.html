@@ -22,11 +22,7 @@
                                 <td>created_at: {{ timeToLocal(news_item.time) | date:"yyyy-MM-dd hh:mm" }}</td>
                                 <td>score: {{ news_item.score }}</td>
                                 <td>
-                                    <a ng-href="/news/{{ news_item._id }}#disqus_thread" data-disqus-identifier="news_item_{{ news_item._id }}_identifier" title="{{ news_item.title }}">
-                                        discuss
-
-                                    </a>
-                                    <span class="disqus-comment-count" data-disqus-identifier="news_item_{{ news_item._id }}_identifier">g</span>
+                                    <a ng-href="{{ absURL(news_item._id) }}" title="{{ news_item.title }}"> discuss </a>
                                 </td>
                             </tr>
                         </tbody>
