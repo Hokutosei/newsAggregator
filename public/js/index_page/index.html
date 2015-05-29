@@ -22,7 +22,7 @@
                                 <td>created_at: {{ timeToLocal(news_item.time) | date:"yyyy-MM-dd hh:mm" }}</td>
                                 <td>score: {{ news_item.score }}</td>
                                 <td>
-                                    <a ng-href="{{ absURL(news_item._id) }}" title="{{ news_item.title }}"> discuss </a>
+                                    <a ng-href="{{ absURL(news_item._id) }}" title="{{ news_item.title }}"> Comment </a>
                                 </td>
                             </tr>
                         </tbody>
