@@ -110,6 +110,12 @@ span.provider_name a {
     padding: 5px;
     min-height: 200px;
 }
+.news_item_page_discuss h1 {
+    width: 80%;
+    text-align: justify;
+    margin: 0 auto;
+    font-size: 40px;
+}
 
 
 /* OVERRIDE DISQUS THREAD LAYOUT */
