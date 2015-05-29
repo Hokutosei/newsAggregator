@@ -8,7 +8,6 @@
             restrict: 'E',
             templateUrl: 'js/shared/templates/overallheader.html',
             link: function(scope) {
-                log("header")
             }
         }
     })
