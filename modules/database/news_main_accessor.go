@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+
 	"gopkg.in/mgo.v2/bson"
 
 	"web_apps/news_aggregator/modules/utils"
