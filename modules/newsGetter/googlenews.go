@@ -22,6 +22,7 @@ import (
 // 	CreatedAt		string
 // }
 
+// GoogleNews interface for google news
 type GoogleNews map[string]interface{}
 
 type GoogleNewsResponseData struct {
@@ -46,11 +47,17 @@ type GoogleNewsResults struct {
 	PublishedDate      string
 	Language           string
 	RelatedStories     []RelatedStories
+	Image              Image
 }
 
 type RelatedStories struct {
 	Url               string
 	TitleNoFormatting string
+}
+
+type Image struct {
+	Publisher string `json:"publisher"`
+	URL       string `json:"url"`
 }
 
 var (
@@ -104,8 +111,8 @@ func GoogleNewsRequester(url string, output_chan chan GoogleNewsResults) {
 
 }
 
+// GoogleNewsDataSetter builds and construct data for insertion
 func GoogleNewsDataSetter(google_news GoogleNewsResults) {
-
 	can_save := database.GoogleNewsFindIfExist(google_news.Title)
 
 	jsonNews := &jsonNewsBody{

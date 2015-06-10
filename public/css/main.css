@@ -117,6 +117,14 @@ span.provider_name a {
     font-size: 40px;
 }
 
+/* NEWS PAGE VIEW */
+.news_title q {
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+.news_title:hover {
+  text-decoration: none;
+}
 
 /* OVERRIDE DISQUS THREAD LAYOUT */
 #disqus_thread {

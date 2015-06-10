@@ -39,9 +39,9 @@ func httpGet(urlString string) (*http.Response, error) {
 	resp, err := client.Do(req)
 
 	if err != nil || resp == nil || resp.StatusCode != 200 {
-		fmt.Println("status code: ", resp)
-		fmt.Println("err: ", err)
-		fmt.Println("-----------------------------------")
+		// fmt.Println("status code: ", resp)
+		// fmt.Println("err: ", err)
+		// fmt.Println("-----------------------------------")
 		return nil, err
 	}
 	return resp, nil

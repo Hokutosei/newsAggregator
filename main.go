@@ -37,6 +37,7 @@ func main() {
 		assetsToHandle := []string{"images", "css", "js", "fonts"}
 		handleAssets(assetsToHandle...)
 
+		// news getter initializers
 		go news_getter.StartHackerNews()
 		go news_getter.StartGoogleNews()
 
