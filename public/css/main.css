@@ -65,11 +65,21 @@ table#news_list {
     padding:0;
 }
 
+#news_list tbody tr td.index_number,
+#news_list tbody tr td.rank_pos,
+#news_list tbody tr td.headline_link,
+.site_table_header tbody tr td {
+  padding: 0 !important;
+}
+
 #news_list tbody tr td.index_number {
     color: #ccc;
+    width: 10px;
+    vertical-align: top;
 }
 #news_list tbody tr td.rank_pos {
     width: 15px;
+    vertical-align: top;
 }
 #news_list tbody tr td.rank_pos span {
     height: 10px;
@@ -94,6 +104,7 @@ span.provider_name a {
     font-size: 10px;
     font-style: italic;
     color: #ccc;
+    width: auto;
 }
 
 .post_info td {

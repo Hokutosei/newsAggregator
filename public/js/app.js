@@ -12,10 +12,14 @@
 			templateUrl: 'js/index_page/' + 'index.html',
 			controller: 'MainCtrl'
 		})
-        .when('/news/:id', {
-            templateUrl: 'js/news_page/template/news.html',
-            controller: 'NewsPageCtrl'
-        })
+    .when('/admin', {
+      templateUrl: 'js/pages/admin/templates/admin.html',
+      controller: 'AdminController'
+    })    
+    .when('/news/:id', {
+        templateUrl: 'js/news_page/template/news.html',
+        controller: 'NewsPageCtrl'
+    })
 		.otherwise({
 			redirectTo: '/'
 		})
