@@ -45,7 +45,7 @@ table#news_list {
     margin-right: 15px;
     width: 10%;
     border-right: 1px solid #f1f1f1;
-    font-weight: 900; 
+    font-weight: 900;
 }
 
 .site_table_header tbody tr td.news_categories {
@@ -65,11 +65,21 @@ table#news_list {
     padding:0;
 }
 
+#news_list tbody tr td.index_number,
+#news_list tbody tr td.rank_pos,
+#news_list tbody tr td.headline_link,
+.site_table_header tbody tr td {
+  padding: 0 !important;
+}
+
 #news_list tbody tr td.index_number {
     color: #ccc;
+    width: 10px;
+    vertical-align: top;
 }
 #news_list tbody tr td.rank_pos {
     width: 15px;
+    vertical-align: top;
 }
 #news_list tbody tr td.rank_pos span {
     height: 10px;
@@ -94,6 +104,7 @@ span.provider_name a {
     font-size: 10px;
     font-style: italic;
     color: #ccc;
+    width: auto;
 }
 
 .post_info td {
@@ -102,12 +113,37 @@ span.provider_name a {
     text-align: center;
 }
 
+.post_info td a {
+    color: #ccc;
+}
+
+.news_item_page_discuss {
+    padding: 5px;
+    min-height: 200px;
+}
+.news_item_page_discuss h1 {
+    width: 80%;
+    text-align: justify;
+    margin: 0 auto;
+    font-size: 40px;
+}
+
+/* NEWS PAGE VIEW */
+.news_title q {
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+.news_title:hover {
+  text-decoration: none;
+}
+
+/* OVERRIDE DISQUS THREAD LAYOUT */
+#disqus_thread {
+    width: 80%;
+    margin: 0 auto;
+}
+
 /* UTILS */
 .clearfloat {
     clear: both;
 }
-
-
-
-
-

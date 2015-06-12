@@ -7,33 +7,22 @@ import (
 	"web_apps/news_aggregator/modules/database"
 )
 
-// type jsonNewsBody struct {
-// 	By				string
-// 	Id				int
-// 	//Kids 			[]int
-// 	Score			int
-// 	Text			string
-// 	Time			int
-// 	Title			string
-// 	Type			string
-// 	Url				string
-// 	ProviderName	string
-// 	ProviderUrl		string
-// 	CreatedAt		string
-// }
-
+// GoogleNews interface for google news
 type GoogleNews map[string]interface{}
 
+// GoogleNewsResponseData response struct
 type GoogleNewsResponseData struct {
 	ResponseData struct {
 		Results []GoogleNewsResults
 	}
 }
 
+// ResponseData response struct
 type ResponseData struct {
 	Results []GoogleNewsResults
 }
 
+// GoogleNewsResults google news result struct
 type GoogleNewsResults struct {
 	GsearchResultClass string
 	ClusterUrl         string
@@ -46,44 +35,75 @@ type GoogleNewsResults struct {
 	PublishedDate      string
 	Language           string
 	RelatedStories     []RelatedStories
+	Image              Image
+	Category           TopicIdentity
 }
 
+// RelatedStories google related stories
 type RelatedStories struct {
 	Url               string
 	TitleNoFormatting string
 }
 
+// Image google news item top image
+type Image struct {
+	Publisher string `json:"publisher"`
+	URL       string `json:"url"`
+}
+
 var (
-	google_loop_counter_delay = 300
-	google_news_provider      = "https://news.google.com/"
-	google_news_name          = "GoogleNews"
+	googleLoopCounterDelay = 300
+	googleNewsProvider     = "https://news.google.com/"
+	googleNewsName         = "GoogleNews"
 )
 
+// TopicsList return a list of topics/categories
+func TopicsList() Topics {
+	topics := Topics{
+		"society":       TopicIdentity{"y", "社会"},
+		"international": TopicIdentity{"w", "国際"},
+		"business":      TopicIdentity{"b", "ビジネス"},
+		"politics":      TopicIdentity{"p", "政治"},
+		"entertainment": TopicIdentity{"e", "エンタメ"},
+		"sports":        TopicIdentity{"s", "スポーツ"},
+		"technology":    TopicIdentity{"t", "テクノロジー"},
+		"pickup":        TopicIdentity{"ir", "ピックアップ"},
+	}
+
+	return topics
+}
+
+// StartGoogleNews start collecting google news
 func StartGoogleNews() {
 	fmt.Println("startgoogle news launched!")
-	url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=t&ned=jp&userip=192.168.0.1")
-	output_chan := make(chan GoogleNewsResults)
+	outputchan := make(chan GoogleNewsResults)
 
 	go func() {
-		for t := range time.Tick(time.Duration(google_loop_counter_delay) * time.Second) {
+		for t := range time.Tick(time.Duration(googleLoopCounterDelay) * time.Second) {
 			_ = t
 			//news_counter = 0
-			go GoogleNewsRequester(url, output_chan)
+
+			for k, v := range TopicsList() {
+				go func(k string, v TopicIdentity) {
+					url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v.Initial)
+					GoogleNewsRequester(url, v, outputchan)
+				}(k, v)
+			}
 		}
 	}()
 
 	go func() {
 		for {
-			output := <-output_chan
+			output := <-outputchan
 			GoogleNewsDataSetter(output)
 			//fmt.Println("-------------------------")
 		}
 	}()
-
 }
 
-func GoogleNewsRequester(url string, output_chan chan GoogleNewsResults) {
-	var google_news GoogleNewsResponseData
+// GoogleNewsRequester google news http getter
+func GoogleNewsRequester(url string, topic TopicIdentity, outputChan chan GoogleNewsResults) {
+	var googleNews GoogleNewsResponseData
 	response, err := httpGet(url)
 	if err != nil {
 		return
@@ -92,34 +112,39 @@ func GoogleNewsRequester(url string, output_chan chan GoogleNewsResults) {
 	defer response.Body.Close()
 
 	contents, _ := responseReader(response)
-	if err := json.Unmarshal(contents, &google_news); err != nil {
+	if err := json.Unmarshal(contents, &googleNews); err != nil {
 		//return id_containers
 		fmt.Println(err)
 	}
 
-	GNResponse := google_news.ResponseData
+	GNResponse := googleNews.ResponseData
 	for _, gn := range GNResponse.Results {
-		output_chan <- gn
-	}
+		// set news item category
+		gn.Category = topic
 
+		// push to upstream channel
+		outputChan <- gn
+	}
 }
 
-func GoogleNewsDataSetter(google_news GoogleNewsResults) {
-
-	can_save := database.GoogleNewsFindIfExist(google_news.Title)
+// GoogleNewsDataSetter builds and construct data for insertion
+func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
+	canSave := database.GoogleNewsFindIfExist(googleNews.Title)
 
 	jsonNews := &jsonNewsBody{
-		Title:          google_news.Title,
+		Title:          googleNews.Title,
 		By:             "GoogleNews",
 		Score:          0,
 		Time:           int(time.Now().Unix()),
-		Url:            google_news.Url,
-		ProviderName:   "GoogleNews",
-		RelatedStories: google_news.RelatedStories,
+		Url:            googleNews.Url,
+		ProviderName:   googleNewsName,
+		RelatedStories: googleNews.RelatedStories,
 		CreatedAt:      fmt.Sprintf("%v", time.Now().Local()),
+		Category:       googleNews.Category,
 	}
 
-	if can_save {
+	// check if data exists already, need refactoring though
+	if canSave {
 		saved := database.GoogleNewsInsert(jsonNews)
 		if saved {
 			fmt.Println("saved!! google news!")

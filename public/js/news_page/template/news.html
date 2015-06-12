@@ -1,0 +1,38 @@
+<div class="news_feeds">
+    <overall_header></overall_header>
+
+    <div class="news_item_page_discuss">
+        <h1>
+          <a ng-href="{{ decodeURL(news_item.url) }}" target="_blank" class="news_title">
+            <q>{{ news_item.title }}</q>
+          </a>
+        </h1>
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = 'kedoyo';
+        // var disqus_identifier = news_item.id;
+        // var disqus_title = news_item.title;
+        // var disqus_url = "/news/" + news_item.id
+
+
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        // callback new comment
+        function disqus_config() {
+            this.callbacks.onNewComment = [function(comment) {
+            //   alert(comment.id);
+            }];
+        }
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>

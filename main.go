@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	serverPort = ":8000"
+	serverPort = ":3000"
 )
 
 func handleAssets(assets ...string) {
@@ -37,6 +37,7 @@ func main() {
 		assetsToHandle := []string{"images", "css", "js", "fonts"}
 		handleAssets(assetsToHandle...)
 
+		// news getter initializers
 		go news_getter.StartHackerNews()
 		go news_getter.StartGoogleNews()
 

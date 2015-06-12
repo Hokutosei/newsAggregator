@@ -1,0 +1,34 @@
+<div class="news_feeds">
+    <overall_header></overall_header>
+
+
+    <div id="news_category">
+        <table id="news_list">
+            <tr ng-repeat="news_item in main_index_news track by $index">
+                <td class="index_number">{{ $index }}</td>
+                <td class="rank_pos"> <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> </td>
+                <td class="headline_link">
+                    <a ng-href="{{ absURL(news_item._id, true) }}"
+                       analytics-on="click"
+                       analytics-event="news_item_clicked"
+                       ng-click="ga_event(news_item)">{{ news_item.title }}</a>
+                    <span class="provider_name">
+                        <a href="{{ news_item.providerurl }}"><{{ news_item.providername }}></a>
+                    </span>
+                    <table class="post_info">
+                        <tbody>
+                            <tr>
+                                <td>created_at: {{ timeToLocal(news_item.time) | date:"yyyy-MM-dd hh:mm" }}</td>
+                                <td>score: {{ news_item.score }}</td>
+                                <td>
+                                    <a ng-href="{{ absURL(news_item._id, false) }}" title="{{ news_item.title }}"> Comment </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <a href="" class="more_feeds" ng-click="feed_more(main_index_news.length)">More..</a>
+</div>
