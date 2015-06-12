@@ -52,7 +52,7 @@ type Image struct {
 }
 
 var (
-	googleLoopCounterDelay = 10
+	googleLoopCounterDelay = 300
 	googleNewsProvider     = "https://news.google.com/"
 	googleNewsName         = "GoogleNews"
 )
