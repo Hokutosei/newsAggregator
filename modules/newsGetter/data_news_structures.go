@@ -14,7 +14,7 @@ type jsonNewsBody struct {
 	ProviderUrl    string
 	CreatedAt      string
 	RelatedStories []RelatedStories
-	Category       Topics
+	Category       TopicIdentity
 }
 
 // Topics topics list map holder

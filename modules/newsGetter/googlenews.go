@@ -36,20 +36,23 @@ type GoogleNewsResults struct {
 	Language           string
 	RelatedStories     []RelatedStories
 	Image              Image
+	Category           TopicIdentity
 }
 
+// RelatedStories google related stories
 type RelatedStories struct {
 	Url               string
 	TitleNoFormatting string
 }
 
+// Image google news item top image
 type Image struct {
 	Publisher string `json:"publisher"`
 	URL       string `json:"url"`
 }
 
 var (
-	googleLoopCounterDelay = 300
+	googleLoopCounterDelay = 10
 	googleNewsProvider     = "https://news.google.com/"
 	googleNewsName         = "GoogleNews"
 )
@@ -73,14 +76,19 @@ func TopicsList() Topics {
 // StartGoogleNews start collecting google news
 func StartGoogleNews() {
 	fmt.Println("startgoogle news launched!")
-	url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=t&ned=jp&userip=192.168.0.1")
 	outputchan := make(chan GoogleNewsResults)
 
 	go func() {
 		for t := range time.Tick(time.Duration(googleLoopCounterDelay) * time.Second) {
 			_ = t
 			//news_counter = 0
-			go GoogleNewsRequester(url, outputchan)
+
+			for k, v := range TopicsList() {
+				go func(k string, v TopicIdentity) {
+					url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v.Initial)
+					GoogleNewsRequester(url, v, outputchan)
+				}(k, v)
+			}
 		}
 	}()
 
@@ -91,11 +99,10 @@ func StartGoogleNews() {
 			//fmt.Println("-------------------------")
 		}
 	}()
-
 }
 
 // GoogleNewsRequester google news http getter
-func GoogleNewsRequester(url string, outputChan chan GoogleNewsResults) {
+func GoogleNewsRequester(url string, topic TopicIdentity, outputChan chan GoogleNewsResults) {
 	var googleNews GoogleNewsResponseData
 	response, err := httpGet(url)
 	if err != nil {
@@ -112,9 +119,12 @@ func GoogleNewsRequester(url string, outputChan chan GoogleNewsResults) {
 
 	GNResponse := googleNews.ResponseData
 	for _, gn := range GNResponse.Results {
+		// set news item category
+		gn.Category = topic
+
+		// push to upstream channel
 		outputChan <- gn
 	}
-
 }
 
 // GoogleNewsDataSetter builds and construct data for insertion
@@ -130,6 +140,7 @@ func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
 		ProviderName:   googleNewsName,
 		RelatedStories: googleNews.RelatedStories,
 		CreatedAt:      fmt.Sprintf("%v", time.Now().Local()),
+		Category:       googleNews.Category,
 	}
 
 	// check if data exists already, need refactoring though
