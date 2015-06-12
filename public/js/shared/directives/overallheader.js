@@ -28,6 +28,8 @@
                   $scope.header_category_lists = _.map(data, function(val) {
                     return val
                   })
+                  log("debug")
+                  log($scope.header_category_lists)
                 })
               }
               // init categories list
