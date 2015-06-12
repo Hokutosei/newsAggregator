@@ -1,7 +1,5 @@
 package news_getter
 
-import ()
-
 type jsonNewsBody struct {
 	By string
 	Id int
@@ -16,4 +14,14 @@ type jsonNewsBody struct {
 	ProviderUrl    string
 	CreatedAt      string
 	RelatedStories []RelatedStories
+	Category       Topics
+}
+
+// Topics topics list map holder
+type Topics map[string]TopicIdentity
+
+//TopicIdentity topic identifier
+type TopicIdentity struct {
+	Initial string
+	Name    string
 }
