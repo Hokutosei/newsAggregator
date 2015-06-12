@@ -1,4 +1,4 @@
-package http_handlers
+package httpHandlers
 
 import (
 	"encoding/json"
@@ -6,16 +6,14 @@ import (
 	"net/http"
 
 	"web_apps/news_aggregator/modules/database"
-
-	_ "gopkg.in/mgo.v2/bson"
-
-	_ "web_apps/news_aggregator/modules/newsGetter"
 )
 
+// NewsIncrementParameter struct for news score incrementer
 type NewsIncrementParameter struct {
 	Id string
 }
 
+// IncrementNews incrase news score
 func IncrementNews(rw http.ResponseWriter, req *http.Request) {
 	decoder := json.NewDecoder(req.Body)
 

@@ -51,6 +51,7 @@
         };
 
 
+
         $scope.ga_event = function(news_item) {
             httpService.incrementNewsItemScore(news_item);
             $analytics.eventTrack('news_item_' + news_item.title , { category: 'news_clicks', label: 'news_item_clicked' })

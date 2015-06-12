@@ -1,7 +1,6 @@
-package http_handlers
+package httpHandlers
 
 import (
-	_ "encoding/json"
 	"fmt"
 	"net/http"
 
@@ -23,6 +22,6 @@ func NewsItemPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondToJson(w, result)
+	respondToJSON(w, result)
 	//NewsItemPage
 }

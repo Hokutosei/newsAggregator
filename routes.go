@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"web_apps/news_aggregator/modules/http_handlers"
+	http_handlers "web_apps/news_aggregator/modules/httpHandlers"
 )
 
 func startRoutes() {
@@ -17,6 +17,9 @@ func startRoutes() {
 	http.HandleFunc("/news_item", http_handlers.NewsItemPage)
 
 	http.HandleFunc("/feed_more", http_handlers.FeedMore)
+	http.HandleFunc("/fetch_category_news", http_handlers.FetchCategoryNews)
+
+	http.HandleFunc("/header_categories", http_handlers.HeaderCategories)
 
 	http.HandleFunc("/increment_news", http_handlers.IncrementNews)
 }

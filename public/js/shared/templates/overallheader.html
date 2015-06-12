@@ -1,4 +1,4 @@
-<table class="site_table_header">
+<table class="site_table_header" ng-init="categories()">
     <tbody>
         <tr>
             <td class="site_name" style="padding-left: 5px; ">Kedoyo</td>
@@ -8,14 +8,14 @@
             <td class="news_categories">
                 <a ng-click="news_content('top_score_news')">Top Score</a>
             </td>
-            <td class="news_categories">
-                <a href="#">Topics</a>
+
+            <td class="news_categories" ng-repeat="category in header_category_lists">
+                <a ng-click="category_get(category.initial)">{{ category.name }} </a>
             </td>
-            <td class="news_categories">
-                <a href="#">Post</a>
-            </td>
+
         </tr>
     </tbody>
 </table>
+
 <hr width="100%" class="site_table_header_border">
 <br class="clearfloat" />

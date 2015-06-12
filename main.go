@@ -38,8 +38,8 @@ func main() {
 		handleAssets(assetsToHandle...)
 
 		// news getter initializers
-		go news_getter.StartHackerNews()
-		go news_getter.StartGoogleNews()
+		go newsGetter.StartHackerNews()
+		go newsGetter.StartGoogleNews()
 
 	}()
 

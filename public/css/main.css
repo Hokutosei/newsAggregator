@@ -32,7 +32,7 @@ table#news_list {
 }
 
 .site_table_header  {
-    width: 42%;
+    width: 100%;
     table-layout: fixed;
 /*    border-bottom: 1px solid #f1f1f1;
     border-width: 100%;*/

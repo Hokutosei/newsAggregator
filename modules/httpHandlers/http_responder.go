@@ -1,11 +1,12 @@
-package http_handlers
+package httpHandlers
 
 import (
 	"encoding/json"
 	"net/http"
 )
 
-func respondToJson(w http.ResponseWriter, data interface{}) {
+// respondToJson write http json resposne
+func respondToJSON(w http.ResponseWriter, data interface{}) {
 	json, err := json.Marshal(data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

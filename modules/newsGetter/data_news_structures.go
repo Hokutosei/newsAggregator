@@ -1,4 +1,4 @@
-package news_getter
+package newsGetter
 
 type jsonNewsBody struct {
 	By string
@@ -22,6 +22,6 @@ type Topics map[string]TopicIdentity
 
 //TopicIdentity topic identifier
 type TopicIdentity struct {
-	Initial string
-	Name    string
+	Initial string `json:"initial"`
+	Name    string `json:"name"`
 }

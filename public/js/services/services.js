@@ -35,6 +35,20 @@
                 }).success(function(data, status) {
                     log(status)
                 })
+            },
+
+            fetchHeaderCategories: function(callback) {
+              $http.get('/header_categories').success(function(data, status) {
+                callback(data)
+              })
+            },
+
+            fetchCategoryNews: function(initial) {
+              return $http({
+                        url: '/fetch_category_news',
+                        method: 'GET',
+                        params: { initial: initial }
+                      })
             }
         }
 

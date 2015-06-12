@@ -1,4 +1,4 @@
-package news_getter
+package newsGetter
 
 import (
 	"encoding/json"
