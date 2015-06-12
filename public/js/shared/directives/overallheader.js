@@ -30,11 +30,13 @@
                   })
                 })
               }
+              // init categories list
               $scope.categories()
 
               $scope.category_get = function(category) {
                 httpService.fetchCategoryNews(category).success(function(data) {
-                  log(data)
+                  // emit categorized data
+                  $rootScope.$emit('update_main_index_news', data)
                 })
               }
             }

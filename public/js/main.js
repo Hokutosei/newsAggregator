@@ -46,11 +46,13 @@
                 for(var i = 0; i < data.length; i++) {
                     $scope.main_index_news.push(data[i])
                 }
-
             })
         };
 
-
+        //update_main_index_news
+        $rootScope.$on("update_main_index_news", function(event, data) {
+          $scope.main_index_news = data
+        })
 
         $scope.ga_event = function(news_item) {
             httpService.incrementNewsItemScore(news_item);

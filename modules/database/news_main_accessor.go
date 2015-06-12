@@ -20,42 +20,44 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 	c := sc.DB(Db).C(NewsMainCollection)
 	defer sc.Close()
 
-	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id").Limit(searchLimitItems).All(&aggregated_news)
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
-		return aggregated_news, err
+		return aggregatedNews, err
 	}
-	return aggregated_news, nil
+	return aggregatedNews, nil
 }
 
+//GetterNewsMainTopScore main top page news getter
 func GetterNewsMainTopScore() (AggregatedNews, error) {
 	c := MongodbSession.DB(Db).C(NewsMainCollection)
-	var aggregated_news AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregated_news)
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
-		return aggregated_news, err
+		return aggregatedNews, err
 	}
-	return aggregated_news, nil
+	return aggregatedNews, nil
 }
 
-func IncrementNewsScore(params_id string) {
+//IncrementNewsScore increment news score
+func IncrementNewsScore(paramsID string) {
 	c := MongodbSession.DB(Db).C(NewsMainCollection)
-	var aggregated_news interface{}
-	fmt.Println(params_id)
+	var aggregatedNews interface{}
+	fmt.Println(paramsID)
 
-	err := c.Update(bson.M{"_id": bson.ObjectIdHex(params_id)},
+	err := c.Update(bson.M{"_id": bson.ObjectIdHex(paramsID)},
 		bson.M{"$inc": bson.M{"score": 1}, "$currentDate": bson.M{"lastModified": true}})
 
 	utils.HandleError(err)
 
-	err = c.Find(bson.M{"_id": bson.ObjectIdHex(params_id)}).One(&aggregated_news)
+	err = c.Find(bson.M{"_id": bson.ObjectIdHex(paramsID)}).One(&aggregatedNews)
 	utils.HandleError(err)
 
-	fmt.Println(aggregated_news)
+	fmt.Println(aggregatedNews)
 }
 
 // NewsItemPage get news item data
@@ -72,4 +74,20 @@ func NewsItemPage(paramsID string) (interface{}, error) {
 	}
 
 	return newsItem, nil
+}
+
+// GetCategorizedNews will get news with category news initials
+func GetCategorizedNews(initial string) (AggregatedNews, error) {
+	sc := SessionCopy()
+	c := sc.DB(Db).C(NewsMainCollection)
+	defer sc.Close()
+
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"category.initial": initial}).Sort("-_id").All(&aggregatedNews)
+
+	if err != nil {
+		fmt.Println(err)
+		return aggregatedNews, err
+	}
+	return aggregatedNews, nil
 }

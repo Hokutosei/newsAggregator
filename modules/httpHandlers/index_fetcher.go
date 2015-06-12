@@ -84,5 +84,16 @@ func HeaderCategories(w http.ResponseWriter, r *http.Request) {
 
 // FetchCategoryNews get categories news
 func FetchCategoryNews(w http.ResponseWriter, r *http.Request) {
+	start := time.Now()
+	categoryInitial := r.URL.Query().Get("initial")
 
+	categorizedNews, err := database.GetCategorizedNews(categoryInitial)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Println("fetchcategorynews TOOK: ", time.Since(start))
+	respondToJSON(w, categorizedNews)
 }
