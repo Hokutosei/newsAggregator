@@ -19,6 +19,7 @@
         // hold init var for conten_type
         $scope.news_content_type = 'latest_news';
         $rootScope.content_type = $scope.news_content_type;
+        $scope.main_index_news = [];
 
 
         httpService.getNewsContent($rootScope.content_type, function(data, status) {
