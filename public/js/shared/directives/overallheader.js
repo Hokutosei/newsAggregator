@@ -22,19 +22,6 @@
                   }
               };
 
-              $scope.header_category_lists = []
-              $scope.categories = function() {
-                httpService.fetchHeaderCategories(function(data) {
-                  $scope.header_category_lists = _.map(data, function(val) {
-                    return val
-                  })
-                  log("debug")
-                  log($scope.header_category_lists)
-                })
-              }
-              // init categories list
-              $scope.categories()
-
               $scope.category_get = function(category) {
                 httpService.fetchCategoryNews(category).success(function(data) {
                   // emit categorized data
