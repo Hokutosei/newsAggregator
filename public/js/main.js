@@ -91,7 +91,9 @@
 
             return index_url == true ? urlString : urlString + '#disqus_thread';
         }
-        userLocation.getLocation()
+
+        // disable getting user location
+        // userLocation.getLocation()
 
         init()
     }]);
