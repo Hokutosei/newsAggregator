@@ -21,10 +21,11 @@
           })
         }
 
-        $scope.category_get = function(category, name) {
+        $scope.category_get = function(category) {
           $rootScope.$emit('empty_main_index_news')
-          $rootScope.$emit('update_current_news_cat', name)
-          httpService.fetchCategoryNews(category).success(function(data) {
+          $rootScope.$emit('update_current_news_cat', category)
+          $rootScope.current_news_cat_name = category;
+          httpService.fetchCategoryNews(category.initial).success(function(data) {
             // emit categorized data
             $rootScope.$emit('update_main_index_news', data)
           })
@@ -32,5 +33,4 @@
       }
     }
   })
-
 }());

@@ -9,7 +9,7 @@
             templateUrl: 'js/shared/templates/overallheader.html',
             controller: function($scope) {
 
-              $scope.current_news_cat = ''
+              $scope.current_news_cat = $rootScope.current_news_cat_name || '';
               $rootScope.$on('update_current_news_cat', function(event, data) {
                 $scope.current_news_cat = data;
               })

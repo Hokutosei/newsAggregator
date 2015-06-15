@@ -1,6 +1,11 @@
 <div class="news_feeds">
     <overall_header></overall_header>
 
+
+    <div class="news_top_img">
+      <img ng-src="{{ news_item.image.url }}">
+    </div>
+
     <div class="news_item_page_discuss">
         <h1>
           <a ng-href="{{ decodeURL(news_item.url) }}" target="_blank" class="news_title">

@@ -15,6 +15,7 @@ type jsonNewsBody struct {
 	CreatedAt      string
 	RelatedStories []RelatedStories
 	Category       TopicIdentity
+	Image          interface{}
 }
 
 // Topics topics list map holder

@@ -78,7 +78,7 @@ func FeedMore(w http.ResponseWriter, r *http.Request) {
 // HeaderCategories list header topic categories
 func HeaderCategories(w http.ResponseWriter, r *http.Request) {
 	topics := newsGetter.TopicsList()
-	fmt.Println(topics)
+
 	respondToJSON(w, topics)
 }
 

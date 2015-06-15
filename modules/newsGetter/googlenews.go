@@ -112,6 +112,7 @@ func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
 		RelatedStories: googleNews.RelatedStories,
 		CreatedAt:      fmt.Sprintf("%v", time.Now().Local()),
 		Category:       googleNews.Category,
+		Image:          googleNews.Image,
 	}
 
 	// check if data exists already, need refactoring though
