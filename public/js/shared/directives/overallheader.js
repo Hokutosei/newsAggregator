@@ -8,6 +8,12 @@
             restrict: 'E',
             templateUrl: 'js/shared/templates/overallheader.html',
             controller: function($scope) {
+
+              $scope.current_news_cat = ''
+              $rootScope.$on('update_current_news_cat', function(event, data) {
+                $scope.current_news_cat = data;
+              })
+
               $scope.news_content = function(content_type) {
                   $rootScope.content_type = content_type;
                   $analytics.eventTrack('index', { category: 'index_main', label: content_type });

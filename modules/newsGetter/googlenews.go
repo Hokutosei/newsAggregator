@@ -22,35 +22,6 @@ type ResponseData struct {
 	Results []GoogleNewsResults
 }
 
-// GoogleNewsResults google news result struct
-type GoogleNewsResults struct {
-	GsearchResultClass string
-	ClusterUrl         string
-	Content            string
-	UnescapedUrl       string
-	Url                string
-	Title              string
-	TitleNoFormatting  string
-	Publish            string
-	PublishedDate      string
-	Language           string
-	RelatedStories     []RelatedStories
-	Image              Image
-	Category           TopicIdentity
-}
-
-// RelatedStories google related stories
-type RelatedStories struct {
-	Url               string
-	TitleNoFormatting string
-}
-
-// Image google news item top image
-type Image struct {
-	Publisher string `json:"publisher"`
-	URL       string `json:"url"`
-}
-
 var (
 	googleLoopCounterDelay = 300
 	googleNewsProvider     = "https://news.google.com/"
@@ -136,7 +107,7 @@ func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
 		By:             "GoogleNews",
 		Score:          0,
 		Time:           int(time.Now().Unix()),
-		Url:            googleNews.Url,
+		Url:            googleNews.URL,
 		ProviderName:   googleNewsName,
 		RelatedStories: googleNews.RelatedStories,
 		CreatedAt:      fmt.Sprintf("%v", time.Now().Local()),

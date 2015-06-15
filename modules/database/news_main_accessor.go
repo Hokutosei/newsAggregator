@@ -83,7 +83,7 @@ func GetCategorizedNews(initial string) (AggregatedNews, error) {
 	defer sc.Close()
 
 	var aggregatedNews AggregatedNews
-	err := c.Find(bson.M{"category.initial": initial}).Sort("-_id").All(&aggregatedNews)
+	err := c.Find(bson.M{"category.initial": initial}).Sort("-_id").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)

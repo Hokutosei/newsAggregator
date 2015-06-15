@@ -2,6 +2,10 @@
     <tbody>
         <tr>
             <td class="site_name" style="padding-left: 5px; ">Kedoyo</td>
+
+            <td class="news_categories" ng-if="current_news_cat != ''">
+              <span class="current_news_cat_name">{{ current_news_cat }} </span>
+            </td>
             <td class="news_categories">
                 <a href ng-click="news_content('latest_news')">Latest</a>
             </td>

@@ -21,11 +21,11 @@
           })
         }
 
-        $scope.category_get = function(category) {
+        $scope.category_get = function(category, name) {
           $rootScope.$emit('empty_main_index_news')
+          $rootScope.$emit('update_current_news_cat', name)
           httpService.fetchCategoryNews(category).success(function(data) {
             // emit categorized data
-
             $rootScope.$emit('update_main_index_news', data)
           })
         }
