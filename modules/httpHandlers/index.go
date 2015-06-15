@@ -18,14 +18,18 @@ var (
 	db = database.MongodbSession
 )
 
+// Index news page
 func Index(w http.ResponseWriter, r *http.Request) {
 	log.Println("handled --> index")
+
+	query := r.URL.Query()
+	fmt.Println(query)
 
 	indexTemplate := "index.html"
 	t := template.New(indexTemplate).Delims("{{%", "%}}")
 	indexVars := IndexVars{"", "", nil}
 
-	parsed_template_str := fmt.Sprintf("public/%s", indexTemplate)
-	t, _ = t.ParseFiles(parsed_template_str)
+	parsedTemplateStr := fmt.Sprintf("public/%s", indexTemplate)
+	t, _ = t.ParseFiles(parsedTemplateStr)
 	t.Execute(w, indexVars)
 }

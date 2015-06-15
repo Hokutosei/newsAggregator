@@ -9,8 +9,8 @@
     }]);
 
 
-    app.controller("MainCtrl", ["$scope", "$window", "httpService", '$analytics', '$location', '$rootScope',
-        function($scope, $window, httpService, $analytics, $location, $rootScope) {
+    app.controller("MainCtrl", ["$scope", "$window", "httpService", '$analytics', '$location', '$rootScope', 'userLocation', '$routeParams',
+        function($scope, $window, httpService, $analytics, $location, $rootScope, userLocation, $routeParams) {
         $analytics.pageTrack('/');
         //$analytics.eventTrack('index');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
@@ -21,10 +21,22 @@
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
 
+        var init = function() {
 
-        httpService.getNewsContent($rootScope.content_type, function(data, status) {
-            $scope.main_index_news = data;
-        });
+          if($routeParams.q) {
+              httpService.fetchCategoryNews($routeParams.q, function(data, status) {
+                $scope.main_index_news = data;
+                return
+              })
+          }
+
+          // main news initializer in index, needs refactoring
+          httpService.getNewsContent($rootScope.content_type, function(data, status) {
+              $scope.main_index_news = data;
+          });
+
+        }
+
 
         $scope.news_content = function(content_type) {
             $rootScope.content_type = content_type;
@@ -79,5 +91,8 @@
 
             return index_url == true ? urlString : urlString + '#disqus_thread';
         }
+        userLocation.getLocation()
+
+        init()
     }]);
 }());

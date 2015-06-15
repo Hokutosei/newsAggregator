@@ -18,9 +18,6 @@
             },
 
             feedMoreNews: function(content_type, length, callback) {
-    //            $http.post('/feed_more', { data: { 'ContentType': content_type, 'Skip': length } }, function(data, status) {
-    //                callback(data, status)
-    //            })
                 $http({method: 'POST', url: '/feed_more', data: { 'ContentType': content_type, 'Skip': length }})
                     .success(function(data, status) {
                         callback(data, status)
