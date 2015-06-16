@@ -16,6 +16,7 @@ type jsonNewsBody struct {
 	RelatedStories []RelatedStories
 	Category       TopicIdentity
 	Image          interface{}
+	NewsPageView   int `bson:"news_page_view"`
 }
 
 // Topics topics list map holder

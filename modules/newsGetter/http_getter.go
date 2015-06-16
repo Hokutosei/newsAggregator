@@ -2,7 +2,6 @@ package newsGetter
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -32,7 +31,7 @@ func httpGet(urlString string) (*http.Response, error) {
 
 	req, err := http.NewRequest("GET", urlString, nil)
 	if err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
 		return nil, err
 	}
 
@@ -57,7 +56,7 @@ func responseReader(response *http.Response) ([]byte, error) {
 
 func unmarshalResponseContent(content []byte, dataContainer interface{}) (interface{}, error) {
 	if err := json.Unmarshal(content, &dataContainer); err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
 		return nil, err
 	}
 	return dataContainer, nil

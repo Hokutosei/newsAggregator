@@ -8,6 +8,8 @@ import (
 	"web_apps/news_aggregator/modules/database"
 )
 
+// IndexVars used to be struct for index
+// TO DEPRECATE
 type IndexVars struct {
 	Ipaddress   string
 	WebAppTitle string
@@ -21,9 +23,6 @@ var (
 // Index news page
 func Index(w http.ResponseWriter, r *http.Request) {
 	log.Println("handled --> index")
-
-	query := r.URL.Query()
-	fmt.Println(query)
 
 	indexTemplate := "index.html"
 	t := template.New(indexTemplate).Delims("{{%", "%}}")

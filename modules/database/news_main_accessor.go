@@ -46,10 +46,10 @@ func GetterNewsMainTopScore() (AggregatedNews, error) {
 }
 
 //IncrementNewsScore increment news score
+// increment news ite page view
 func IncrementNewsScore(paramsID string) {
 	c := MongodbSession.DB(Db).C(NewsMainCollection)
 	var aggregatedNews interface{}
-	fmt.Println(paramsID)
 
 	err := c.Update(bson.M{"_id": bson.ObjectIdHex(paramsID)},
 		bson.M{"$inc": bson.M{"score": 1}, "$currentDate": bson.M{"lastModified": true}})

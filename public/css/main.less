@@ -99,6 +99,26 @@ table#news_list {
     font-size: 13px;
 }
 
+#news_list {
+  tr {
+
+    td {
+      table.post_info {
+        &:hover {
+          color: #9e9e9e;
+        }
+        tr {
+          td {
+            &:hover {
+              color: #9e9e9e;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 span.provider_name a {
     font-size: 10px;
     font-style: italic;
