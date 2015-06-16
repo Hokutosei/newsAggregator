@@ -21,7 +21,9 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 	defer sc.Close()
 
 	var aggregatedNews AggregatedNews
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id").Limit(searchLimitItems).All(&aggregatedNews)
+	// fix sorting query with
+	// iter := coll.Find(nil).Sort(bson.D{{"field1", 1}, {"field2", -1}}).Iter()
+	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id", "-score").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
