@@ -9,67 +9,71 @@ import (
 )
 
 var (
-	loop_counter_delay   = 300
-	hacker_news_provider = "https://news.ycombinator.com"
-	hacker_news_name     = "HackerNews"
+	loopCounterDelay   = 300
+	hackerNewsProvider = "https://news.ycombinator.com"
+	hackerNewsName     = "HackerNews"
 )
 
-type HackerNewsTopStoriesId []int
+// HackerNewsTopStoriesID struct for hacker news ids results
+type HackerNewsTopStoriesID []int
 
+// StartHackerNews starting GET hackernews
 func StartHackerNews() {
 	fmt.Println("starthacker news launched!")
-	content_out := make(chan jsonNewsBody)
-	time_profiler := make(chan string)
+	contentOut := make(chan jsonNewsBody)
+	timeProfiler := make(chan string)
 
 	go func() {
-		for t := range time.Tick(time.Duration(loop_counter_delay) * time.Second) {
-			top_stories_ids, err := topStoriesId()
+		for t := range time.Tick(time.Duration(loopCounterDelay) * time.Second) {
+			topStoriesIds, err := topStoriesID()
 			if err != nil {
 				fmt.Println("skipping, err from topStoriesId")
 				continue
 			}
 			fmt.Println("running the loop: ", t)
 
-			for _, id := range top_stories_ids {
-				go func(id int, content_out chan jsonNewsBody, time_profiler chan string) {
+			for _, id := range topStoriesIds {
+				go func(id int, contentOut chan jsonNewsBody, timeProfiler chan string) {
 					start := time.Now()
-					news_content := hackerNewsReader(id)
-					content_out <- news_content
-					time_profiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
-				}(id, content_out, time_profiler)
+					newsContent := hackerNewsReader(id)
+					contentOut <- newsContent
+					timeProfiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
+				}(id, contentOut, timeProfiler)
 			}
 		}
 	}()
 
 	for {
-		content_out_msg := <-content_out
-		time_profiler_out := <-time_profiler
+		contentOutMsg := <-contentOut
+		timeProfilerOut := <-timeProfiler
 
-		time_f := content_out_msg.Time
-		content_out_msg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
-		content_out_msg.ProviderUrl = hacker_news_provider
-		content_out_msg.ProviderName = hacker_news_name
+		timeF := contentOutMsg.Time
+		contentOutMsg.Time = int(time.Now().Unix())
+		contentOutMsg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
+		contentOutMsg.ProviderUrl = hackerNewsProvider
+		contentOutMsg.ProviderName = hackerNewsName
 
-		_ = time_f
+		_ = timeF
 
 		// check if can save
 		// then save
-		can_save := database.HackerNewsFindIfExist(content_out_msg.Title)
-		if can_save {
-			database.HackerNewsInsert(content_out_msg)
+		canSave := database.HackerNewsFindIfExist(contentOutMsg.Title)
+		if canSave {
+			database.HackerNewsInsert(contentOutMsg)
 		} else {
 			//fmt.Println("did not save!")
 		}
-		_ = time_profiler_out
+		_ = timeProfilerOut
 		// fmt.Println(time_profiler_out)
 		// fmt.Println("----------------------------")
 	}
 }
 
-func topStoriesId() ([]int, error) {
-	var top_stories_id_url string = "https://hacker-news.firebaseio.com/v0/topstories.json"
-	var id_containers HackerNewsTopStoriesId
-	response, err := httpGet(top_stories_id_url)
+// topStoriesId
+func topStoriesID() ([]int, error) {
+	var topStoriesIDURL = "https://hacker-news.firebaseio.com/v0/topstories.json"
+	var idContainers HackerNewsTopStoriesID
+	response, err := httpGet(topStoriesIDURL)
 	if err != nil {
 		var x []int
 		return x, err
@@ -78,28 +82,28 @@ func topStoriesId() ([]int, error) {
 	defer response.Body.Close()
 
 	contents, _ := responseReader(response)
-	if err := json.Unmarshal(contents, &id_containers); err != nil {
-		return id_containers, nil
+	if err := json.Unmarshal(contents, &idContainers); err != nil {
+		return idContainers, nil
 	}
-	fmt.Printf("got %v ids:", len(id_containers))
+	fmt.Printf("got %v ids:", len(idContainers))
 
 	// make error handler
-	return id_containers, nil
+	return idContainers, nil
 }
 
 func hackerNewsReader(id int) jsonNewsBody {
-	news_url := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
-	var news_content jsonNewsBody
-	response, err := httpGet(news_url)
+	newsURL := fmt.Sprintf("https://hacker-news.firebaseio.com/v0/item/%d.json", id)
+	var newsContent jsonNewsBody
+	response, err := httpGet(newsURL)
 	if err != nil {
 		fmt.Println(err)
-		return news_content
+		return newsContent
 	}
 	defer response.Body.Close()
 
 	contents, _ := responseReader(response)
-	if err := json.Unmarshal(contents, &news_content); err != nil {
-		return news_content
+	if err := json.Unmarshal(contents, &newsContent); err != nil {
+		return newsContent
 	}
-	return news_content
+	return newsContent
 }

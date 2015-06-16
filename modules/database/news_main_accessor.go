@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"time"
 
 	"gopkg.in/mgo.v2/bson"
 
@@ -11,7 +12,9 @@ import (
 var (
 
 	// NewsMainCollection collection name
-	NewsMainCollection = "news_main"
+	NewsMainCollection               = "news_main"
+	dayHours           time.Duration = 24
+	hoursPerDayQuery                 = dayHours * 1
 )
 
 // NewsMainIndexNews responder for index news query
@@ -23,6 +26,13 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 	var aggregatedNews AggregatedNews
 	// fix sorting query with
 	// iter := coll.Find(nil).Sort(bson.D{{"field1", 1}, {"field2", -1}}).Iter()
+	// refactor querying by including explicitly gte & lte
+	// time.Local = time.UTC
+	// gte := time.Now().Add(-time.Hour * hoursPerDayQuery)
+	// lte := time.Now()
+	// fmt.Println(gte)
+	// fmt.Println(lte)
+	// err := c.Find(bson.M{"url": bson.M{"$ne": ""}, "createdat": bson.M{"$gt": gte, "$lt": lte}}).Sort("-_id", "-score").Limit(searchLimitItems).All(&aggregatedNews)
 	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id", "-score").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
