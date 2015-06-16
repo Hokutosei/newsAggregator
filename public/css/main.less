@@ -1,6 +1,8 @@
 @blue-lighten-2: #64b5f6 !important;
 @blue-current_news: #039be5;
 
+@news_item_title_color: #757575;
+
 body {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -125,7 +127,7 @@ span.provider_name a {
 }
 .news_item_page_discuss h1 {
     width: 80%;
-    text-align: justify;
+    text-align: center;
     margin: 0 auto;
     font-size: 40px;
 }
@@ -135,8 +137,12 @@ span.provider_name a {
   quotes: "\201C" "\201D" "\2018" "\2019";
 }
 
-.news_title:hover {
-  text-decoration: none;
+.news_title {
+  color: @news_item_title_color;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 /* OVERRIDE DISQUS THREAD LAYOUT */
