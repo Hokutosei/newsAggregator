@@ -14,9 +14,10 @@ import (
 )
 
 var (
-	serverPort = ":4000"
+	serverPort = ":3000"
 )
 
+// handleAssets serve all file assets
 func handleAssets(assets ...string) {
 	fmt.Println("called")
 	for _, asset := range assets {
@@ -27,6 +28,7 @@ func handleAssets(assets ...string) {
 	}
 }
 
+// main entrypoint and main func for the app
 func main() {
 	go func() {
 		config.StartEtcd()

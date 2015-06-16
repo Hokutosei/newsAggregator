@@ -9,35 +9,34 @@
     }]);
 
 
-    app.controller("MainCtrl", ["$scope", "$window", "httpService", '$analytics', '$location', '$rootScope', 'userLocation', '$routeParams',
-        function($scope, $window, httpService, $analytics, $location, $rootScope, userLocation, $routeParams) {
+    app.controller("MainCtrl", ["$scope", "$window", "httpService",
+                  '$analytics', '$location', '$rootScope', 'userLocation', '$routeParams', '$timeout',
+        function($scope, $window, httpService, $analytics, $location, $rootScope, userLocation, $routeParams, $timeout) {
         $analytics.pageTrack('/');
-        //$analytics.eventTrack('index');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
-        //$analytics.eventTrack('news_item_clicked', { category: 'news_clicks', label: 'news_item_clicked' })
 
         // hold init var for conten_type
         $scope.news_content_type = 'latest_news';
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
 
+        // main init func
         var init = function() {
 
-          if($routeParams.q) {
-              httpService.fetchCategoryNews($routeParams.q, function(data, status) {
+          if(_.has($routeParams, 'q') == true) {
+              httpService.fetchCategoryNews($routeParams.q).success(function(data) {
                 $scope.main_index_news = data;
-                return
               })
+          } else {
+            // main news initializer in index, needs refactoring
+            httpService.getNewsContent($rootScope.content_type, function(data, status) {
+                $scope.main_index_news = data;
+            });
           }
-
-          // main news initializer in index, needs refactoring
-          httpService.getNewsContent($rootScope.content_type, function(data, status) {
-              $scope.main_index_news = data;
-          });
-
         }
 
 
+        // get news_content from conten_type string
         $scope.news_content = function(content_type) {
             $rootScope.content_type = content_type;
             $analytics.eventTrack('index', { category: 'index_main', label: content_type });
@@ -52,7 +51,7 @@
             }
         };
 
-
+        // feed_more
         $scope.feed_more = function(length) {
             $analytics.eventTrack('feed_more', { category: 'system_func', label: 'feed_more_data' });
             httpService.feedMoreNews($scope.news_content_type, length, function(data, status) {
@@ -95,6 +94,7 @@
         // disable getting user location
         // userLocation.getLocation()
 
+        // call init func
         init()
     }]);
 }());
