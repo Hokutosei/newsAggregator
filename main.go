@@ -40,6 +40,7 @@ func main() {
 		handleAssets(assetsToHandle...)
 
 		// news getter initializers
+		// should set in admin page
 		go newsGetter.StartHackerNews()
 		go newsGetter.StartGoogleNews()
 
