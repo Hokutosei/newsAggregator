@@ -34,6 +34,7 @@ func main() {
 		config.StartEtcd()
 		go database.MongodbStart()
 
+		// startRoutes start all routes
 		startRoutes()
 
 		assetsToHandle := []string{"images", "css", "js", "fonts"}
