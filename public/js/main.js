@@ -30,7 +30,7 @@
 
         // main init func
         var init = function() {
-          log(userSession.userSessionId())
+          // log(userSession.userSessionId())
 
           if(_.has($routeParams, 'q') == true) {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {

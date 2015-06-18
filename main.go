@@ -46,6 +46,8 @@ func main() {
 
 	}()
 
+	InitNewRelic()
+
 	log.Println("now servering to port: ...", serverPort)
 	http.ListenAndServe(serverPort, nil)
 }
