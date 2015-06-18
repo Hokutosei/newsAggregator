@@ -8,10 +8,18 @@
 
     }]);
 
-
-    app.controller("MainCtrl", ["$scope", "$window", "httpService",
-                  '$analytics', '$location', '$rootScope', 'userLocation', '$routeParams', '$timeout',
-        function($scope, $window, httpService, $analytics, $location, $rootScope, userLocation, $routeParams, $timeout) {
+    // MainCtrl main application controller
+    app.controller("MainCtrl", function(
+      $scope
+      , $window
+      , httpService
+      , $analytics
+      , $location
+      , $rootScope
+      , userLocation
+      , $routeParams
+      , userSession
+      , $timeout) {
         $analytics.pageTrack('/');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
 
@@ -22,6 +30,7 @@
 
         // main init func
         var init = function() {
+          log(userSession.userSessionId())
 
           if(_.has($routeParams, 'q') == true) {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
@@ -96,5 +105,5 @@
 
         // call init func
         init()
-    }]);
+    });
 }());
