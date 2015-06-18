@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    app = angular.module("newsAggregator", ["ngTouch", "angulartics", "angulartics.google.analytics", 'ngResource', 'ngRoute']);
+    app = angular.module("newsAggregator", ["ngTouch", 'ngCookies', "angulartics", "angulartics.google.analytics", 'ngResource', 'ngRoute']);
 
     var log = function(str) { console.log(str) };
 

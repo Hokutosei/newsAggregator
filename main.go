@@ -34,6 +34,7 @@ func main() {
 		config.StartEtcd()
 		go database.MongodbStart()
 
+		// startRoutes start all routes
 		startRoutes()
 
 		assetsToHandle := []string{"images", "css", "js", "fonts"}
@@ -45,6 +46,8 @@ func main() {
 		go newsGetter.StartGoogleNews()
 
 	}()
+
+	InitNewRelic()
 
 	log.Println("now servering to port: ...", serverPort)
 	http.ListenAndServe(serverPort, nil)
