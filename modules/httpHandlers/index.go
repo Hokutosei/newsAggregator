@@ -24,6 +24,8 @@ var (
 func Index(w http.ResponseWriter, r *http.Request) {
 	log.Println("handled --> index")
 
+	fmt.Println(r.Header)
+
 	indexTemplate := "index.html"
 	t := template.New(indexTemplate).Delims("{{%", "%}}")
 	indexVars := IndexVars{"", "", nil}

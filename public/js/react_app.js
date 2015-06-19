@@ -1,2 +1,2 @@
-var IndexNewsList = React.createClass({
-})
+// var IndexNewsList = React.createClass({
+// })

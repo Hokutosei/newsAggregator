@@ -4,7 +4,9 @@
   app.factory('userSession', function($cookies) {
     return {
       userSessionId: function() {
-        var id = $cookies.get['kedoyoId']
+        $cookies.put("tests", "ktest")
+        console.log($cookies)
+        var id = $cookies.kedoyoId
         return id;
       }
     }

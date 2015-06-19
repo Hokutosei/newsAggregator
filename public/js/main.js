@@ -19,6 +19,7 @@
       , userLocation
       , $routeParams
       , userSession
+      , $cookies
       , $timeout) {
         $analytics.pageTrack('/');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
@@ -31,6 +32,8 @@
         // main init func
         var init = function() {
           // log(userSession.userSessionId())
+          $cookies.kedoyoId = 'testid'
+          log($cookies.kedoyoId)
 
           if(_.has($routeParams, 'q') == true) {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
