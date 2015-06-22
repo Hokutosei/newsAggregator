@@ -24,7 +24,7 @@ type ResponseData struct {
 }
 
 var (
-	googleLoopCounterDelay = 10
+	googleLoopCounterDelay = 300
 	googleNewsProvider     = "https://news.google.com/"
 	googleNewsName         = "GoogleNews"
 )
@@ -93,16 +93,16 @@ func GoogleNewsRequester(url string, topic TopicIdentity) {
 		gn.Category = topic
 		wg.Add(1)
 		go func(gn GoogleNewsResults) {
-			GoogleNewsDataSetter(gn)
-			wg.Done()
+			GoogleNewsDataSetter(gn, &wg)
 		}(gn)
 	}
 	wg.Wait()
 }
 
 // GoogleNewsDataSetter builds and construct data for insertion
-func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
+func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg *sync.WaitGroup) {
 	canSave := database.GoogleNewsFindIfExist(googleNews.Title)
+	defer wg.Done()
 
 	jsonNews := &jsonNewsBody{
 		Title:          googleNews.Title,

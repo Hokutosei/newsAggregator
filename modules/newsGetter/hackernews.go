@@ -39,10 +39,9 @@ func StartHackerNews() {
 			go func(id int, timeProfiler chan string) {
 				start := time.Now()
 				newsContent := hackerNewsReader(id)
-				ContentOutPut(newsContent)
+				ContentOutPut(newsContent, &wg)
 
 				timeProfiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
-				wg.Done()
 			}(id, timeProfiler)
 		}
 		wg.Wait()
@@ -51,7 +50,8 @@ func StartHackerNews() {
 }
 
 // ContentOutPut data insert and db processing
-func ContentOutPut(contentOutMsg jsonNewsBody) {
+func ContentOutPut(contentOutMsg jsonNewsBody, wg *sync.WaitGroup) {
+	defer wg.Done()
 	timeF := contentOutMsg.Time
 	contentOutMsg.Time = int(time.Now().Unix())
 	contentOutMsg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
