@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	mongodb "gopkg.in/mgo.v2"
-	_ "gopkg.in/mgo.v2/bson"
 
 	"web_apps/news_aggregator/modules/config"
 )
@@ -38,7 +37,6 @@ func MongodbStart() {
 	if err != nil {
 		// fmt.Println(err)
 		panic(err)
-		return
 	}
 	fmt.Println("connected to mongodb...")
 	MongodbSession = session

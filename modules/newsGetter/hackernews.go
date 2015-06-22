@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	loopCounterDelay   = 10
+	loopCounterDelay   = 30
 	hackerNewsProvider = "https://news.ycombinator.com"
 	hackerNewsName     = "HackerNews"
 )
@@ -19,8 +19,9 @@ type HackerNewsTopStoriesID []int
 
 // StartHackerNews starting GET hackernews
 func StartHackerNews() {
+	var wg sync.WaitGroup
+
 	for t := range time.Tick(time.Duration(loopCounterDelay) * time.Second) {
-		var wg sync.WaitGroup
 
 		fmt.Println("starthacker news launched!")
 		timeProfiler := make(chan string)

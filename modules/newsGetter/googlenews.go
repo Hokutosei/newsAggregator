@@ -24,7 +24,7 @@ type ResponseData struct {
 }
 
 var (
-	googleLoopCounterDelay = 300
+	googleLoopCounterDelay = 10
 	googleNewsProvider     = "https://news.google.com/"
 	googleNewsName         = "GoogleNews"
 )
@@ -49,18 +49,20 @@ func TopicsList() Topics {
 func StartGoogleNews() {
 	fmt.Println("startgoogle news launched!")
 
+	var wg sync.WaitGroup
 	for t := range time.Tick(time.Duration(googleLoopCounterDelay) * time.Second) {
 		_ = t
-		var wg sync.WaitGroup
 
 		c := make(chan int)
+		fmt.Println("loop will start")
 		for k, v := range TopicsList() {
 			wg.Add(1)
 			go func(k string, v TopicIdentity) {
-				url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v.Initial)
-				GoogleNewsRequester(url, v)
+				fmt.Println("running loop")
+				GoogleNewsRequester(googleURLConstructor(v.Initial), v)
 				wg.Done()
 			}(k, v)
+			// wg.Done()
 		}
 		wg.Wait()
 		close(c)
@@ -72,6 +74,7 @@ func GoogleNewsRequester(url string, topic TopicIdentity) {
 	var googleNews GoogleNewsResponseData
 	response, err := httpGet(url)
 	if err != nil {
+		fmt.Println("got error google!")
 		return
 	}
 
@@ -89,13 +92,16 @@ func GoogleNewsRequester(url string, topic TopicIdentity) {
 		// set news item category
 		gn.Category = topic
 		wg.Add(1)
-		go GoogleNewsDataSetter(gn, &wg)
+		go func(gn GoogleNewsResults) {
+			GoogleNewsDataSetter(gn)
+			wg.Done()
+		}(gn)
 	}
 	wg.Wait()
 }
 
 // GoogleNewsDataSetter builds and construct data for insertion
-func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg *sync.WaitGroup) {
+func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
 	canSave := database.GoogleNewsFindIfExist(googleNews.Title)
 
 	jsonNews := &jsonNewsBody{
@@ -120,5 +126,10 @@ func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg *sync.WaitGroup) {
 		}
 		fmt.Println("did not save!")
 	}
-	wg.Done()
+}
+
+//googleUrlConstructor return url string
+func googleURLConstructor(v string) string {
+	url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v)
+	return url
 }
