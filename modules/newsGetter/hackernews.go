@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
 	"web_apps/news_aggregator/modules/database"
 )
 
 var (
-	loopCounterDelay   = 300
+	loopCounterDelay   = 10
 	hackerNewsProvider = "https://news.ycombinator.com"
 	hackerNewsName     = "HackerNews"
 )
@@ -19,53 +18,49 @@ type HackerNewsTopStoriesID []int
 
 // StartHackerNews starting GET hackernews
 func StartHackerNews() {
-	fmt.Println("starthacker news launched!")
-	contentOut := make(chan jsonNewsBody)
-	timeProfiler := make(chan string)
+	// var wg sync.WaitGroup
+	for t := range time.Tick(time.Duration(loopCounterDelay) * time.Second) {
 
-	go func() {
-		for t := range time.Tick(time.Duration(loopCounterDelay) * time.Second) {
-			topStoriesIds, err := topStoriesID()
-			if err != nil {
-				fmt.Println("skipping, err from topStoriesId")
-				continue
-			}
-			fmt.Println("running the loop: ", t)
+		fmt.Println("starthacker news launched!")
+		timeProfiler := make(chan string)
 
-			for _, id := range topStoriesIds {
-				go func(id int, contentOut chan jsonNewsBody, timeProfiler chan string) {
-					start := time.Now()
-					newsContent := hackerNewsReader(id)
-					contentOut <- newsContent
-					timeProfiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
-				}(id, contentOut, timeProfiler)
-			}
+		topStoriesIds, err := topStoriesID()
+		if err != nil {
+			fmt.Println("skipping, err from topStoriesId")
+			continue
 		}
-	}()
+		fmt.Println("running the loop: ", t)
 
-	for {
-		contentOutMsg := <-contentOut
-		timeProfilerOut := <-timeProfiler
+		for _, id := range topStoriesIds {
+			go func(id int, timeProfiler chan string) {
+				start := time.Now()
+				newsContent := hackerNewsReader(id)
+				ContentOutPut(newsContent)
 
-		timeF := contentOutMsg.Time
-		contentOutMsg.Time = int(time.Now().Unix())
-		contentOutMsg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
-		contentOutMsg.ProviderUrl = hackerNewsProvider
-		contentOutMsg.ProviderName = hackerNewsName
-
-		_ = timeF
-
-		// check if can save
-		// then save
-		canSave := database.HackerNewsFindIfExist(contentOutMsg.Title)
-		if canSave {
-			database.HackerNewsInsert(contentOutMsg)
-		} else {
-			//fmt.Println("did not save!")
+				timeProfiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
+			}(id, timeProfiler)
 		}
-		_ = timeProfilerOut
-		// fmt.Println(time_profiler_out)
-		// fmt.Println("----------------------------")
+	}
+}
+
+// ContentOutPut data insert and db processing
+func ContentOutPut(contentOutMsg jsonNewsBody) {
+	timeF := contentOutMsg.Time
+	contentOutMsg.Time = int(time.Now().Unix())
+	contentOutMsg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
+	contentOutMsg.ProviderUrl = hackerNewsProvider
+	contentOutMsg.ProviderName = hackerNewsName
+
+	_ = timeF
+
+	// check if can save
+	// then save
+	canSave := database.HackerNewsFindIfExist(contentOutMsg.Title)
+	if canSave {
+		fmt.Println("can save!")
+		database.HackerNewsInsert(contentOutMsg)
+	} else {
+		//fmt.Println("did not save!")
 	}
 }
 

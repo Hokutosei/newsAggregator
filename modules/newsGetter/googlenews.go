@@ -47,33 +47,21 @@ func TopicsList() Topics {
 // StartGoogleNews start collecting google news
 func StartGoogleNews() {
 	fmt.Println("startgoogle news launched!")
-	outputchan := make(chan GoogleNewsResults)
 
-	go func() {
-		for t := range time.Tick(time.Duration(googleLoopCounterDelay) * time.Second) {
-			_ = t
-			//news_counter = 0
+	for t := range time.Tick(time.Duration(googleLoopCounterDelay) * time.Second) {
+		_ = t
 
-			for k, v := range TopicsList() {
-				go func(k string, v TopicIdentity) {
-					url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v.Initial)
-					GoogleNewsRequester(url, v, outputchan)
-				}(k, v)
-			}
+		for k, v := range TopicsList() {
+			go func(k string, v TopicIdentity) {
+				url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v.Initial)
+				GoogleNewsRequester(url, v)
+			}(k, v)
 		}
-	}()
-
-	go func() {
-		for {
-			output := <-outputchan
-			GoogleNewsDataSetter(output)
-			//fmt.Println("-------------------------")
-		}
-	}()
+	}
 }
 
 // GoogleNewsRequester google news http getter
-func GoogleNewsRequester(url string, topic TopicIdentity, outputChan chan GoogleNewsResults) {
+func GoogleNewsRequester(url string, topic TopicIdentity) {
 	var googleNews GoogleNewsResponseData
 	response, err := httpGet(url)
 	if err != nil {
@@ -93,8 +81,7 @@ func GoogleNewsRequester(url string, topic TopicIdentity, outputChan chan Google
 		// set news item category
 		gn.Category = topic
 
-		// push to upstream channel
-		outputChan <- gn
+		go GoogleNewsDataSetter(gn)
 	}
 }
 
