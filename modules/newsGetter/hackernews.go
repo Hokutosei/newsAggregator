@@ -3,6 +3,7 @@ package newsGetter
 import (
 	"encoding/json"
 	"fmt"
+	"sync"
 	"time"
 	"web_apps/news_aggregator/modules/database"
 )
@@ -18,8 +19,8 @@ type HackerNewsTopStoriesID []int
 
 // StartHackerNews starting GET hackernews
 func StartHackerNews() {
-	// var wg sync.WaitGroup
 	for t := range time.Tick(time.Duration(loopCounterDelay) * time.Second) {
+		var wg sync.WaitGroup
 
 		fmt.Println("starthacker news launched!")
 		timeProfiler := make(chan string)
@@ -33,16 +34,18 @@ func StartHackerNews() {
 
 		c := make(chan int)
 		for _, id := range topStoriesIds {
+			wg.Add(1)
 			go func(id int, timeProfiler chan string) {
 				start := time.Now()
 				newsContent := hackerNewsReader(id)
 				ContentOutPut(newsContent)
-				c <- 0
 
 				timeProfiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
+				wg.Done()
 			}(id, timeProfiler)
 		}
-		<-c
+		wg.Wait()
+		close(c)
 	}
 }
 

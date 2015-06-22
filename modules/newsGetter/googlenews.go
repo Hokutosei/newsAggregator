@@ -3,6 +3,7 @@ package newsGetter
 import (
 	"encoding/json"
 	"fmt"
+	"sync"
 	"time"
 	"web_apps/news_aggregator/modules/database"
 )
@@ -50,16 +51,19 @@ func StartGoogleNews() {
 
 	for t := range time.Tick(time.Duration(googleLoopCounterDelay) * time.Second) {
 		_ = t
+		var wg sync.WaitGroup
 
 		c := make(chan int)
 		for k, v := range TopicsList() {
+			wg.Add(1)
 			go func(k string, v TopicIdentity) {
 				url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v.Initial)
 				GoogleNewsRequester(url, v)
-				c <- 0
+				wg.Done()
 			}(k, v)
 		}
-		<-c
+		wg.Wait()
+		close(c)
 	}
 }
 
@@ -80,16 +84,18 @@ func GoogleNewsRequester(url string, topic TopicIdentity) {
 	}
 
 	GNResponse := googleNews.ResponseData
+	var wg sync.WaitGroup
 	for _, gn := range GNResponse.Results {
 		// set news item category
 		gn.Category = topic
-
-		go GoogleNewsDataSetter(gn)
+		wg.Add(1)
+		go GoogleNewsDataSetter(gn, wg)
 	}
+	wg.Wait()
 }
 
 // GoogleNewsDataSetter builds and construct data for insertion
-func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
+func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg sync.WaitGroup) {
 	canSave := database.GoogleNewsFindIfExist(googleNews.Title)
 
 	jsonNews := &jsonNewsBody{
@@ -114,4 +120,5 @@ func GoogleNewsDataSetter(googleNews GoogleNewsResults) {
 		}
 		fmt.Println("did not save!")
 	}
+	wg.Done()
 }
