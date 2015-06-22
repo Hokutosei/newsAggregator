@@ -89,13 +89,13 @@ func GoogleNewsRequester(url string, topic TopicIdentity) {
 		// set news item category
 		gn.Category = topic
 		wg.Add(1)
-		go GoogleNewsDataSetter(gn, wg)
+		go GoogleNewsDataSetter(gn, &wg)
 	}
 	wg.Wait()
 }
 
 // GoogleNewsDataSetter builds and construct data for insertion
-func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg sync.WaitGroup) {
+func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg *sync.WaitGroup) {
 	canSave := database.GoogleNewsFindIfExist(googleNews.Title)
 
 	jsonNews := &jsonNewsBody{
