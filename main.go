@@ -6,15 +6,14 @@ import (
 	"net/http"
 	"path"
 
-	"web_apps/news_aggregator/modules/newsGetter"
-
 	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
 	_ "web_apps/news_aggregator/modules/utils"
 )
 
 var (
-	serverPort = ":3000"
+	serverPort       = ":3000"
+	loopCounterDelay = 10
 )
 
 // handleAssets serve all file assets
@@ -42,8 +41,8 @@ func main() {
 
 		// news getter initializers
 		// should set in admin page
-		go newsGetter.StartHackerNews()
-		go newsGetter.StartGoogleNews()
+		// go newsGetter.StartHackerNews(loopCounterDelay)
+		// go newsGetter.StartGoogleNews(loopCounterDelay)
 
 	}()
 

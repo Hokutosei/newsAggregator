@@ -2,6 +2,8 @@ package database
 
 import (
 	"fmt"
+	"sync"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -13,7 +15,8 @@ var (
 )
 
 // GoogleNewsInsert insert data for google news
-func GoogleNewsInsert(hn GoogleNews) bool {
+func GoogleNewsInsert(hn GoogleNews, wg *sync.WaitGroup) bool {
+	defer wg.Done()
 	sc := SessionCopy()
 	c := sc.DB(Db).C(googleNewsCollection)
 	defer sc.Close()

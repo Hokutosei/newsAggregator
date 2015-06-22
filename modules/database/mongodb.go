@@ -37,7 +37,7 @@ func MongodbStart() {
 
 	mongoDBDialInfo := &mongodb.DialInfo{
 		Addrs:   []string{host},
-		Timeout: 60 * time.Second,
+		Timeout: 10 * time.Second,
 	}
 
 	session, err := mongodb.DialWithInfo(mongoDBDialInfo)
@@ -47,6 +47,7 @@ func MongodbStart() {
 	}
 	fmt.Println("connected to mongodb...")
 	MongodbSession = session
+	// MongodbSession.SetMode(mongodb.Monotonic, true)
 }
 
 // SessionCopy make copy of a mongodb session

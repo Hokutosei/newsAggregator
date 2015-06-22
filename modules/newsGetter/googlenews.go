@@ -24,9 +24,8 @@ type ResponseData struct {
 }
 
 var (
-	googleLoopCounterDelay = 300
-	googleNewsProvider     = "https://news.google.com/"
-	googleNewsName         = "GoogleNews"
+	googleNewsProvider = "https://news.google.com/"
+	googleNewsName     = "GoogleNews"
 )
 
 // TopicsList return a list of topics/categories
@@ -46,7 +45,7 @@ func TopicsList() Topics {
 }
 
 // StartGoogleNews start collecting google news
-func StartGoogleNews() {
+func StartGoogleNews(googleLoopCounterDelay int) {
 	fmt.Println("startgoogle news launched!")
 
 	var wg sync.WaitGroup
@@ -59,8 +58,7 @@ func StartGoogleNews() {
 			wg.Add(1)
 			go func(k string, v TopicIdentity) {
 				fmt.Println("running loop")
-				GoogleNewsRequester(googleURLConstructor(v.Initial), v)
-				wg.Done()
+				GoogleNewsRequester(googleURLConstructor(v.Initial), v, &wg)
 			}(k, v)
 			// wg.Done()
 		}
@@ -70,7 +68,8 @@ func StartGoogleNews() {
 }
 
 // GoogleNewsRequester google news http getter
-func GoogleNewsRequester(url string, topic TopicIdentity) {
+func GoogleNewsRequester(url string, topic TopicIdentity, wsg *sync.WaitGroup) {
+	defer wsg.Done()
 	var googleNews GoogleNewsResponseData
 	response, err := httpGet(url)
 	if err != nil {
@@ -102,7 +101,6 @@ func GoogleNewsRequester(url string, topic TopicIdentity) {
 // GoogleNewsDataSetter builds and construct data for insertion
 func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg *sync.WaitGroup) {
 	canSave := database.GoogleNewsFindIfExist(googleNews.Title)
-	defer wg.Done()
 
 	jsonNews := &jsonNewsBody{
 		Title:          googleNews.Title,
@@ -119,7 +117,7 @@ func GoogleNewsDataSetter(googleNews GoogleNewsResults, wg *sync.WaitGroup) {
 
 	// check if data exists already, need refactoring though
 	if canSave {
-		saved := database.GoogleNewsInsert(jsonNews)
+		saved := database.GoogleNewsInsert(jsonNews, wg)
 		if saved {
 			fmt.Println("saved!! google news!")
 			return

@@ -9,7 +9,6 @@ import (
 )
 
 var (
-	loopCounterDelay   = 30
 	hackerNewsProvider = "https://news.ycombinator.com"
 	hackerNewsName     = "HackerNews"
 )
@@ -18,12 +17,12 @@ var (
 type HackerNewsTopStoriesID []int
 
 // StartHackerNews starting GET hackernews
-func StartHackerNews() {
+func StartHackerNews(loopCounterDelay int) {
 	var wg sync.WaitGroup
+	fmt.Println("starthacker news launched!")
 
 	for t := range time.Tick(time.Duration(loopCounterDelay) * time.Second) {
 
-		fmt.Println("starthacker news launched!")
 		timeProfiler := make(chan string)
 
 		topStoriesIds, err := topStoriesID()
@@ -51,7 +50,6 @@ func StartHackerNews() {
 
 // ContentOutPut data insert and db processing
 func ContentOutPut(contentOutMsg jsonNewsBody, wg *sync.WaitGroup) {
-	defer wg.Done()
 	timeF := contentOutMsg.Time
 	contentOutMsg.Time = int(time.Now().Unix())
 	contentOutMsg.CreatedAt = fmt.Sprintf("%v", time.Now().Local())
@@ -62,13 +60,7 @@ func ContentOutPut(contentOutMsg jsonNewsBody, wg *sync.WaitGroup) {
 
 	// check if can save
 	// then save
-	canSave := database.HackerNewsFindIfExist(contentOutMsg.Title)
-	if canSave {
-		fmt.Println("can save!")
-		database.HackerNewsInsert(contentOutMsg)
-	} else {
-		//fmt.Println("did not save!")
-	}
+	database.HackerNewsInsert(contentOutMsg, contentOutMsg.Title, wg)
 }
 
 // topStoriesId
