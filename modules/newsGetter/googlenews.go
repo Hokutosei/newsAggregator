@@ -51,12 +51,15 @@ func StartGoogleNews() {
 	for t := range time.Tick(time.Duration(googleLoopCounterDelay) * time.Second) {
 		_ = t
 
+		c := make(chan int)
 		for k, v := range TopicsList() {
 			go func(k string, v TopicIdentity) {
 				url := fmt.Sprintf("https://ajax.googleapis.com/ajax/services/search/news?v=1.0&topic=%s&ned=jp&userip=192.168.0.1", v.Initial)
 				GoogleNewsRequester(url, v)
+				c <- 0
 			}(k, v)
 		}
+		<-c
 	}
 }
 

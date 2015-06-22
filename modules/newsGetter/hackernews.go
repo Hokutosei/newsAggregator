@@ -31,15 +31,18 @@ func StartHackerNews() {
 		}
 		fmt.Println("running the loop: ", t)
 
+		c := make(chan int)
 		for _, id := range topStoriesIds {
 			go func(id int, timeProfiler chan string) {
 				start := time.Now()
 				newsContent := hackerNewsReader(id)
 				ContentOutPut(newsContent)
+				c <- 0
 
 				timeProfiler <- fmt.Sprintf("HN loop took: %v", time.Since(start))
 			}(id, timeProfiler)
 		}
+		<-c
 	}
 }
 
