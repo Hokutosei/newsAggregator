@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"time"
 
 	mongodb "gopkg.in/mgo.v2"
 
@@ -33,7 +34,13 @@ func MongodbStart() {
 	go GetMongodbCluster(mongodbCluster)
 
 	host := <-mongodbCluster
-	session, err := mongodb.Dial(host)
+
+	mongoDBDialInfo := &mongodb.DialInfo{
+		Addrs:   []string{host},
+		Timeout: 60 * time.Second,
+	}
+
+	session, err := mongodb.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		// fmt.Println(err)
 		panic(err)
