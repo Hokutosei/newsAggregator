@@ -10,10 +10,12 @@ import (
 )
 
 var (
+	// MongodbSession main mongodb cluster session
 	MongodbSession *mongodb.Session
 
+	// Db current app database
 	Db                       = "news_aggregator"
-	mongodbClusterKey string = "mongodb_cluster1"
+	mongodbClusterKey  = "mongodb_cluster1"
 )
 
 // GetMongodbCluster retrieve mongodb cluster node from etcd

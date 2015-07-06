@@ -6,6 +6,7 @@ import (
 
 	"gopkg.in/mgo.v2/bson"
 
+	"web_apps/news_aggregator/modules/cache"
 	"web_apps/news_aggregator/modules/utils"
 )
 
@@ -22,8 +23,15 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 	sc := SessionCopy()
 	c := sc.DB(Db).C(NewsMainCollection)
 	defer sc.Close()
-
 	var aggregatedNews AggregatedNews
+
+	ids, err := cache.IndexNewsIDS(RedisPool)
+	if err != nil {
+		fmt.Println(err)
+		return aggregatedNews, err
+	}
+	err = c.Find(bson.M{"_id": bson.M{"$in": ids}}).All(&aggregatedNews)
+
 	// fix sorting query with
 	// iter := coll.Find(nil).Sort(bson.D{{"field1", 1}, {"field2", -1}}).Iter()
 	// refactor querying by including explicitly gte & lte
@@ -33,13 +41,28 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 	// fmt.Println(gte)
 	// fmt.Println(lte)
 	// err := c.Find(bson.M{"url": bson.M{"$ne": ""}, "createdat": bson.M{"$gt": gte, "$lt": lte}}).Sort("-_id", "-score").Limit(searchLimitItems).All(&aggregatedNews)
-	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id", "-score").Limit(searchLimitItems).All(&aggregatedNews)
+	// err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id", "-score").Limit(searchLimitItems).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)
 		return aggregatedNews, err
 	}
 	return aggregatedNews, nil
+}
+
+// NewsMainIndexNewsCached retrieve index news from cached ID
+func NewsMainIndexNewsCached(IDs []string) {
+	sc := SessionCopy()
+	c := sc.DB(Db).C(NewsMainCollection)
+	defer sc.Close()
+
+	var aggregatedNews AggregatedNews
+	err := c.Find(bson.M{"_id": bson.M{"$in": IDs}}).All(&aggregatedNews)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(aggregatedNews)
 }
 
 //GetterNewsMainTopScore main top page news getter

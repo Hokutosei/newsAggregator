@@ -32,6 +32,7 @@ func main() {
 	go func() {
 		config.StartEtcd()
 		go database.MongodbStart()
+		go database.StartRedis()
 
 		// startRoutes start all routes
 		startRoutes()
@@ -46,7 +47,7 @@ func main() {
 
 	}()
 
-	InitNewRelic()
+	// InitNewRelic()
 
 	log.Println("now servering to port: ...", serverPort)
 	http.ListenAndServe(serverPort, nil)
