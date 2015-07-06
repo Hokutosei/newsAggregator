@@ -2,7 +2,6 @@ package cache
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 	"time"
 
@@ -29,7 +28,11 @@ func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
 		return x, err
 	}
 	fmt.Println("indexnewsids took: ", time.Since(start))
-	return convStrID(result...), nil
+	reversed := ReverseSlice(result...)
+	fmt.Println(reversed)
+	fmt.Println("0000")
+	// fmt.Println(result)
+	return convStrID(reversed...), nil
 }
 
 // RedisKeyGen is a util that joins slices to string
@@ -39,12 +42,17 @@ func RedisKeyGen(keys ...string) string {
 
 // convStrID
 func convStrID(IDs ...string) []bson.ObjectId {
-	fmt.Println(IDs)
-	sort.Sort(sort.Reverse(sort.StringSlice(IDs)))
-	fmt.Println(IDs)
 	var objID []bson.ObjectId
 	for _, i := range IDs {
 		objID = append(objID, bson.ObjectIdHex(i))
 	}
 	return objID
+}
+
+// ReverseSlice util to reverse slice
+func ReverseSlice(s ...string) []string {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		s[i], s[j] = s[j], s[i]
+	}
+	return s
 }
