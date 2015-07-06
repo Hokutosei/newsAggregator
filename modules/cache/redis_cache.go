@@ -2,6 +2,7 @@ package cache
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 
@@ -38,6 +39,9 @@ func RedisKeyGen(keys ...string) string {
 
 // convStrID
 func convStrID(IDs ...string) []bson.ObjectId {
+	fmt.Println(IDs)
+	sort.Sort(sort.Reverse(sort.StringSlice(IDs)))
+	fmt.Println(IDs)
 	var objID []bson.ObjectId
 	for _, i := range IDs {
 		objID = append(objID, bson.ObjectIdHex(i))
