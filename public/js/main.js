@@ -19,7 +19,8 @@
       , userLocation
       , $routeParams
       , userSession
-      , $timeout) {
+      , $timeout
+      , adjustStageHeight) {
         $analytics.pageTrack('/');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
 
@@ -31,6 +32,11 @@
         // main init func
         var init = function() {
           // log(userSession.userSessionId())
+          $scope.news_category_style = {
+            height: adjustStageHeight.adjustHeight(),
+            'overflow-y': 'auto'
+          }
+          log($scope.news_category_style)
 
           if(_.has($routeParams, 'q') == true) {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
@@ -98,6 +104,12 @@
                 , urlString = protocol + '://' + location.host + '/news/' + news_item_id
 
             return index_url == true ? urlString : urlString + '#disqus_thread';
+        }
+
+        $scope.setIndexThumbBorder = function(news_item) {
+          var color = '#fff'
+          if(news_item.image.url != '') { color = '#ededed'; };
+          return { 'border': '1px solid ' + color };
         }
 
         // disable getting user location
