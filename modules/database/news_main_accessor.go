@@ -30,7 +30,6 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 		fmt.Println(err)
 		return aggregatedNews, err
 	}
-	fmt.Println(ids)
 	err = c.Find(bson.M{"_id": bson.M{"$in": ids}}).All(&aggregatedNews)
 	// err = c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-_id", "-score").Limit(searchLimitItems).All(&aggregatedNews)
 	// fix sorting query with

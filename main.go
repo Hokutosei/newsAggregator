@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	serverPort       = ":3000"
+	serverPort       = ":4000"
 	loopCounterDelay = 10
 )
 
@@ -47,7 +47,7 @@ func main() {
 
 	}()
 
-	// InitNewRelic()
+	InitNewRelic()
 
 	log.Println("now servering to port: ...", serverPort)
 	http.ListenAndServe(serverPort, nil)

@@ -29,8 +29,6 @@ func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
 	}
 	fmt.Println("indexnewsids took: ", time.Since(start))
 	reversed := ReverseSlice(result...)
-	fmt.Println(reversed)
-	fmt.Println("0000")
 	// fmt.Println(result)
 	return convStrID(reversed...), nil
 }
