@@ -40,11 +40,12 @@
 
           if(_.has($routeParams, 'q') == true) {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
-                $scope.main_index_news = data.reverse();
+                $scope.main_index_news = data;
               })
           } else {
             // main news initializer in index, needs refactoring
             httpService.getNewsContent($rootScope.content_type, function(data, status) {
+                log("this?")
                 $scope.main_index_news = data.reverse();
             });
           }

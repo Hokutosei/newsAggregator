@@ -44,10 +44,8 @@ func main() {
 		// should set in admin page
 		// go newsGetter.StartHackerNews(loopCounterDelay)
 		// go newsGetter.StartGoogleNews(loopCounterDelay)
-
+		InitNewRelic()
 	}()
-
-	InitNewRelic()
 
 	log.Println("now servering to port: ...", serverPort)
 	http.ListenAndServe(serverPort, nil)
