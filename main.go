@@ -31,7 +31,10 @@ func handleAssets(assets ...string) {
 
 // main entrypoint and main func for the app
 func main() {
+	fmt.Println("starting server....")
+
 	go func() {
+		fmt.Println("initializing backends...")
 		config.StartEtcd()
 		go database.MongodbStart()
 		go database.StartRedis()
@@ -49,6 +52,6 @@ func main() {
 		InitNewRelic()
 	}()
 
-	fmt.Println("now servering to port: ...", serverPort)
+	fmt.Println("now servering to port -->>: ...", serverPort)
 	http.ListenAndServe(serverPort, nil)
 }

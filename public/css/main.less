@@ -51,23 +51,25 @@ body {
 table#news_list {
     padding: 5px;
     margin-left: 5px;
+    position: absolute;
+    z-index: -5;
+
 }
 
 .site_table_header  {
     width: 40%;
     table-layout: fixed;
     position: relative;
-    z-index: 100000;
-/*    border-bottom: 1px solid #f1f1f1;
-    border-width: 100%;*/
 }
 .site_table_header_bg {
-  width: 100%;
-  height: 50px;
+  width: 67%;
+  height: 45px;
   position: absolute;
+  top: 50px;
+  z-index: -1;
   -webkit-filter: blur(10px);
   filter: blur(10px);
-
+  background-color: #fff;
   span {
     position: relative;
   }

@@ -5,10 +5,10 @@ metadata:
 spec:
   containers:
     - name: newsaggregator
-      image: gcr.io/chat-app-proto01/news_aggregator_n
+      image: gcr.io/chat-app-proto01/news_aggregator_n:latest
       env:
         - name: COREOS_PRIVATE_IPV4
-          value:
+          value: 130.211.255.234
       ports:
         - containerPort: 3000
           hostPort: 3000
