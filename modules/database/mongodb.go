@@ -14,8 +14,8 @@ var (
 	MongodbSession *mongodb.Session
 
 	// Db current app database
-	Db                       = "news_aggregator"
-	mongodbClusterKey  = "mongodb_cluster1"
+	Db                = "news_aggregator"
+	mongodbClusterKey = "mongodb_cluster1"
 )
 
 // GetMongodbCluster retrieve mongodb cluster node from etcd
@@ -39,7 +39,7 @@ func MongodbStart() {
 
 	mongoDBDialInfo := &mongodb.DialInfo{
 		Addrs:   []string{host},
-		Timeout: 10 * time.Second,
+		Timeout: 20 * time.Second,
 	}
 
 	session, err := mongodb.DialWithInfo(mongoDBDialInfo)

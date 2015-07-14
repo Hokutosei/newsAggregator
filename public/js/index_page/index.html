@@ -11,6 +11,9 @@
                   <image-loader data="news_item"></image-loader>
                 </td>
                 <td class="headline_link">
+                    <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
+                      <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
+                    </span> <br/>
                     <a ng-href="{{ absURL(news_item._id, true) }}"
                        analytics-on="click"
                        analytics-event="news_item_clicked"
