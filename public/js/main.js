@@ -112,6 +112,30 @@
           return { 'border': '1px solid ' + color };
         }
 
+        // news_tag style
+        $scope.news_tag_style = function(initial) {
+          // "society":       TopicIdentity{"y", "社会"},
+      		// "international": TopicIdentity{"w", "国際"},
+      		// "business":      TopicIdentity{"b", "ビジネス"},
+      		// "politics":      TopicIdentity{"p", "政治"},
+      		// "entertainment": TopicIdentity{"e", "エンタメ"},
+      		// "sports":        TopicIdentity{"s", "スポーツ"},
+      		// "technology":    TopicIdentity{"t", "テクノロジー"},
+      		// "pickup":        TopicIdentity{"ir", "ピックアップ"},
+          var initials = {
+            'y': '#ffca28',
+            'w': '#ff7043',
+            'b': '#81c784',
+            'p': '#4db6ac',
+            'e': '#9575cd',
+            's': '#bcaaa4',
+            't': '#81d4fa',
+            'ir': '#80cbc4',
+          }
+          return {
+            'background-color': initials[initial]
+          }
+        }
         // disable getting user location
         // userLocation.getLocation()
 
