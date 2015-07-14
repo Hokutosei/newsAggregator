@@ -36,7 +36,7 @@
             height: adjustStageHeight.adjustHeight(),
             'overflow-y': 'auto'
           }
-          log($scope.news_category_style)
+          // $('.index_right_wrap').pushpin({ top: $('.index_right_wrap').offset().top });
 
           if(_.has($routeParams, 'q') == true) {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {

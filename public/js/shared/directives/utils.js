@@ -19,7 +19,7 @@
   app.factory('adjustStageHeight', function($document) {
     return {
       adjustHeight: function() {
-        return ($document.height()) + 'px'
+        return ($document.height() + 200) + 'px'
       }
     }
   })
