@@ -3,6 +3,8 @@
 
   var log = function(str) { console.log(str) }
 
+  var stage_height = 500;
+
   app.directive('imageLoader', function() {
     return {
       restrict: 'E',
@@ -19,7 +21,7 @@
   app.factory('adjustStageHeight', function($document) {
     return {
       adjustHeight: function() {
-        return ($document.height() + 200) + 'px'
+        return ($document.height() + stage_height) + 'px'
       }
     }
   })

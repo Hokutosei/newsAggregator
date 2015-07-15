@@ -11,13 +11,16 @@ docker tag -f jeanepaul/news_aggregator_n gcr.io/chat-app-proto01/news_aggregato
 
 echo "--->> pushing container"
 # docker push jeanepaul/news_aggregator_n:latest
-gcloud docker push gcr.io/chat-app-proto01/news_aggregator_n
+gcloud docker push gcr.io/chat-app-proto01/news_aggregator_n:latest
 #
 echo "--->> stoping newsaggregator pod"
 kubectl stop pod newsaggregator
 
 echo "--->> creating newsaggregator pod"
 kubectl create -f "$(pwd)"/kubernetes.yaml
+
+# echo "--->> rolling update"
+# kubectl rolling-update newsaggregator --image=gcr.io/chat-app-proto01/news_aggregator_n:latest
 
 # echo "--->> clean unused images..."
 # docker rmi "$(images | grep none | awk '{print $3}')"

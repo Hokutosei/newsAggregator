@@ -51,18 +51,18 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 }
 
 // NewsMainIndexNewsCached retrieve index news from cached ID
-func NewsMainIndexNewsCached(IDs []bson.ObjectId) {
+func NewsMainIndexNewsCached(IDs ...bson.ObjectId) (AggregatedNews, error) {
 	sc := SessionCopy()
 	c := sc.DB(Db).C(NewsMainCollection)
 	defer sc.Close()
 
 	var aggregatedNews AggregatedNews
-	err := c.Find(bson.M{"_id": bson.M{"$in": IDs}}).All(&aggregatedNews)
+	err := c.Find(bson.M{"_id": bson.M{"$in": IDs}}).Limit(5).All(&aggregatedNews)
 	if err != nil {
 		fmt.Println(err)
-		return
+		return aggregatedNews, err
 	}
-	fmt.Println(aggregatedNews)
+	return aggregatedNews, nil
 }
 
 //GetterNewsMainTopScore main top page news getter

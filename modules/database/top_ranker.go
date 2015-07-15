@@ -10,7 +10,7 @@ var (
 )
 
 // TopRankingNews retrieve curated top ranking news fom cache
-func TopRankingNews() {
+func TopRankingNews() (AggregatedNews, error) {
 	fmt.Println("retreiving news cached")
 	// RetrieveCachedNews(key string, redisPool *redis.Pool)
 	key := cache.RedisKeyGen(todayTopRank...)
@@ -18,8 +18,15 @@ func TopRankingNews() {
 	objID, err := cache.RetrieveCachedNews(key, RedisPool)
 	if err != nil {
 		fmt.Println(err)
-		return
+		var x AggregatedNews
+		return x, err
 	}
 
-	fmt.Println(objID)
+	results, err := NewsMainIndexNewsCached(objID...)
+	if err != nil {
+		fmt.Println(err)
+		return results, err
+	}
+
+	return results, nil
 }

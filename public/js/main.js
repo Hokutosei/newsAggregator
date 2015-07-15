@@ -28,11 +28,12 @@
         $scope.news_content_type = 'latest_news';
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
+        $scope.main_index_topranks = [];
 
         var services = function() {
           httpService.fetchTopRankingNews(function(data, status) {
-            log(data)
-            log(status)
+            log(data.length)
+            $scope.main_index_topranks = data;
           })
         }
 

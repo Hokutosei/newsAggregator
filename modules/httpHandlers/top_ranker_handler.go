@@ -10,6 +10,9 @@ import (
 func TopRankingNews(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("handled top ranking news")
 
-	database.TopRankingNews()
-
+	news, err := database.TopRankingNews()
+	if err != nil {
+		return
+	}
+	respondToJSON(w, news)
 }
