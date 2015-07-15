@@ -51,7 +51,7 @@ func NewsMainIndexNews() (AggregatedNews, error) {
 }
 
 // NewsMainIndexNewsCached retrieve index news from cached ID
-func NewsMainIndexNewsCached(IDs []string) {
+func NewsMainIndexNewsCached(IDs []bson.ObjectId) {
 	sc := SessionCopy()
 	c := sc.DB(Db).C(NewsMainCollection)
 	defer sc.Close()

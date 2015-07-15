@@ -47,10 +47,9 @@
                         params: { initial: initial }
                       })
             },
-            fetchTopRankingNews: function() {
-              return $http({
-                url: '/top_ranking_news',
-                method: 'GET'
+            fetchTopRankingNews: function(callback) {
+              $http.get('/top_ranking_news').success(function(data, status) {
+                callback(data)
               })
             }
         }

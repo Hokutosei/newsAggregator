@@ -15,6 +15,7 @@ var (
 )
 
 // IndexNewsIDS main index news ids
+// TODO refactor this!
 func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
 	start := time.Now()
 	fmt.Println("retrieving news index ids")
@@ -22,6 +23,24 @@ func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
 	defer conn.Close()
 
 	key := RedisKeyGen(newsIndexKeySlice...)
+	result, err := redis.Strings(conn.Do("LRANGE", key, 0, -1))
+	if err != nil {
+		var x []bson.ObjectId
+		return x, err
+	}
+	fmt.Println("indexnewsids took: ", time.Since(start))
+	reversed := ReverseSlice(result...)
+	// fmt.Println(result)
+	return convStrID(reversed...), nil
+}
+
+// RetrieveCachedNews main index news ids
+func RetrieveCachedNews(key string, redisPool *redis.Pool) ([]bson.ObjectId, error) {
+	start := time.Now()
+	fmt.Println("retrieving news index ids")
+	conn := redisPool.Get()
+	defer conn.Close()
+
 	result, err := redis.Strings(conn.Do("LRANGE", key, 0, -1))
 	if err != nil {
 		var x []bson.ObjectId

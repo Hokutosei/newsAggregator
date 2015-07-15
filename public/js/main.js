@@ -29,6 +29,13 @@
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
 
+        var services = function() {
+          httpService.fetchTopRankingNews(function(data, status) {
+            log(data)
+            log(status)
+          })
+        }
+
         // main init func
         var init = function() {
           // log(userSession.userSessionId())
@@ -48,6 +55,7 @@
                 $scope.main_index_news = data.reverse();
             });
           }
+          services()
         }
 
 
