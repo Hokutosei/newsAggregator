@@ -13,6 +13,7 @@ func startRoutes() {
 	http.HandleFunc("/get_index_news", http_handlers.LatestNews)
 	http.HandleFunc("/top_score_news", http_handlers.TopScoreNews)
 	http.HandleFunc("/latest_news", http_handlers.LatestNews)
+	http.HandleFunc("/top_ranking_news", http_handlers.TopRankingNews)
 
 	http.HandleFunc("/news_item", http_handlers.NewsItemPage)
 

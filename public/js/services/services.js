@@ -46,6 +46,12 @@
                         method: 'GET',
                         params: { initial: initial }
                       })
+            },
+            fetchTopRankingNews: function() {
+              return $http({
+                url: '/top_ranking_news',
+                method: 'GET'
+              })
             }
         }
 
