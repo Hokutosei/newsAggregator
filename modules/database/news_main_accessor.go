@@ -57,7 +57,7 @@ func NewsMainIndexNewsCached(IDs ...bson.ObjectId) (AggregatedNews, error) {
 	defer sc.Close()
 
 	var aggregatedNews AggregatedNews
-	err := c.Find(bson.M{"_id": bson.M{"$in": IDs}}).Limit(5).All(&aggregatedNews)
+	err := c.Find(bson.M{"_id": bson.M{"$in": IDs}}).Sort("-score").Limit(5).All(&aggregatedNews)
 	if err != nil {
 		fmt.Println(err)
 		return aggregatedNews, err

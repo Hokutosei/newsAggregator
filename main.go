@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	serverPort       = ":4000"
+	serverPort       = ":3000"
 	loopCounterDelay = 300
 )
 

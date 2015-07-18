@@ -7,6 +7,15 @@ import (
 )
 
 func startRoutes() {
+
+	// sec := secure.New(secure.Options{
+	// 	FrameDeny:             true,
+	// 	ContentTypeNosniff:    true,
+	// 	BrowserXssFilter:      true,
+	// 	ContentSecurityPolicy: "default-src 'self'",
+	// 	// ...
+	// })
+
 	fmt.Println("load routes..")
 
 	http.HandleFunc("/", http_handlers.Index)

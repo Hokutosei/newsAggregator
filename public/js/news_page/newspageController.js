@@ -21,6 +21,22 @@
         $scope.decodeURL = function(url) {
             return decodeURIComponent(url)
         };
+        $scope.news_tag_style = function(initial) {
+          var initials = {
+            'y': '#ffca28',
+            'w': '#ff7043',
+            'b': '#81c784',
+            'p': '#4db6ac',
+            'e': '#9575cd',
+            's': '#bcaaa4',
+            't': '#81d4fa',
+            'ir': '#80cbc4',
+          }
+          return {
+            'background-color': initials[initial]
+          }
+        }
+        
     })
 
 }());

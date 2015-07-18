@@ -14,6 +14,8 @@ COPY linux_news_aggregator /web_apps/news_aggregator/
 
 COPY public /web_apps/news_aggregator/public/
 
+COPY data /
+
 WORKDIR /web_apps/news_aggregator/
 
 ENTRYPOINT ./linux_news_aggregator
