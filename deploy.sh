@@ -7,11 +7,11 @@ echo "--->> building container...."
 docker build -t jeanepaul/news_aggregator_n .
 
 echo "--->> re-tag container...."
-docker tag -f jeanepaul/news_aggregator_n gcr.io/chat-app-proto01/news_aggregator_n
+docker tag -f jeanepaul/news_aggregator_n gcr.io/chat-app-proto01/news_aggregator_n:latest
 
 echo "--->> pushing container"
 # docker push jeanepaul/news_aggregator_n:latest
-gcloud docker push gcr.io/chat-app-proto01/news_aggregator_n:latest
+gcloud docker push gcr.io/chat-app-proto01/news_aggregator_n
 #
 echo "--->> stoping newsaggregator pod"
 kubectl stop rc newsaggregator

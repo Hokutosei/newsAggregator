@@ -52,6 +52,6 @@ func main() {
 		InitNewRelic()
 	}()
 
-	fmt.Println("now servering to port -->>: ...", serverPort)
+	fmt.Println("now servering to port -->> ...", serverPort)
 	http.ListenAndServe(serverPort, nil)
 }

@@ -49,10 +49,11 @@
     <li ng-repeat="story in news_item.relatedstories | limitTo: 5" class="collection-item">
       <div class="row">
         <div class="col s8 offset-s2">
-          <a ng-href="{{ absURL(toprank._id, true) }}"
+          <a ng-href="{{ absURL(story, false) }}"
              analytics-on="click"
              analytics-event="news_item_clicked"
              ng-click="ga_event(toprank)"
+             target="_blank"
              class="title">{{ story.title }}</a> <br />
           <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
             <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
