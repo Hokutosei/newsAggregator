@@ -28,6 +28,14 @@
         $scope.news_content_type = 'latest_news';
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
+        $scope.main_index_topranks = [];
+
+        var services = function() {
+          httpService.fetchTopRankingNews(function(data, status) {
+            log(data.length)
+            $scope.main_index_topranks = data;
+          })
+        }
 
         // main init func
         var init = function() {
@@ -36,7 +44,7 @@
             height: adjustStageHeight.adjustHeight(),
             'overflow-y': 'auto'
           }
-          log($scope.news_category_style)
+          // $('.index_right_wrap').pushpin({ top: $('.index_right_wrap').offset().top });
 
           if(_.has($routeParams, 'q') == true) {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
@@ -48,6 +56,7 @@
                 $scope.main_index_news = data.reverse();
             });
           }
+          services()
         }
 
 
@@ -114,14 +123,6 @@
 
         // news_tag style
         $scope.news_tag_style = function(initial) {
-          // "society":       TopicIdentity{"y", "社会"},
-      		// "international": TopicIdentity{"w", "国際"},
-      		// "business":      TopicIdentity{"b", "ビジネス"},
-      		// "politics":      TopicIdentity{"p", "政治"},
-      		// "entertainment": TopicIdentity{"e", "エンタメ"},
-      		// "sports":        TopicIdentity{"s", "スポーツ"},
-      		// "technology":    TopicIdentity{"t", "テクノロジー"},
-      		// "pickup":        TopicIdentity{"ir", "ピックアップ"},
           var initials = {
             'y': '#ffca28',
             'w': '#ff7043',

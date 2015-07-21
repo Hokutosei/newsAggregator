@@ -7,12 +7,22 @@ import (
 )
 
 func startRoutes() {
+
+	// sec := secure.New(secure.Options{
+	// 	FrameDeny:             true,
+	// 	ContentTypeNosniff:    true,
+	// 	BrowserXssFilter:      true,
+	// 	ContentSecurityPolicy: "default-src 'self'",
+	// 	// ...
+	// })
+
 	fmt.Println("load routes..")
 
 	http.HandleFunc("/", http_handlers.Index)
 	http.HandleFunc("/get_index_news", http_handlers.LatestNews)
 	http.HandleFunc("/top_score_news", http_handlers.TopScoreNews)
 	http.HandleFunc("/latest_news", http_handlers.LatestNews)
+	http.HandleFunc("/top_ranking_news", http_handlers.TopRankingNews)
 
 	http.HandleFunc("/news_item", http_handlers.NewsItemPage)
 

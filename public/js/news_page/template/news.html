@@ -40,5 +40,26 @@
 
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    
+    <br style="clear:both"/>
+</div>
+
+<div class="index_right_wrap is_mobile_h">
+  <h6>Related</h6>
+  <ul class="collection top_rank_st">
+    <li ng-repeat="story in news_item.relatedstories | limitTo: 5" class="collection-item">
+      <div class="row">
+        <div class="col s8 offset-s2">
+          <a ng-href="{{ absURL(story, false) }}"
+             analytics-on="click"
+             analytics-event="news_item_clicked"
+             ng-click="ga_event(toprank)"
+             target="_blank"
+             class="title">{{ story.title }}</a> <br />
+          <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
+            <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
+          </span>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>
