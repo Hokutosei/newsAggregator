@@ -39,13 +39,15 @@
     </div>
     <a href="" class="more_feeds" ng-click="feed_more(main_index_news.length)">More..</a>
 </div>
+
+<!-- TODO directive -->
 <div class="index_right_wrap is_mobile_h">
-  <h6>Popular</h6>
+  <h6>人気の記事</h6>
   <ul class="collection top_rank_st">
     <li ng-repeat="toprank in main_index_topranks" class="collection-item">
       <div class="row">
         <div class="col s1">
-          <img ng-src="{{ toprank.image.url }}" alt="" class="circle">
+          <popular-index-thumb data="toprank" class="circle"></popular-index-thumb>
         </div>
         <div class="col s8 offset-s2">
           <a ng-href="{{ absURL(toprank._id, true) }}"

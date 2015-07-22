@@ -18,6 +18,19 @@
     }
   })
 
+  app.directive('popularIndexThumb', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '='
+      },
+      templateUrl: 'js/shared/templates/popular_index_thumb.html',
+      link: function(scope) {
+        scope.item = scope.data;
+      }
+    }
+  })
+
   app.factory('adjustStageHeight', function($document) {
     return {
       adjustHeight: function() {
