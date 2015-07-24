@@ -4,38 +4,42 @@
     <div id="news_category" ng-style="news_category_style">
         <load-spinner data="main_index_news"></load-spinner>
 
-        <table id="news_list">
-            <tr ng-repeat="news_item in main_index_news track by $index" class="main_news_item">
-                <td class="index_number">{{ $index }}</td>
-                <td class="news_thumb z-depth-0" ng-style="setIndexThumbBorder(news_item)">
-                  <image-loader data="news_item"></image-loader>
-                </td>
-                <td class="headline_link">
-                    <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
-                      <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
-                    </span> <br/>
-                    <a ng-href="{{ absURL(news_item._id, true) }}"
-                       analytics-on="click"
-                       analytics-event="news_item_clicked"
-                       ng-click="ga_event(news_item)">{{ news_item.title }}</a>
-                    <span class="provider_name">
-                        <a href="{{ news_item.providerurl }}"><{{ news_item.providername }}></a>
-                    </span>
-                    <table class="post_info">
-                        <tbody>
-                            <tr>
-                                <td>created_at: {{ timeToLocal(news_item.time) | date:"yyyy-MM-dd hh:mm" }}</td>
-                                <td>score: {{ news_item.score }}</td>
-                                <td>
-                                    <a ng-href="{{ absURL(news_item._id, false) }}" title="{{ news_item.title }}"> Comment </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <span class="news_publisher">{{ news_item.publisher }} </span>
-                </td>
-            </tr>
-        </table>
+        <div id="theGrid" class="main">
+  				<section class="grid">
+  					<header class="top-bar">
+  						<h2 class="top-bar__headline">Latest articles</h2>
+  						<div class="filter">
+  							<span>Filter by:</span>
+  							<span class="dropdown">Popular</span>
+  						</div>
+  					</header>
+  					<div class="grid__item" ng-repeat="news_item in main_index_news track by $index">
+              <div class="item_image">
+                <image-loader data="news_item"></image-loader>
+              </div>
+  						<h2 class="title title--preview">{{ news_item.title }}</h2>
+  						<div class="loader"></div>
+
+              <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
+                <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
+              </span>
+
+  						<div class="meta meta--preview">
+  							<p>
+                  {{ news_item.publisher }}
+                </p>
+  							<span class="meta__date"><i class="fa fa-calendar-o"></i> 9 Apr</span>
+  							<span class="meta__reading-time"><i class="fa fa-clock-o"></i> 3 min read</span>
+  						</div>
+  					</div>
+
+  					<footer class="page-meta">
+  						<span>Load more...</span>
+  					</footer>
+  				</section>
+        </div>
+
+
     </div>
     <a href="" class="more_feeds" ng-click="feed_more(main_index_news.length)">More..</a>
 </div>
