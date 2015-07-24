@@ -14,10 +14,20 @@
   						</div>
   					</header>
   					<div class="grid__item" ng-repeat="news_item in main_index_news track by $index">
-              <div class="item_image">
+              <div class="item_image" ng-if="news_item.image.url != ''">
                 <image-loader data="news_item"></image-loader>
               </div>
-  						<h2 class="title title--preview">{{ news_item.title }}</h2>
+
+              <a ng-href="{{ absURL(news_item._id, true) }}"
+                 analytics-on="click"
+                 analytics-event="news_item_clicked"
+                 ng-click="ga_event(news_item)"
+                 class="news_item_title_link">
+
+                 <h2 class="title title--preview">{{ news_item.title }}</h2>
+
+               </a>
+
   						<div class="loader"></div>
 
               <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
@@ -28,8 +38,8 @@
   							<p>
                   {{ news_item.publisher }}
                 </p>
-  							<span class="meta__date"><i class="fa fa-calendar-o"></i> 9 Apr</span>
-  							<span class="meta__reading-time"><i class="fa fa-clock-o"></i> 3 min read</span>
+  							<span class="meta__date"><i class="fa fa-calendar-o"></i> <date-format-day-month data="news_item"></date-format-day-month>   </span>
+  							<!-- <span class="meta__reading-time"><i class="fa fa-clock-o"></i> 3 min read</span> -->
   						</div>
   					</div>
 

@@ -356,6 +356,8 @@ footer.page-footer {
     clear: both;
 }
 .grid__item {
+  top: 0;
+  padding-top: 10px !important;
 
   .news_tag {
     width: 60%;
@@ -365,7 +367,8 @@ footer.page-footer {
   }
 
   .item_image {
-    height: 200px;
+    padding-top: 5px;
+    height: 155px;
     width: 14rem;
     text-align: center;
     overflow: hidden;
@@ -376,11 +379,20 @@ footer.page-footer {
       height: auto;
     }
   }
+  .news_item_title_link {
+    color: @blue-lighten-2;
+    &:hover {
+      text-decoration: none;
+    }
+  }
   h2 {
     line-height: 2rem;
-    font-size: 21px
+    font-size: 17px
   }
 
+  &:before {
+    top: 0 !important;
+  }
   &:hover {
     text-decoration: none;
   }

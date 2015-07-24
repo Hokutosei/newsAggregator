@@ -39,4 +39,20 @@
     }
   })
 
+  app.directive('dateFormatDayMonth', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '='
+      },
+      template: '{{ dateStr }}',
+      link: function(scope) {
+        var date = new Date(scope.data.created_at)
+            , day = date.getDate()
+            , month = date.getMonth() + 1
+        scope.dateStr = day + '日 ' + month + '月'
+      }
+    }
+  })
+
 }());
