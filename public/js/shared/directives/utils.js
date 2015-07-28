@@ -3,6 +3,11 @@
 
   var log = function(str) { console.log(str) }
 
+  function twoDigitFmt(int) {
+    if((int + "").length > 1) return int;
+    return ("0" + int).slice(-2);
+  }
+
   var stage_height = 500;
 
   app.directive('imageLoader', function() {
@@ -50,7 +55,9 @@
         var date = new Date(scope.data.created_at)
             , day = date.getDate()
             , month = date.getMonth() + 1
-        scope.dateStr = day + '日 ' + month + '月'
+            , hours = twoDigitFmt(date.getHours())
+            , minutes = twoDigitFmt(date.getMinutes())
+        scope.dateStr = day + '日 ' + month + '月' + hours + ':' + minutes
       }
     }
   })

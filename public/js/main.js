@@ -121,6 +121,14 @@
           return { 'border': '1px solid ' + color };
         }
 
+        // right_panel_item design distinguish if item has no image.url
+        $scope.right_panel_item = function(toprank) {
+          if(toprank.image.url == '') {
+            return 's12';
+          }
+          return 's9 offset-s2';
+        }
+
         // news_tag style
         $scope.news_tag_style = function(initial) {
           var initials = {

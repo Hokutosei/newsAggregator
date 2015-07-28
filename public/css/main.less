@@ -8,6 +8,7 @@
 
 @top-rank-thumb: 60px;
 @news-tag-color: #f5f5f5;
+@right_panel_created: #aaa;
 
 /* MIXINS */
 .bottom-shadow {
@@ -328,17 +329,22 @@ footer.page-footer {
     height: 116px;
     padding-left: 0px !important;
     .title {
-      font-size: 10px;
+      font-size: 15px;
     }
     .circle {
       height: @top-rank-thumb;
       width: @top-rank-thumb;
     }
     .news_tag {
-      padding: 0px 5px 0 5px !important;
+      padding: 5px 5px 0 5px !important;
+      margin-bottom: 2px;
       a {
         color: @news-tag-color;
       }
+    }
+    .right_panel_created_at {
+      font-size: 12px;
+      color: @right_panel_created;
     }
   }
 }

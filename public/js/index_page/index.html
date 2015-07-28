@@ -6,7 +6,7 @@
 
         <div id="theGrid" class="main">
   				<section class="grid">
-  					<header class="top-bar">
+  					<header class="top-bar" ng-hide="true">
   						<h2 class="top-bar__headline">Latest articles</h2>
   						<div class="filter">
   							<span>Filter by:</span>
@@ -38,7 +38,9 @@
   							<p>
                   {{ news_item.publisher }}
                 </p>
-  							<span class="meta__date"><i class="fa fa-calendar-o"></i> <date-format-day-month data="news_item"></date-format-day-month>   </span>
+  							<span class="meta__date"><i class="fa fa-calendar-o"></i>
+                  <date-format-day-month data="news_item"></date-format-day-month>
+                </span>
   							<!-- <span class="meta__reading-time"><i class="fa fa-clock-o"></i> 3 min read</span> -->
   						</div>
   					</div>
@@ -63,7 +65,7 @@
         <div class="col s1">
           <popular-index-thumb data="toprank" class="circle"></popular-index-thumb>
         </div>
-        <div class="col s8 offset-s2">
+        <div class="col" ng-class="right_panel_item(toprank)">
           <a ng-href="{{ absURL(toprank._id, true) }}"
              analytics-on="click"
              analytics-event="news_item_clicked"
@@ -71,6 +73,10 @@
              class="title">{{ toprank.title }}</a> <br />
           <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(toprank.category.initial)">
             <a href="/{{ toprank.category.initial }}">{{ toprank.category.name }} </a>
+          </span>
+          <br />
+          <span class="right_panel_created_at">
+            <date-format-day-month data="toprank"></date-format-day-month>
           </span>
         </div>
       </div>
