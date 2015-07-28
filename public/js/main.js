@@ -26,6 +26,7 @@
 
         // hold init var for conten_type
         $scope.news_content_type = 'latest_news';
+        $rootScope.page_title = 'newsInstance'
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
         $scope.main_index_topranks = [];
@@ -40,6 +41,9 @@
         // main init func
         var init = function() {
           // log(userSession.userSessionId())
+
+          $('.materialboxed').materialbox();
+
           $scope.news_category_style = {
             height: adjustStageHeight.adjustHeight(),
             'overflow-y': 'auto'
@@ -145,6 +149,8 @@
             'background-color': initials[initial]
           }
         }
+
+        // $rootScope.page_title;
         // disable getting user location
         // userLocation.getLocation()
 

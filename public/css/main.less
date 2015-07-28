@@ -159,7 +159,7 @@ table#news_list {
         height: auto;
       }
       &:hover {
-        cursor: default;
+        // cursor: default;
       }
     }
   }
@@ -242,6 +242,15 @@ span.provider_name a {
 .news_item_page_discuss {
     padding: 5px;
     min-height: 200px;
+
+    .social_share {
+      width: 80%;
+      margin: 0 auto;
+      .twitter-share-button {
+        position: relative !important;
+        bottom: -8px !important;
+      }
+    }
 }
 .news_item_page_discuss h1 {
     width: 80%;

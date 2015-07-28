@@ -7,31 +7,44 @@
 
     app.config(function($routeProvider, $locationProvider) {
 
-	$routeProvider
-		.when('/', {
-			templateUrl: 'js/index_page/' + 'index.html',
-			controller: 'MainCtrl'
-		})
-    .when('/:q', {
-			templateUrl: 'js/index_page/' + 'index.html',
-			controller: 'MainCtrl'
-		})
-    .when('/admin', {
-      templateUrl: 'js/pages/admin/templates/admin.html',
-      controller: 'AdminController'
-    })
-    .when('/news/:id', {
-        templateUrl: 'js/news_page/template/news.html',
-        controller: 'NewsPageCtrl'
-    })
-		.otherwise({
-			redirectTo: '/'
-		})
+  	$routeProvider
+  		.when('/', {
+  			templateUrl: 'js/index_page/' + 'index.html',
+  			controller: 'MainCtrl'
+  		})
+      .when('/:q', {
+  			templateUrl: 'js/index_page/' + 'index.html',
+  			controller: 'MainCtrl'
+  		})
+      .when('/admin', {
+        templateUrl: 'js/pages/admin/templates/admin.html',
+        controller: 'AdminController'
+      })
+      .when('/news/:id', {
+          templateUrl: 'js/news_page/template/news.html',
+          controller: 'NewsPageCtrl'
+      })
+  		.otherwise({
+  			redirectTo: '/'
+  		})
 
-	$locationProvider.html5Mode({
-		enabled: true,
-		requireBase: true
-	})
+  	$locationProvider.html5Mode({
+  		enabled: true,
+  		requireBase: true
+  	})
+
+    app.run(['$location', '$rootScope', function($location, $rootScope) {
+      $rootScope.title = '';
+      console.log("called?")
+
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            if (current.hasOwnProperty('$$route')) {
+
+                $rootScope.title = current.$$route.title;
+            }
+        });
+    }]);
+
 })
 
 

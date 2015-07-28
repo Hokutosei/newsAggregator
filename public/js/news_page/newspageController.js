@@ -3,13 +3,14 @@
 
     var log = function(str) { console.log(str); };
 
-    app.controller('NewsPageCtrl', function($routeParams, newsPageService, $scope, $analytics, $location) {
+    app.controller('NewsPageCtrl', function($routeParams, newsPageService, $scope, $analytics, $location, $rootScope) {
         newsPageService.getNewsItem($routeParams.id).then(function(resp, status) {
             $scope.news_item = resp.data
 
             $analytics.eventTrack('news_item', { category: 'news_item', label: $scope.news_item.title });
 
         })
+        log($rootScope)
 
         $scope.absURL = function(news_item, index_url) {
           var protocol = $location.protocol()

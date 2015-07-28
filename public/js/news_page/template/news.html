@@ -12,6 +12,11 @@
             <q>{{ news_item.title }}</q>
           </a>
         </h1>
+        <div class="social_share">
+          <div class="fb-share-button" data-href="{{ absURL }}" data-layout="button_count"></div>
+          <a href="https://twitter.com/share" data-text="{{ news_item.title }}" class="twitter-share-button" data-via="jeanepaul">Tweet</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
     </div>
 
     <div id="disqus_thread"></div>
@@ -60,8 +65,8 @@
           </span>
           <br />
           <span class="right_panel_created_at">
-            <date-format-day-month data="toprank"></date-format-day-month>
-          </span>          
+            <date-format-day-month data="news_item"></date-format-day-month>
+          </span>
         </div>
       </div>
     </li>
