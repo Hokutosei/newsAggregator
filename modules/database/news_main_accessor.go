@@ -56,7 +56,10 @@ func NewsMainIndexNewsCached(IDs ...bson.ObjectId) (AggregatedNews, error) {
 
 //GetterNewsMainTopScore main top page news getter
 func GetterNewsMainTopScore() (AggregatedNews, error) {
-	c := MongodbSession.DB(Db).C(NewsMainCollection)
+	sc := SessionCopy()
+	c := sc.DB(Db).C(NewsMainCollection)
+	defer sc.Close()
+
 	var aggregatedNews AggregatedNews
 	err := c.Find(bson.M{"url": bson.M{"$ne": ""}}).Sort("-score").Limit(searchLimitItems).All(&aggregatedNews)
 
@@ -70,18 +73,14 @@ func GetterNewsMainTopScore() (AggregatedNews, error) {
 //IncrementNewsScore increment news score
 // increment news ite page view
 func IncrementNewsScore(paramsID string) {
-	c := MongodbSession.DB(Db).C(NewsMainCollection)
-	var aggregatedNews interface{}
+	sc := SessionCopy()
+	c := sc.DB(Db).C(NewsMainCollection)
+	defer sc.Close()
 
 	err := c.Update(bson.M{"_id": bson.ObjectIdHex(paramsID)},
 		bson.M{"$inc": bson.M{"score": 1}, "$currentDate": bson.M{"lastModified": true}})
 
 	utils.HandleError(err)
-
-	err = c.Find(bson.M{"_id": bson.ObjectIdHex(paramsID)}).One(&aggregatedNews)
-	utils.HandleError(err)
-
-	fmt.Println(aggregatedNews)
 }
 
 // NewsItemPage get news item data

@@ -3,11 +3,12 @@
 
     var log = function(str) { console.log(str); };
 
-    app.directive('overallHeader', function($rootScope, $analytics, httpService, $location) {
+    app.directive('overallHeader', function($rootScope, $analytics, httpService, $location, APP_CONFIG) {
         return {
             restrict: 'E',
             templateUrl: 'js/shared/templates/overallheader.html',
             controller: function($scope) {
+              $scope.app_name = APP_CONFIG.APP_NAME;
 
               $scope.current_news_cat = $rootScope.current_news_cat_name || '';
               $rootScope.$on('update_current_news_cat', function(event, data) {
