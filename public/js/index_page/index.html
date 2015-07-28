@@ -70,7 +70,7 @@
              analytics-on="click"
              analytics-event="news_item_clicked"
              ng-click="ga_event(toprank)"
-             class="title">{{ toprank.title }}</a> <br />
+             class="title">{{ toprank.title | limitTo: title_limit }}...</a> <br />
           <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(toprank.category.initial)">
             <a href="/{{ toprank.category.initial }}">{{ toprank.category.name }} </a>
           </span>

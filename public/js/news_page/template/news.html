@@ -59,7 +59,7 @@
              analytics-event="news_item_clicked"
              ng-click="ga_event(toprank)"
              target="_blank"
-             class="title">{{ story.title }}</a> <br />
+             class="title">{{ story.title | limitTo: title_limit }}...</a> <br />
           <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
             <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
           </span>
@@ -67,6 +67,7 @@
           <span class="right_panel_created_at">
             <date-format-day-month data="news_item"></date-format-day-month>
           </span>
+          <br style="clear:both" />
         </div>
       </div>
     </li>

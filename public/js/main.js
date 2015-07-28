@@ -20,13 +20,15 @@
       , $routeParams
       , userSession
       , $timeout
-      , adjustStageHeight) {
+      , adjustStageHeight
+      , APP_CONFIG) {
         $analytics.pageTrack('/');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
 
         // hold init var for conten_type
         $scope.news_content_type = 'latest_news';
         $rootScope.page_title = 'newsInstance'
+        $scope.title_limit = APP_CONFIG.title_limit;
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
         $scope.main_index_topranks = [];
@@ -141,7 +143,7 @@
             'b': '#81c784',
             'p': '#4db6ac',
             'e': '#9575cd',
-            's': '#bcaaa4',
+            's': '#afb42b',
             't': '#81d4fa',
             'ir': '#80cbc4',
           }
