@@ -44,7 +44,8 @@
           // log(userSession.userSessionId())
 
           $('.materialboxed').materialbox();
-
+          $(".dropdown-button").dropdown();
+          
           $scope.news_category_style = {
             height: adjustStageHeight.adjustHeight(),
             'overflow-y': 'auto'
