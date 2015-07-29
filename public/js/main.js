@@ -35,7 +35,6 @@
 
         var services = function() {
           httpService.fetchTopRankingNews(function(data, status) {
-            log(data.length)
             $scope.main_index_topranks = data;
           })
         }
@@ -101,8 +100,8 @@
         })
 
         $scope.ga_event = function(news_item) {
-            httpService.incrementNewsItemScore(news_item);
-            $analytics.eventTrack('news_item_' + news_item.title , { category: 'news_clicks', label: 'news_item_clicked' })
+          httpService.incrementNewsItemScore(news_item);
+          $analytics.eventTrack('news_item_' + news_item.title , { category: 'news_clicks', label: 'news_item_clicked' })
         };
 
         $scope.decodeURL = function(url) {

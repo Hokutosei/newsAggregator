@@ -25,12 +25,10 @@
             },
 
             incrementNewsItemScore: function(news_item) {
-                log(news_item);
                 $http({ method: 'POST', url: '/increment_news', data: {
                     'Id': news_item._id
                     }
                 }).success(function(data, status) {
-                    log(status)
                 })
             },
 
