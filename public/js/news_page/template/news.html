@@ -12,24 +12,24 @@
             <q>{{ news_item.title }}</q>
           </a>
         </h1>
+        <div class="social_share">
+
+          <div class="fb-share-button" data-href="{{ absURL }}" data-layout="button_count"></div>
+          <a href="https://twitter.com/share" data-text="{{ news_item.title }}" class="twitter-share-button" data-via="jeanepaul">Tweet</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
     </div>
 
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES * * */
-        var disqus_shortname = 'kedoyo';
-        // var disqus_identifier = news_item.id;
-        // var disqus_title = news_item.title;
-        // var disqus_url = "/news/" + news_item.id
-
-
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
+        // var disqus_shortname = 'kedoyo';
+        // /* * * DON'T EDIT BELOW THIS LINE * * */
+        // (function() {
+        //     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        //     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        //     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        // })();
 
         // callback new comment
         function disqus_config() {
@@ -44,20 +44,25 @@
 </div>
 
 <div class="index_right_wrap is_mobile_h">
-  <h6>Related</h6>
+  <h6>関連記事</h6>
   <ul class="collection top_rank_st">
     <li ng-repeat="story in news_item.relatedstories | limitTo: 5" class="collection-item">
       <div class="row">
-        <div class="col s8 offset-s2">
+        <div class="col" ng-class="right_panel_item(toprank)">
           <a ng-href="{{ absURL(story, false) }}"
              analytics-on="click"
              analytics-event="news_item_clicked"
              ng-click="ga_event(toprank)"
              target="_blank"
-             class="title">{{ story.title }}</a> <br />
+             class="title">{{ story.title | limitTo: title_limit }}...</a> <br />
           <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
             <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
           </span>
+          <br />
+          <span class="right_panel_created_at">
+            <date-format-day-month data="news_item"></date-format-day-month>
+          </span>
+          <br style="clear:both" />
         </div>
       </div>
     </li>

@@ -20,19 +20,21 @@
       , $routeParams
       , userSession
       , $timeout
-      , adjustStageHeight) {
+      , adjustStageHeight
+      , APP_CONFIG) {
         $analytics.pageTrack('/');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
 
         // hold init var for conten_type
         $scope.news_content_type = 'latest_news';
+        $rootScope.page_title = 'newsInstance'
+        $scope.title_limit = APP_CONFIG.title_limit;
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
         $scope.main_index_topranks = [];
 
         var services = function() {
           httpService.fetchTopRankingNews(function(data, status) {
-            log(data.length)
             $scope.main_index_topranks = data;
           })
         }
@@ -40,6 +42,9 @@
         // main init func
         var init = function() {
           // log(userSession.userSessionId())
+
+          $('.materialboxed').materialbox();
+
           $scope.news_category_style = {
             height: adjustStageHeight.adjustHeight(),
             'overflow-y': 'auto'
@@ -95,8 +100,8 @@
         })
 
         $scope.ga_event = function(news_item) {
-            httpService.incrementNewsItemScore(news_item);
-            $analytics.eventTrack('news_item_' + news_item.title , { category: 'news_clicks', label: 'news_item_clicked' })
+          httpService.incrementNewsItemScore(news_item);
+          $analytics.eventTrack('news_item_' + news_item.title , { category: 'news_clicks', label: 'news_item_clicked' })
         };
 
         $scope.decodeURL = function(url) {
@@ -121,6 +126,14 @@
           return { 'border': '1px solid ' + color };
         }
 
+        // right_panel_item design distinguish if item has no image.url
+        $scope.right_panel_item = function(toprank) {
+          if(toprank.image.url == '') {
+            return 's12';
+          }
+          return 's9 offset-s2';
+        }
+
         // news_tag style
         $scope.news_tag_style = function(initial) {
           var initials = {
@@ -129,7 +142,7 @@
             'b': '#81c784',
             'p': '#4db6ac',
             'e': '#9575cd',
-            's': '#bcaaa4',
+            's': '#afb42b',
             't': '#81d4fa',
             'ir': '#80cbc4',
           }
@@ -137,6 +150,8 @@
             'background-color': initials[initial]
           }
         }
+
+        // $rootScope.page_title;
         // disable getting user location
         // userLocation.getLocation()
 

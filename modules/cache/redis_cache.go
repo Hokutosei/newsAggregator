@@ -18,7 +18,7 @@ var (
 // TODO refactor this!
 func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
 	start := time.Now()
-	fmt.Println("retrieving news index ids")
+	fmt.Println("retrieving news index ids on TODO")
 	conn := redisPool.Get()
 	defer conn.Close()
 
@@ -37,7 +37,7 @@ func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
 // RetrieveCachedNews main index news ids
 func RetrieveCachedNews(key string, redisPool *redis.Pool) ([]bson.ObjectId, error) {
 	start := time.Now()
-	fmt.Println("retrieving news index ids")
+	fmt.Println("retrieving news index ids from cached news")
 	conn := redisPool.Get()
 	defer conn.Close()
 

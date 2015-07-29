@@ -3,13 +3,15 @@
 
     var log = function(str) { console.log(str); };
 
-    app.controller('NewsPageCtrl', function($routeParams, newsPageService, $scope, $analytics, $location) {
+    app.controller('NewsPageCtrl', function($routeParams, newsPageService, $scope, $analytics, $location, $rootScope, APP_CONFIG) {
         newsPageService.getNewsItem($routeParams.id).then(function(resp, status) {
             $scope.news_item = resp.data
 
             $analytics.eventTrack('news_item', { category: 'news_item', label: $scope.news_item.title });
 
         })
+
+        $scope.title_limit = APP_CONFIG.title_limit;
 
         $scope.absURL = function(news_item, index_url) {
           var protocol = $location.protocol()
@@ -28,7 +30,7 @@
             'b': '#81c784',
             'p': '#4db6ac',
             'e': '#9575cd',
-            's': '#bcaaa4',
+            's': '#afb42b',
             't': '#81d4fa',
             'ir': '#80cbc4',
           }

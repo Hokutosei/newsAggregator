@@ -8,6 +8,7 @@
 
 @top-rank-thumb: 60px;
 @news-tag-color: #f5f5f5;
+@right_panel_created: #aaa;
 
 /* MIXINS */
 .bottom-shadow {
@@ -57,10 +58,9 @@ body {
 
 table#news_list {
     padding: 5px;
-    margin-left: 5px;
     position: absolute;
     z-index: 2;
-  &::-webkit-scrollbar { display: none; }  
+  &::-webkit-scrollbar { display: none; }
 
 }
 
@@ -159,7 +159,7 @@ table#news_list {
         height: auto;
       }
       &:hover {
-        cursor: default;
+        // cursor: default;
       }
     }
   }
@@ -242,6 +242,15 @@ span.provider_name a {
 .news_item_page_discuss {
     padding: 5px;
     min-height: 200px;
+
+    .social_share {
+      width: 80%;
+      margin: 0 auto;
+      .twitter-share-button {
+        position: relative !important;
+        bottom: -8px !important;
+      }
+    }
 }
 .news_item_page_discuss h1 {
     width: 80%;
@@ -329,17 +338,22 @@ footer.page-footer {
     height: 116px;
     padding-left: 0px !important;
     .title {
-      font-size: 10px;
+      font-size: 15px;
     }
     .circle {
       height: @top-rank-thumb;
       width: @top-rank-thumb;
     }
     .news_tag {
-      padding: 0px !important;
+      padding: 5px 5px 0 5px !important;
+      margin-bottom: 2px;
       a {
         color: @news-tag-color;
       }
+    }
+    .right_panel_created_at {
+      font-size: 12px;
+      color: @right_panel_created;
     }
   }
 }
@@ -355,4 +369,46 @@ footer.page-footer {
 /* UTILS */
 .clearfloat {
     clear: both;
+}
+.grid__item {
+  top: 0;
+  padding-top: 10px !important;
+
+  .news_tag {
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    padding:5px 0px 2px 0px;
+  }
+
+  .item_image {
+    padding-top: 5px;
+    height: 155px;
+    width: 14rem;
+    text-align: center;
+    overflow: hidden;
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      vertical-align: middle;
+      height: auto;
+    }
+  }
+  .news_item_title_link {
+    color: @blue-lighten-2;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  h2 {
+    line-height: 2rem;
+    font-size: 17px
+  }
+
+  &:before {
+    top: 0 !important;
+  }
+  &:hover {
+    text-decoration: none;
+  }
 }
