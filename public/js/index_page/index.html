@@ -1,3 +1,4 @@
+<br style="clear: both" />
 <div class="news_feeds">
     <overall_header></overall_header>
 
@@ -15,7 +16,12 @@
   					</header>
   					<div class="grid__item" ng-repeat="news_item in main_index_news track by $index">
               <div class="item_image" ng-if="news_item.image.url != ''">
-                <image-loader data="news_item"></image-loader>
+                <div class="card small">
+                  <div class="card-image">
+                    <image-loader data="news_item"></image-loader>
+                     <span class="card-title">Card Title</span>
+                  </div>
+                </div>
               </div>
 
               <a ng-href="{{ absURL(news_item._id, true) }}"
@@ -23,9 +29,7 @@
                  analytics-event="news_item_clicked"
                  ng-click="ga_event(news_item)"
                  class="news_item_title_link">
-
                  <h2 class="title title--preview">{{ news_item.title }}</h2>
-
                </a>
 
   						<div class="loader"></div>
