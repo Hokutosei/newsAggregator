@@ -1,3 +1,5 @@
+<headlines></headlines>
+
 <br style="clear: both" />
 <div class="news_feeds">
     <overall_header></overall_header>
@@ -19,7 +21,7 @@
                 <div class="card small">
                   <div class="card-image">
                     <image-loader data="news_item"></image-loader>
-                     <span class="card-title">Card Title</span>
+                     <!-- <span class="card-title">Card Title</span> -->
                   </div>
                 </div>
               </div>
@@ -54,14 +56,12 @@
   					</footer>
   				</section>
         </div>
-
-
     </div>
     <a href="" class="more_feeds" ng-click="feed_more(main_index_news.length)">More..</a>
 </div>
 
 <!-- TODO directive -->
-<div class="index_right_wrap is_mobile_h">
+<div class="index_right_wrap is_mobile_h" style="min-height:100%">
   <h6>人気の記事</h6>
   <ul class="collection top_rank_st">
     <li ng-repeat="toprank in main_index_topranks" class="collection-item">
@@ -87,6 +87,4 @@
     </li>
   </ul>
 </div>
-
-
-    <br style="clear: both" />
+<br style="clear: both" />

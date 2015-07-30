@@ -43,7 +43,7 @@ body {
     border: 1px solid #f1f1f1;
     width: 57%;
     height: 100%;
-    margin: 0 0 0 15%;
+    margin: 10px 0 0 15%;
     position: relative;
     z-index: 5;
     float: left;
@@ -360,10 +360,17 @@ footer.page-footer {
 
 .headline {
   width: 100%;
+  margin-bottom: 0px;
   li.headline_item {
     display: inline !important;
     float: left;
     width: 100% / 3;
+    a {
+      color: #fff;
+      &:hover {
+        color: #fff;
+      }
+    }
     .card {
       margin-right: 0px !important;
       width: 99%;
@@ -374,7 +381,7 @@ footer.page-footer {
 
 /* NEWS INDEX RIGHT */
 .index_right_wrap {
-  float: left;
+  // float: left;
   position: fixed;
   left: 72%;
   margin-left: 4px;

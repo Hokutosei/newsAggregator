@@ -3,7 +3,14 @@
     <div class="card medium">
       <div class="card-image">
         <img ng-src="{{ headline.image.url }}"></img>
-        <span class="card-title">{{ headline.title }}</span>
+        <span class="card-title">
+          <a ng-href="{{ absURL(headline._id, true) }}"
+             analytics-on="click"
+             analytics-event="news_item_clicked"
+             ng-click="ga_event(news_item)"
+             class="news_item_title_link">
+          {{ headline.title }}</a>
+        </span>
       </div>
     </div>
   </li>
