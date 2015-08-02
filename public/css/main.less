@@ -41,9 +41,9 @@ body {
 
 #main_stage .news_feeds {
     border: 1px solid #f1f1f1;
-    width: 57%;
+    width: 67%;
     height: 100%;
-    margin: 10px 0 0 15%;
+    margin: 10px 0 0 5%;
     position: relative;
     z-index: 5;
     float: left;
@@ -375,8 +375,34 @@ footer.page-footer {
       margin-right: 0px !important;
       width: 99%;
       height: 240px;
+      .card-title {
+        background: rgba(0, 0, 0, 0.5);
+      }
     }
   }
+}
+
+.parallax-jp {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.parallax__layer {
+  position: relative;
+  top: 0px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.parallax__layer--base {
+  background-color: #fff;
+  transform: translateZ(0);
+}
+.parallax__layer--back {
+  transform:translateZ(-1px) scale(2);
+  position: relative;
+  top: -220px;
 }
 
 /* NEWS INDEX RIGHT */

@@ -97,6 +97,7 @@ func NewsItemPage(paramsID string) (interface{}, error) {
 		return newsItem, err
 	}
 
+	IncrementNewsScore(paramsID)
 	return newsItem, nil
 }
 
