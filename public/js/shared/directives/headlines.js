@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  app.directive('headlines', function(httpService, $location) {
+  app.directive('headlines', function(httpService, $location, strServices) {
     return {
       restrict: 'E',
       templateUrl: 'js/shared/templates/headlines.html',
@@ -9,7 +9,9 @@
         httpService.fetchHeadlines(function(data) {
           scope.headlines = data;
         })
-        console.log($location.path())
+        scope.truncateTitle = function(str) {
+          return strServices.truncateStr(str, 35);
+        }
         scope.absURL = function(news_item_id, index_url) {
             var protocol = $location.protocol()
                 , port = $location.port()

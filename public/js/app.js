@@ -52,5 +52,6 @@
       })
     });
 
+    app.constant('API', 'http://localhost:3000')
 
 }());
