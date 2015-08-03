@@ -49,6 +49,11 @@
               $http.get('/top_ranking_news').success(function(data, status) {
                 callback(data)
               })
+            },
+            fetchHeadlines: function(callback) {
+              $http.get('/headlines').success(function(data, status) {
+                callback(data);
+              })
             }
         }
 

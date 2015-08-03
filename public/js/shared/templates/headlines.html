@@ -1,0 +1,18 @@
+<ul class="headline" style="clear :both">
+  <li class="headline_item" ng-repeat="headline in headlines | limitTo: 3">
+    <div class="card medium">
+      <div class="card-image">
+        <img ng-src="{{ headline.image.url }}"></img>
+        <span class="card-title">
+          <a ng-href="{{ absURL(headline._id, true) }}"
+             analytics-on="click"
+             analytics-event="news_item_clicked"
+             ng-click="ga_event(news_item)"
+             class="news_item_title_link">
+          {{ headline.title }} ー <span style="font-size:16px;">{{ headline.category.name }} ({{ headline.score }}) </span></a>
+        </span>
+      </div>
+    </div>
+  </li>
+</ul>
+<br style="clear: both" />

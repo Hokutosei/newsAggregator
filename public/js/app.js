@@ -33,7 +33,7 @@
       		requireBase: true
       	})
     })
-    app.run(function($rootScope) {
+    app.run(function($rootScope, $timeout) {
       $rootScope.$on('$routeChangeSuccess', function($window, $timeout) {
         (function(d, s, id) {
           var initFB = function() {
@@ -45,6 +45,7 @@
           }
 
           initFB();
+          // $timeout(function(){console.log("aa")}, 3000)
           setTimeout(function() { initFB(); FB.XFBML.parse()}, 4000)
         }(document, 'script', 'facebook-jssdk'));
 

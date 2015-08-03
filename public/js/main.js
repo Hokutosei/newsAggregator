@@ -44,10 +44,13 @@
           // log(userSession.userSessionId())
 
           $('.materialboxed').materialbox();
-
+          $(".dropdown-button").dropdown();
+          // $('.parallax').parallax();
+          
           $scope.news_category_style = {
-            height: adjustStageHeight.adjustHeight(),
-            'overflow-y': 'auto'
+            // disable overflow for index news
+            // height: adjustStageHeight.adjustHeight(),
+            // 'overflow-y': 'auto'
           }
           // $('.index_right_wrap').pushpin({ top: $('.index_right_wrap').offset().top });
 
