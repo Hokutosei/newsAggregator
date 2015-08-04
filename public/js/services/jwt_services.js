@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  app.factory('jwtServices', function(API, auth) {
+  app.factory('jwtServices', function(api, authService) {
     return {
       authInterceptor: function(config) {
         return config;
@@ -12,16 +12,26 @@
       }
     }
   });
+}());
 
+
+(function() {
+  'use strict';
   app.service('authService', function($window) {
     var self = this;
   });
 
-  app.service('userService', function($http, API, auth) {
+
+}());
+//
+(function() {
+  'use strict';
+
+  app.service('userService', function($http, authService) {
     var self = this;
-    self.getQuote = function() {
-      return $http.get(API + '/auth/qoute')
+    self.getQuote = function(api) {
+      return $http.get(api + '/auth/qoute')
     }
   })
 
-})
+}());
