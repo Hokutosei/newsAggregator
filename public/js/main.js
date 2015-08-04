@@ -21,8 +21,6 @@
       , userSession
       , $timeout
       , adjustStageHeight
-      , user
-      , auth
       , APP_CONFIG) {
         $analytics.pageTrack('/');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
@@ -56,7 +54,7 @@
           }
           // $('.index_right_wrap').pushpin({ top: $('.index_right_wrap').offset().top });
 
-          if(_.has($routeParams, 'q') == true) {
+          if(_.has($routeParams, 'q') == true && $routeParams.q != 'registration') {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
                 $scope.main_index_news = data;
               })
@@ -156,34 +154,34 @@
           }
         }
 
-        // AUTH BLOCK, REFACTOR THIS!;
-        var self = this;
-
-        function handleRequest(res) {
-          var token = res.data ? res.data.token : null;
-          if(token) { console.log('JWT:', token); }
-          self.message = res.data.message;
-        }
-
-        self.login = function() {
-          user.login(self.username, self.password)
-            .then(handleRequest, handleRequest)
-        }
-        self.register = function() {
-          user.register(self.username, self.password)
-            .then(handleRequest, handleRequest)
-        }
-        self.getQuote = function() {
-          user.getQuote()
-            .then(handleRequest, handleRequest)
-        }
-        self.logout = function() {
-          auth.logout && auth.logout()
-        }
-        self.isAuthed = function() {
-          return auth.isAuthed ? auth.isAuthed() : false
-        }
-
+        // // AUTH BLOCK, REFACTOR THIS!;
+        // var self = this;
+        //
+        // function handleRequest(res) {
+        //   var token = res.data ? res.data.token : null;
+        //   if(token) { console.log('JWT:', token); }
+        //   self.message = res.data.message;
+        // }
+        //
+        // self.login = function() {
+        //   user.login(self.username, self.password)
+        //     .then(handleRequest, handleRequest)
+        // }
+        // self.register = function() {
+        //   user.register(self.username, self.password)
+        //     .then(handleRequest, handleRequest)
+        // }
+        // self.getQuote = function() {
+        //   user.getQuote()
+        //     .then(handleRequest, handleRequest)
+        // }
+        // self.logout = function() {
+        //   auth.logout && auth.logout()
+        // }
+        // self.isAuthed = function() {
+        //   return auth.isAuthed ? auth.isAuthed() : false
+        // }
+        //
 
 
         // $rootScope.page_title;
