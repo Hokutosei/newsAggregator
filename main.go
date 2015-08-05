@@ -8,12 +8,16 @@ import (
 
 	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/security"
 	_ "web_apps/news_aggregator/modules/utils"
 )
 
 var (
 	serverPort       = ":3000"
 	loopCounterDelay = 300
+	hashKey          = "newsInstanceSecret"
+	blockKey         = "newsInstanceBlock"
+	cookieName       = "newsInstance.com"
 )
 
 // handleAssets serve all file assets
@@ -38,6 +42,9 @@ func main() {
 		config.StartEtcd()
 		go database.MongodbStart()
 		go database.StartRedis()
+
+		// build secure cookies and keys
+		security.BuildSecureKeys(hashKey, blockKey, cookieName)
 
 		// startRoutes start all routes
 		startRoutes()
