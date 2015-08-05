@@ -3,6 +3,7 @@ package database
 import (
 	"flag"
 	"fmt"
+	"strings"
 	"time"
 	"web_apps/news_aggregator/modules/config"
 
@@ -60,4 +61,9 @@ func GetRedisHost(host chan string) {
 	}
 
 	host <- redisHost
+}
+
+// RedisKeyGen is a util that joins slices to string
+func RedisKeyGen(keys ...string) string {
+	return strings.Join(keys, ":")
 }

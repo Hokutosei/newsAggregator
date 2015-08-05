@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"threadtimer/lib/utils"
+	"web_apps/news_aggregator/modules/database"
 
 	"github.com/gorilla/securecookie"
 )
@@ -28,26 +29,29 @@ func BuildSecureKeys(hash, block, cookie string) {
 
 // SetCookieHandler set cookie handler to user
 func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
-	utils.Info("setcookieHandler!")
 	value := map[string]string{
 		cookieKeyName: "jeanepaul",
-		"password":    "fdsafsadfadsfsadfasfs",
 	}
+
 	encoded, err := s.Encode(cookieName, value)
-	if err == nil {
+	if err == nil && database.SetSessionKey(encoded) {
+
 		cookie := &http.Cookie{
 			Name:  cookieName,
 			Value: encoded,
 			Path:  "/",
 		}
 		http.SetCookie(w, cookie)
+		return
 	}
+	utils.Info("error set cookie!")
 }
 
 // ReadCookieHandler retrieve user cookie
 func ReadCookieHandler(w http.ResponseWriter, r *http.Request) {
 	if cookie, err := r.Cookie(cookieName); err == nil {
 		value := make(map[string]string)
+		// utils.Info(fmt.Sprintf("this cookie %v", cookie))
 		if err = s.Decode(cookieName, cookie.Value, &value); err == nil {
 			// fmt.Fprintf(w, "The value of foo is %q", value[cookieKeyName])
 			utils.Info(fmt.Sprintf("The value of foo is %q", value[cookieKeyName]))

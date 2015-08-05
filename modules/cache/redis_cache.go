@@ -53,6 +53,7 @@ func RetrieveCachedNews(key string, redisPool *redis.Pool) ([]bson.ObjectId, err
 }
 
 // RedisKeyGen is a util that joins slices to string
+// Deperecate this!
 func RedisKeyGen(keys ...string) string {
 	return strings.Join(keys, ":")
 }
