@@ -49,7 +49,7 @@ func main() {
 		// startRoutes start all routes
 		startRoutes()
 
-		assetsToHandle := []string{"images", "css", "js", "fonts"}
+		assetsToHandle := []string{"images", "css", "js", "fonts", "vendor"}
 		handleAssets(assetsToHandle...)
 
 		// news getter initializers
