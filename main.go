@@ -9,7 +9,7 @@ import (
 	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
 	"web_apps/news_aggregator/modules/security"
-	_ "web_apps/news_aggregator/modules/utils"
+	"web_apps/news_aggregator/modules/utils"
 )
 
 var (
@@ -29,17 +29,15 @@ func handleAssets(assets ...string) {
 		assetURLPath := fmt.Sprintf("/%s/", asset)
 		//asset_dir := fmt.Sprintf("public/%s", asset)
 		http.Handle(assetURLPath, http.StripPrefix(assetURLPath, http.FileServer(http.Dir(assetDir))))
-		fmt.Println(asset, " took: ", time.Since(start))
+		utils.Info(fmt.Sprintf("%s took: %v", asset, time.Since(start)))
 	}
 }
 
 // main entrypoint and main func for the app
 func main() {
-	fmt.Println("starting server....")
 
 	go func() {
-		fmt.Println("initializing backends...")
-		config.StartEtcd()
+		config.StartConsul()
 		go database.MongodbStart()
 		go database.StartRedis()
 
@@ -52,13 +50,10 @@ func main() {
 		assetsToHandle := []string{"images", "css", "js", "fonts", "vendor"}
 		handleAssets(assetsToHandle...)
 
-		// news getter initializers
-		// should set in admin page
-		// go newsGetter.StartHackerNews(loopCounterDelay)
-		// go newsGetter.StartGoogleNews(loopCounterDelay)
 		InitNewRelic()
+		config.RegisterServer()
 	}()
 
-	fmt.Println("now servering to port -->> ...", serverPort)
+	utils.Info(fmt.Sprintf("now servering to port -->> ... %v", serverPort))
 	http.ListenAndServe(serverPort, nil)
 }

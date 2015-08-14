@@ -20,7 +20,7 @@ var (
 
 // GetMongodbCluster retrieve mongodb cluster node from etcd
 func GetMongodbCluster(host chan string) {
-	mongodbCluster, err := config.EtcdRawGetValue(mongodbClusterKey)
+	mongodbCluster, err := config.GetKV(config.MongodBKey)
 	if err != nil {
 		panic(err)
 	}
