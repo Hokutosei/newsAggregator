@@ -40,20 +40,19 @@
         }
 
         // main init func
-        var init = function() {
+        $scope.init = function() {
           // log(userSession.userSessionId())
 
           $('.materialboxed').materialbox();
           $(".dropdown-button").dropdown();
-          // $('.parallax').parallax();
 
           $scope.news_category_style = {
             // disable overflow for index news
             // height: adjustStageHeight.adjustHeight(),
             // 'overflow-y': 'auto'
           }
-          // $('.index_right_wrap').pushpin({ top: $('.index_right_wrap').offset().top });
 
+          // NEWS INDEX INITIALIZER
           if(_.has($routeParams, 'q') == true && $routeParams.q != 'registration') {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
                 $scope.main_index_news = data;
@@ -189,6 +188,6 @@
         // userLocation.getLocation()
 
         // call init func
-        init()
+        // init()
     });
 }());

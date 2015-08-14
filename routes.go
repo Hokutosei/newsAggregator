@@ -19,9 +19,12 @@ func startRoutes() {
 	fmt.Println("load routes..")
 
 	http.HandleFunc("/", http_handlers.Index)
+
+	// Main index news getter page handler
+	http.HandleFunc("/latest_news", http_handlers.LatestNews)
+
 	http.HandleFunc("/get_index_news", http_handlers.LatestNews)
 	http.HandleFunc("/top_score_news", http_handlers.TopScoreNews)
-	http.HandleFunc("/latest_news", http_handlers.LatestNews)
 	http.HandleFunc("/top_ranking_news", http_handlers.TopRankingNews)
 	http.HandleFunc("/headlines", http_handlers.Headlines)
 
