@@ -3,7 +3,7 @@ kind: ReplicationController
 metadata:
   name: newsaggregator
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     name: newsaggregator
     version: v0
@@ -19,6 +19,8 @@ spec:
         env:
           - name: COREOS_PRIVATE_IPV4
             value: 10.240.235.207
+          - name: CONSUL_MASTER
+            value: consul-master.chimuwork.com
         ports:
         - containerPort: 3000
           hostPort: 3000

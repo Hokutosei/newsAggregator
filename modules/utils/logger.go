@@ -32,7 +32,7 @@ func logLevel(key string) string {
 }
 
 func timeLoglevel(logLevelStr string) string {
-	str := fmt.Sprintf("%s %s", time.Now().Format("Mon Jan _2 15:04:05 2006"), logLevel(logLevelStr))
+	str := fmt.Sprintf("[%s] %s", time.Now().Format("Mon Jan _2 15:04:05 2006"), logLevel(logLevelStr))
 	return str
 }
 
