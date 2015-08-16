@@ -37,7 +37,8 @@ func handleAssets(assets ...string) {
 func main() {
 
 	go func() {
-		config.StartConsul()
+		// config.StartConsul()
+		config.StartEtcd()
 		go database.MongodbStart()
 		go database.StartRedis()
 
@@ -51,7 +52,6 @@ func main() {
 		handleAssets(assetsToHandle...)
 
 		InitNewRelic()
-		config.RegisterServer()
 	}()
 
 	utils.Info(fmt.Sprintf("now servering to port -->> ... %v", serverPort))

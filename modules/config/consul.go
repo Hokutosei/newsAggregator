@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 	"web_apps/news_aggregator/modules/utils"
 
 	consul "github.com/hashicorp/consul/api"
@@ -27,12 +28,33 @@ func StartConsul() {
 // GetKV get k/v pair
 func GetKV(key string) (string, error) {
 	// Lookup the pair
-	pair, _, err := kv.Get(key, nil)
-	if pair == nil || err != nil {
-		return "", err
+	utils.Info(fmt.Sprintf("get KV: %s", key))
+	retry := true
+	retryCount := 0
+	var pair *consul.KVPair
+	for retry && retryCount != 5 {
+		p, _, err := kv.Get(key, nil)
+		if err != nil || p == nil {
+			utils.Info(fmt.Sprintf("%v", err))
+			utils.Info(fmt.Sprintf("%v", p))
+			utils.Info(fmt.Sprintf("get KV: %s", key))
+			utils.Info("debug ----------")
+			retry = true
+			time.Sleep(2000 * time.Millisecond)
+			retryCount++
+		} else {
+			pair = p
+			retry = false
+		}
 	}
 
-	return string(pair.Value), nil
+	if pair == nil {
+		panic("err key not found!")
+	}
+
+	result := string(pair.Value)
+	utils.Info(fmt.Sprintf("found!: %v", result))
+	return result, nil
 }
 
 // PutValue put/save k/v to consul

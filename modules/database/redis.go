@@ -55,7 +55,7 @@ func NewPool(server string) *redis.Pool {
 
 // GetRedisHost get redis host from etcd
 func GetRedisHost(host chan string) {
-	redisHost, err := config.GetKV(redisHostKey)
+	redisHost, err := config.EtcdRawGetValue(redisHostKey)
 	if err != nil {
 		panic(err)
 	}
