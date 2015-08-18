@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "--->> compile static dependencies"
+rm public/js/app.min.js
 gulp
 
 GOOS=linux GOARCH=amd64 go build -v -o linux_news_aggregator

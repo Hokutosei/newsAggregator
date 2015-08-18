@@ -51,7 +51,7 @@ func main() {
 		assetsToHandle := []string{"images", "css", "js", "fonts", "vendor"}
 		handleAssets(assetsToHandle...)
 
-		InitNewRelic()
+		// InitNewRelic()
 	}()
 
 	utils.Info(fmt.Sprintf("now servering to port -->> ... %v", serverPort))
