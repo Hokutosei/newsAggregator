@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"web_apps/news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/security"
 )
 
 // IndexVars used to be struct for index
@@ -25,8 +26,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	log.Println("handled --> index")
 
 	// disable this for deployment, not finish yet
-	// security.SetCookieHandler(w, r)
-	// security.ReadCookieHandler(w, r)
+	security.SetCookieHandler(w, r)
+	security.ReadCookieHandler(w, r)
 
 	indexTemplate := "index.html"
 	t := template.New(indexTemplate).Delims("{{%", "%}}")

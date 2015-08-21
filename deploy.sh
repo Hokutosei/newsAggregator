@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "--->> delete app.min.js"
+rm public/js/app.min.js
 
 echo "--->> compile static dependencies"
 gulp
