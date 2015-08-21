@@ -1,0 +1,28 @@
+{
+  "name": "news_aggregator",
+  "version": "0.6.9",
+  "description": "`docker run -d --name news_aggregator_new -v $(pwd):/go/src/web_apps/news_aggregator -e COREOS_PRIVATE_IPV4=${COREOS_PRIVATE_IPV4}  -p 49154:3000 news_aggregator`",
+  "main": "update_collections.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hokutosei/newsAggregator.git"
+  },
+  "author": "jeanepaul@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hokutosei/newsAggregator/issues"
+  },
+  "homepage": "https://github.com/Hokutosei/newsAggregator",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-uglify": "^1.2.0"
+  }
+}

@@ -2,6 +2,8 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   name: newsaggregator
+  labels:
+    name: newsaggregator
 spec:
   replicas: 2
   selector:

@@ -19,18 +19,17 @@ var (
 )
 
 // NewsMainIndexNews responder for index news query
+// NEWS MAIN GETTER
 func NewsMainIndexNews() (AggregatedNews, error) {
+	newsIDChan := make(chan []bson.ObjectId)
+	go cache.IndexNewsIDS(RedisPool, newsIDChan)
 	sc := SessionCopy()
 	c := sc.DB(Db).C(NewsMainCollection)
 	defer sc.Close()
 	var aggregatedNews AggregatedNews
 
-	ids, err := cache.IndexNewsIDS(RedisPool)
-	if err != nil {
-		fmt.Println(err)
-		return aggregatedNews, err
-	}
-	err = c.Find(bson.M{"_id": bson.M{"$in": ids}}).All(&aggregatedNews)
+	ids := <-newsIDChan
+	err := c.Find(bson.M{"_id": bson.M{"$in": ids}}).All(&aggregatedNews)
 
 	if err != nil {
 		fmt.Println(err)

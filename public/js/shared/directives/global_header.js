@@ -8,7 +8,7 @@
       restrict: 'E',
       templateUrl: 'js/shared/templates/global_header.html',
       link: function(scope) {
-        scope.app_name = APP_CONFIG.APP_NAME;
+        scope.app_name = "test";
       }
     }
   })

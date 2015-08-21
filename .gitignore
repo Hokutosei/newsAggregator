@@ -4,3 +4,5 @@ jap_lesson
 news_aggregator
 Godeps/_workspace/
 linux_news_aggregator
+node_modules/
+public/js/app.min.js

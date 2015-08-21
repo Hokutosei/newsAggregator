@@ -16,7 +16,7 @@ var (
 
 // IndexNewsIDS main index news ids
 // TODO refactor this!
-func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
+func IndexNewsIDS(redisPool *redis.Pool, newsIDChan chan []bson.ObjectId) {
 	start := time.Now()
 	fmt.Println("retrieving news index ids on TODO")
 	conn := redisPool.Get()
@@ -26,12 +26,14 @@ func IndexNewsIDS(redisPool *redis.Pool) ([]bson.ObjectId, error) {
 	result, err := redis.Strings(conn.Do("LRANGE", key, 0, -1))
 	if err != nil {
 		var x []bson.ObjectId
-		return x, err
+		// return x, err
+		newsIDChan <- x
 	}
 	fmt.Println("indexnewsids took: ", time.Since(start))
 	reversed := ReverseSlice(result...)
 	// fmt.Println(result)
-	return convStrID(reversed...), nil
+	// return convStrID(reversed...), nil
+	newsIDChan <- convStrID(reversed...)
 }
 
 // RetrieveCachedNews main index news ids
@@ -53,6 +55,7 @@ func RetrieveCachedNews(key string, redisPool *redis.Pool) ([]bson.ObjectId, err
 }
 
 // RedisKeyGen is a util that joins slices to string
+// Deperecate this!
 func RedisKeyGen(keys ...string) string {
 	return strings.Join(keys, ":")
 }

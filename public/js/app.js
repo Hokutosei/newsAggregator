@@ -24,6 +24,10 @@
               templateUrl: 'js/news_page/template/news.html',
               controller: 'NewsPageCtrl'
           })
+          .when('/registration', {
+            templateUrl: 'js/user/templates/login.html',
+            controller: 'loginController'
+          })
       		.otherwise({
       			redirectTo: '/'
       		})
@@ -52,5 +56,6 @@
       })
     });
 
+    app.constant('API', 'http://localhost:3000')
 
 }());

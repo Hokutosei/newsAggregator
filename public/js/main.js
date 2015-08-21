@@ -40,21 +40,20 @@
         }
 
         // main init func
-        var init = function() {
+        $scope.init = function() {
           // log(userSession.userSessionId())
 
           $('.materialboxed').materialbox();
           $(".dropdown-button").dropdown();
-          // $('.parallax').parallax();
-          
+
           $scope.news_category_style = {
             // disable overflow for index news
             // height: adjustStageHeight.adjustHeight(),
             // 'overflow-y': 'auto'
           }
-          // $('.index_right_wrap').pushpin({ top: $('.index_right_wrap').offset().top });
 
-          if(_.has($routeParams, 'q') == true) {
+          // NEWS INDEX INITIALIZER
+          if(_.has($routeParams, 'q') == true && $routeParams.q != 'registration') {
               httpService.fetchCategoryNews($routeParams.q).success(function(data) {
                 $scope.main_index_news = data;
               })
@@ -154,11 +153,41 @@
           }
         }
 
+        // // AUTH BLOCK, REFACTOR THIS!;
+        // var self = this;
+        //
+        // function handleRequest(res) {
+        //   var token = res.data ? res.data.token : null;
+        //   if(token) { console.log('JWT:', token); }
+        //   self.message = res.data.message;
+        // }
+        //
+        // self.login = function() {
+        //   user.login(self.username, self.password)
+        //     .then(handleRequest, handleRequest)
+        // }
+        // self.register = function() {
+        //   user.register(self.username, self.password)
+        //     .then(handleRequest, handleRequest)
+        // }
+        // self.getQuote = function() {
+        //   user.getQuote()
+        //     .then(handleRequest, handleRequest)
+        // }
+        // self.logout = function() {
+        //   auth.logout && auth.logout()
+        // }
+        // self.isAuthed = function() {
+        //   return auth.isAuthed ? auth.isAuthed() : false
+        // }
+        //
+
+
         // $rootScope.page_title;
         // disable getting user location
         // userLocation.getLocation()
 
         // call init func
-        init()
+        // init()
     });
 }());

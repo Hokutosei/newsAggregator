@@ -8,12 +8,16 @@ import (
 
 	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
-	_ "web_apps/news_aggregator/modules/utils"
+	"web_apps/news_aggregator/modules/security"
+	"web_apps/news_aggregator/modules/utils"
 )
 
 var (
 	serverPort       = ":3000"
 	loopCounterDelay = 300
+	hashKey          = "newsInstanceSecret"
+	blockKey         = "newsInstanceBlock"
+	cookieName       = "newsInstance.com"
 )
 
 // handleAssets serve all file assets
@@ -25,33 +29,31 @@ func handleAssets(assets ...string) {
 		assetURLPath := fmt.Sprintf("/%s/", asset)
 		//asset_dir := fmt.Sprintf("public/%s", asset)
 		http.Handle(assetURLPath, http.StripPrefix(assetURLPath, http.FileServer(http.Dir(assetDir))))
-		fmt.Println(asset, " took: ", time.Since(start))
+		utils.Info(fmt.Sprintf("%s took: %v", asset, time.Since(start)))
 	}
 }
 
 // main entrypoint and main func for the app
 func main() {
-	fmt.Println("starting server....")
 
 	go func() {
-		fmt.Println("initializing backends...")
+		// config.StartConsul()
 		config.StartEtcd()
 		go database.MongodbStart()
 		go database.StartRedis()
 
+		// build secure cookies and keys
+		security.BuildSecureKeys(hashKey, blockKey, cookieName)
+
 		// startRoutes start all routes
 		startRoutes()
 
-		assetsToHandle := []string{"images", "css", "js", "fonts"}
+		assetsToHandle := []string{"images", "css", "js", "fonts", "vendor"}
 		handleAssets(assetsToHandle...)
 
-		// news getter initializers
-		// should set in admin page
-		// go newsGetter.StartHackerNews(loopCounterDelay)
-		// go newsGetter.StartGoogleNews(loopCounterDelay)
-		InitNewRelic()
+		// InitNewRelic()
 	}()
 
-	fmt.Println("now servering to port -->> ...", serverPort)
+	utils.Info(fmt.Sprintf("now servering to port -->> ... %v", serverPort))
 	http.ListenAndServe(serverPort, nil)
 }

@@ -9,7 +9,7 @@
              analytics-event="news_item_clicked"
              ng-click="ga_event(news_item)"
              class="news_item_title_link">
-          {{ headline.title }} ー <span style="font-size:16px;">{{ headline.category.name }} ({{ headline.score }}) </span></a>
+             {{ truncateTitle(headline.title) }} ー <span style="font-size:16px;">{{ headline.category.name }} ({{ headline.score }}) </span></a>
         </span>
       </div>
     </div>

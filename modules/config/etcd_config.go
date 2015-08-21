@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"web_apps/news_aggregator/modules/utils"
+
 	"github.com/coreos/go-etcd/etcd"
 )
 
@@ -44,6 +46,7 @@ func getOsMachinePrivateIP() {
 
 // StartEtcd beginning connection
 func StartEtcd() {
+	utils.Info(fmt.Sprintf("starting etcd.."))
 	getOsMachinePrivateIP()
 }
 
