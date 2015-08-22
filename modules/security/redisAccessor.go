@@ -9,8 +9,10 @@ import (
 // GetSessionID retrieve from redis if session ID is pressent
 func GetSessionID(key string) bool {
 	utils.Info(fmt.Sprintf("getsessionId to redis"))
+	sessionKey := database.RedisKeyGen([]string{"sn", "session", key}...)
+	utils.Info(fmt.Sprintf("session key %v", sessionKey))
 	rString := &database.Rstring{
-		database.RedisKeyGen([]string{"sn", "session", key}...),
+		sessionKey,
 		"",
 	}
 	val, err := rString.Get()

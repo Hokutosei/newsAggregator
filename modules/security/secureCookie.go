@@ -14,7 +14,7 @@ import (
 var (
 	hashKey       = []byte{}
 	blockKey      = []byte{}
-	s             *securecookie.SecureCookie
+	s2            *securecookie.SecureCookie
 	cookieName    string
 	cookieKeyName = "newsInstance.com"
 )
@@ -23,7 +23,7 @@ var (
 func BuildSecureKeys(hash, block, cookie string) {
 	hashKey = []byte(hash)
 	blockKey = securecookie.GenerateRandomKey(32)
-	s = securecookie.New(hashKey, blockKey)
+	s2 = securecookie.New(hashKey, blockKey)
 	cookieName = cookie
 
 	utils.Info("built secure cookies!")
@@ -35,13 +35,17 @@ func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 		cookieKeyName: GenerateUniqueID(),
 	}
 
-	encoded, err := s.Encode(cookieName, value)
+	encoded, err := s2.Encode(cookieName, value)
 	if err == nil && database.SetSessionKey(encoded) {
 
 		cookie := &http.Cookie{
-			Name:  cookieName,
-			Value: encoded,
-			Path:  "/",
+			Name:   cookieName,
+			Value:  encoded,
+			Path:   "/",
+			MaxAge: 0,
+
+			// addDate(year, month, day)
+			Expires: time.Now().AddDate(0, 1, 0),
 		}
 		http.SetCookie(w, cookie)
 		return
@@ -59,16 +63,23 @@ func ReadCookieHandler(w http.ResponseWriter, r *http.Request) {
 
 	// utils.Info(fmt.Sprintf("cookie value, %v", cookie.Value))
 	value := make(map[string]string)
-	err = s.Decode(cookieName, cookie.Value, &value)
+	utils.Info(fmt.Sprintf("cookie read %v", cookie.Value))
+	err = s2.Decode(cookieName, cookie.Value, &value)
 	if err != nil {
 		utils.Info(fmt.Sprintf("err decoding cookie %v", err))
 		return
 	}
 	utils.Info(fmt.Sprintf("The value of foo is %q", value[cookieKeyName]))
-	if value[cookieKeyName] != "" {
-		found := GetSessionID(value[cookieKeyName])
-	}
+	registerSessionID(value[cookieKeyName])
 	return
+}
+
+func registerSessionID(cookieVal string) {
+	if cookieVal != "" && GetSessionID(cookieVal) {
+		utils.Info("session found!")
+		return
+	}
+	utils.Info("session not found!")
 }
 
 // GenerateUniqueID create unique ID from bsonID
