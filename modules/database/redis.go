@@ -19,6 +19,12 @@ var (
 	redisHostKey  = "redisHost"
 )
 
+// Rstring struct for single KV
+type Rstring struct {
+	Key   string `bson:"key"`
+	Value string `bson:"value"`
+}
+
 // StartRedis start connecting to redis
 func StartRedis() {
 	fmt.Println("starting redis..")
@@ -66,4 +72,30 @@ func GetRedisHost(host chan string) {
 // RedisKeyGen is a util that joins slices to string
 func RedisKeyGen(keys ...string) string {
 	return strings.Join(keys, ":")
+}
+
+// Set insert to redis single KEY Value
+func (r *Rstring) Set() (reply interface{}, err error) {
+	conn := RedisPool.Get()
+	defer conn.Close()
+
+	n, err := conn.Do("SET", r.Key, r.Value)
+	if err != nil {
+		var s interface{}
+		return s, err
+	}
+	return n, nil
+}
+
+// Get retrieve single KEY Value
+func (r *Rstring) Get() (reply interface{}, err error) {
+	conn := RedisPool.Get()
+	defer conn.Close()
+
+	s, err := redis.String(conn.Do("GET", r.Key))
+	if err != nil {
+		var x interface{}
+		return x, err
+	}
+	return s, nil
 }

@@ -51,16 +51,13 @@ func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 
 // ReadCookieHandler retrieve user cookie
 func ReadCookieHandler(w http.ResponseWriter, r *http.Request) {
-	utils.Info("reading cookie!")
 	cookie, err := r.Cookie(cookieName)
 	if err != nil {
-		utils.Info(fmt.Sprintf("err val of readcookie %v", err))
-		utils.Info("setting new cookie")
 		SetCookieHandler(w, r)
 		return
 	}
 
-	utils.Info(fmt.Sprintf("cookie value, %v", cookie.Value))
+	// utils.Info(fmt.Sprintf("cookie value, %v", cookie.Value))
 	value := make(map[string]string)
 	err = s.Decode(cookieName, cookie.Value, &value)
 	if err != nil {
@@ -68,6 +65,9 @@ func ReadCookieHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	utils.Info(fmt.Sprintf("The value of foo is %q", value[cookieKeyName]))
+	if value[cookieKeyName] != "" {
+		found := GetSessionID(value[cookieKeyName])
+	}
 	return
 }
 
