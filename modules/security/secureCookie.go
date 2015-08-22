@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"threadtimer/lib/utils"
+	"time"
 	"web_apps/news_aggregator/modules/database"
 
 	"github.com/gorilla/securecookie"
+	"labix.org/v2/mgo/bson"
 )
 
 var (
@@ -14,7 +16,7 @@ var (
 	blockKey      = []byte{}
 	s             *securecookie.SecureCookie
 	cookieName    string
-	cookieKeyName = "username"
+	cookieKeyName = "newsInstance.com"
 )
 
 // BuildSecureKeys start building required keys
@@ -30,7 +32,7 @@ func BuildSecureKeys(hash, block, cookie string) {
 // SetCookieHandler set cookie handler to user
 func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 	value := map[string]string{
-		cookieKeyName: "jeanepaul",
+		cookieKeyName: GenerateUniqueID(),
 	}
 
 	encoded, err := s.Encode(cookieName, value)
@@ -49,14 +51,28 @@ func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 
 // ReadCookieHandler retrieve user cookie
 func ReadCookieHandler(w http.ResponseWriter, r *http.Request) {
+	utils.Info("reading cookie!")
 	cookie, err := r.Cookie(cookieName)
-	if err == nil {
-		value := make(map[string]string)
-		// utils.Info(fmt.Sprintf("this cookie %v", cookie))
-		if err = s.Decode(cookieName, cookie.Value, &value); err == nil {
-			// fmt.Fprintf(w, "The value of foo is %q", value[cookieKeyName])
-			utils.Info(fmt.Sprintf("The value of foo is %q", value[cookieKeyName]))
-		}
+	if err != nil {
+		utils.Info(fmt.Sprintf("err val of readcookie %v", err))
+		utils.Info("setting new cookie")
+		SetCookieHandler(w, r)
+		return
 	}
-	utils.Info(fmt.Sprintf("err val of readcookie %v", err))
+
+	utils.Info(fmt.Sprintf("cookie value, %v", cookie.Value))
+	value := make(map[string]string)
+	err = s.Decode(cookieName, cookie.Value, &value)
+	if err != nil {
+		utils.Info(fmt.Sprintf("err decoding cookie %v", err))
+		return
+	}
+	utils.Info(fmt.Sprintf("The value of foo is %q", value[cookieKeyName]))
+	return
+}
+
+// GenerateUniqueID create unique ID from bsonID
+func GenerateUniqueID() string {
+	objID := bson.NewObjectIdWithTime(time.Now())
+	return objID.Hex()
 }

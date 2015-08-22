@@ -26,7 +26,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	log.Println("handled --> index")
 
 	// disable this for deployment, not finish yet
-	security.SetCookieHandler(w, r)
+	// security.SetCookieHandler(w, r)
 	security.ReadCookieHandler(w, r)
 
 	indexTemplate := "index.html"
