@@ -16,5 +16,6 @@ func SuggestRand(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// send to json response
 	respondToJSON(w, news)
 }

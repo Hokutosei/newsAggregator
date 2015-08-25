@@ -29,6 +29,7 @@
         }
 
         // news_tag style
+        // make this in config or fetch from backend
         scope.news_tag_style = function(initial) {
           var initials = {
             'y': '#ffca28',
@@ -45,15 +46,16 @@
           }
         }
 
+        // absolute url to a link from news item
         scope.absURL = function(news_item_id, is_index) {
           var url = httpService.absURL(news_item_id, is_index)
-          Utils.log("absurl")
-          Utils.log(url)
           return url
         }
 
+        // news link title truncate limit
         scope.title_limit = APP_CONFIG.title_limit;
 
+        // start getting new data
         scope.getData()
       }
     }

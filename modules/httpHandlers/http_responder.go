@@ -6,6 +6,7 @@ import (
 )
 
 // respondToJson write http json resposne
+// Private func for package httpHandlers
 func respondToJSON(w http.ResponseWriter, data interface{}) {
 	json, err := json.Marshal(data)
 	if err != nil {
@@ -18,6 +19,7 @@ func respondToJSON(w http.ResponseWriter, data interface{}) {
 }
 
 // PublicrespondToJSON write http json resposne
+// Public func
 func PublicrespondToJSON(w http.ResponseWriter, data interface{}) {
 	json, err := json.Marshal(data)
 	if err != nil {
