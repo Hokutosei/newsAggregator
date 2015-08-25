@@ -1,0 +1,27 @@
+<div class="index_right_wrap is_mobile_h" style="min-height:100%">
+  <h6>{{ title }}</h6>
+  <ul class="collection top_rank_st">
+    <li ng-repeat="item in data" class="collection-item">
+      <div class="row">
+        <div class="col s1">
+          <popular-index-thumb data="item" class="circle"></popular-index-thumb>
+        </div>
+        <div class="col" ng-class="right_panel_item(item)">
+          <a ng-href="{{ absURL(item._id, true) }}"
+             analytics-on="click"
+             analytics-event="news_item_clicked"
+             ng-click="ga_event(item)"
+             class="title">{{ item.title | limitTo: title_limit }}...</a> <br />
+          <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(item.category.initial)">
+            <a href="/{{ item.category.initial }}">{{ item.category.name }} </a>
+          </span>
+          <br />
+          <span class="right_panel_created_at">
+            <date-format-day-month data="item"></date-format-day-month>
+          </span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<br style="clear: both" />

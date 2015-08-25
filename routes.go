@@ -28,6 +28,7 @@ func startRoutes() {
 	http.HandleFunc("/top_score_news", http_handlers.TopScoreNews)
 	http.HandleFunc("/top_ranking_news", http_handlers.TopRankingNews)
 	http.HandleFunc("/headlines", http_handlers.Headlines)
+	http.HandleFunc("/suggest_rand", http_handlers.SuggestRand)
 
 	http.HandleFunc("/news_item", http_handlers.NewsItemPage)
 
