@@ -399,11 +399,13 @@ footer.page-footer {
 .parallax__layer--base {
   background-color: #fff;
   transform: translateZ(0);
+  position: absolute;
+  top: 230px;
 }
 .parallax__layer--back {
   transform:translateZ(-1px) scale(2);
-  position: relative;
-  top: -220px;
+  position: absolute;
+  z-index: 0;
 }
 
 /* NEWS INDEX RIGHT */

@@ -48,6 +48,20 @@ func LatestNews(w http.ResponseWriter, r *http.Request) {
 	respondToJSON(w, aggregatedNews)
 }
 
+// LatestNewsJSON retrieve latest news items in JSON only
+func LatestNewsJSON(newsItems chan []byte) {
+	start := time.Now()
+	aggregatedNews, err := database.NewsMainIndexNews()
+	fmt.Println("FETCH index took: ", time.Since(start))
+	if err != nil {
+		var x []byte
+		newsItems <- x
+		return
+	}
+
+	newsItems <- JSONWriter(aggregatedNews)
+}
+
 // TopScoreNews get news item that has greate news scores
 func TopScoreNews(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()

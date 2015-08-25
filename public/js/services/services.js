@@ -54,6 +54,12 @@
               $http.get('/headlines').success(function(data, status) {
                 callback(data);
               })
+            },
+
+            fetchUniqueSessionId: function(callback) {
+              $http.get('/get_unique_session').success(function(data) {
+                callback(data)
+              })
             }
         }
 

@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"net/http"
 	"web_apps/news_aggregator/modules/database"
-	"web_apps/news_aggregator/modules/security"
 	"web_apps/news_aggregator/modules/utils"
 )
 
@@ -15,6 +14,7 @@ type IndexVars struct {
 	Ipaddress   string
 	WebAppTitle string
 	CurrentUser interface{}
+	NewsItems   template.JS
 }
 
 var (
@@ -23,16 +23,15 @@ var (
 
 // Index news page
 func Index(w http.ResponseWriter, r *http.Request) {
+	// indexNewsJSON := make(chan []byte)
+	// go LatestNewsJSON(indexNewsJSON)
 	utils.Info(fmt.Sprintf("main index page --> handled!"))
-	// disable this for deployment, not finish yet
-	// security.SetCookieHandler(w, r)
-	security.ReadCookieHandler(w, r)
 
 	indexTemplate := "index.html"
-	t := template.New(indexTemplate).Delims("{{%", "%}}")
-	indexVars := IndexVars{"", "", nil}
+	t := template.New(indexTemplate)
+	indexVars := IndexVars{"", "", nil, ""}
 
 	parsedTemplateStr := fmt.Sprintf("public/%s", indexTemplate)
 	t, _ = t.ParseFiles(parsedTemplateStr)
-	t.Execute(w, indexVars)
+	t.Execute(w, &indexVars)
 }

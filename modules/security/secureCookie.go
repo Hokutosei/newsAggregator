@@ -6,6 +6,7 @@ import (
 	"threadtimer/lib/utils"
 	"time"
 	"web_apps/news_aggregator/modules/database"
+	"web_apps/news_aggregator/modules/httpHandlers"
 
 	"github.com/gorilla/securecookie"
 	"labix.org/v2/mgo/bson"
@@ -14,6 +15,7 @@ import (
 var (
 	hashKey       = []byte{}
 	blockKey      = []byte{}
+	rBkey         = []string{"secured", "blockKey"}
 	s2            *securecookie.SecureCookie
 	cookieName    string
 	cookieKeyName = "newsInstance.com"
@@ -21,12 +23,20 @@ var (
 
 // BuildSecureKeys start building required keys
 func BuildSecureKeys(hash, block, cookie string) {
+	getBlockKey := make(chan []byte)
+	go blockKeyGetter(getBlockKey)
 	hashKey = []byte(hash)
-	blockKey = securecookie.GenerateRandomKey(32)
+	blockKey = <-getBlockKey
 	s2 = securecookie.New(hashKey, blockKey)
 	cookieName = cookie
 
 	utils.Info("built secure cookies!")
+}
+
+// BuildHTTPObjectIDKey generate unique bsonObject ID
+func BuildHTTPObjectIDKey(w http.ResponseWriter, r *http.Request) {
+	response := map[string]string{"sessionId": GenerateUniqueStrID()}
+	httpHandlers.PublicrespondToJSON(w, response)
 }
 
 // SetCookieHandler set cookie handler to user
@@ -51,6 +61,29 @@ func SetCookieHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	utils.Info("error set cookie!")
+}
+
+// blockKeyGetter retrieve block key from redis if exists
+// else generate randomkey and register to redis
+func blockKeyGetter(bKeyChan chan []byte) {
+	bKey := database.Rstring{database.RedisKeyGen(rBkey...), ""}
+	secureCookieKey, err := bKey.Get()
+	if err != nil {
+		utils.Info(fmt.Sprintf("err blockkeygetter %v", err))
+		bKeyChan <- registerSecureCookieKey()
+	}
+	bKeyChan <- []byte(secureCookieKey.(string))
+}
+
+// registerSecureCookieKey register new random key to redis
+func registerSecureCookieKey() []byte {
+	val := securecookie.GenerateRandomKey(32)
+	key := database.Rstring{database.RedisKeyGen(rBkey...), string(val)}
+	_, err := key.Set()
+	if err != nil {
+		panic(err)
+	}
+	return val
 }
 
 // ReadCookieHandler retrieve user cookie
@@ -86,4 +119,10 @@ func registerSessionID(cookieVal string) {
 func GenerateUniqueID() string {
 	objID := bson.NewObjectIdWithTime(time.Now())
 	return objID.Hex()
+}
+
+// GenerateUniqueStrID unique string ID
+func GenerateUniqueStrID() string {
+	objID := bson.NewObjectIdWithTime(time.Now())
+	return objID.String()
 }
