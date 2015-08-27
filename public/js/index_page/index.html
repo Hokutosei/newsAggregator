@@ -36,14 +36,14 @@
                      <h2 class="title title--preview">{{ news_item.title }}</h2>
                    </a>
 
-      						<div class="loader"></div>
-
                   <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
                     <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
                   </span>
 
+                  <content-display content="news_item.content"></content-display>
+
       						<div class="meta meta--preview">
-      							<p>
+      							<p class="publisher">
                       {{ news_item.publisher }}
                     </p>
       							<span class="meta__date"><i class="fa fa-calendar-o"></i>

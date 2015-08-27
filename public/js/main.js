@@ -41,7 +41,7 @@
 
         // main init func
         $scope.init = function() {
-          log(userSession.userSessionId())
+          // log(userSession.userSessionId())
           userSession.setUserSession()
 
           $('.materialboxed').materialbox();
