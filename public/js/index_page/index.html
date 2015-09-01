@@ -33,7 +33,7 @@
                      analytics-event="news_item_clicked"
                      ng-click="ga_event(news_item)"
                      class="news_item_title_link">
-                     <h2 class="title title--preview">{{ news_item.title }}</h2>
+                     <news-title title="{{ news_item.title }}"></news-title>
                    </a>
 
                   <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">

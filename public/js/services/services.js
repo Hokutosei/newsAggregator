@@ -11,8 +11,8 @@
                 })
             },
 
-            getNewsContent: function(content_type, callback) {
-            	$http.get('/' + content_type).success(function(data, status) {
+            getNewsContent: function(content_type, params, callback) {
+            	$http.get('/' + content_type, {params: params}).success(function(data, status) {
             		callback(data, status)
             	})
             },

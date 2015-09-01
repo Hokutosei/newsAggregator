@@ -7,6 +7,7 @@ import (
 	"time"
 	"web_apps/news_aggregator/modules/database"
 	"web_apps/news_aggregator/modules/newsGetter"
+	"web_apps/news_aggregator/modules/utils"
 )
 
 // TestStruct a test Struct for utilities: to DEPRECATE
@@ -20,8 +21,8 @@ type FeedMoreParams struct {
 	Skip        int
 }
 
-func indexNews() {
-
+// NewsIndexRequest struct for main news index request
+type NewsIndexRequest struct {
 }
 
 // GetIndexNews get list down the index news
@@ -38,6 +39,10 @@ func GetIndexNews(w http.ResponseWriter, r *http.Request) {
 // LatestNews latest news getter to index page
 func LatestNews(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
+
+	requestQuery := r.URL.Query()
+	utils.Info(fmt.Sprintf("%v", requestQuery["lang"]))
+
 	aggregatedNews, err := database.NewsMainIndexNews()
 	fmt.Println("FETCH index took: ", time.Since(start))
 	if err != nil {

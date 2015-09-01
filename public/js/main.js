@@ -21,6 +21,7 @@
       , userSession
       , $timeout
       , adjustStageHeight
+      , Utils
       , APP_CONFIG) {
         $analytics.pageTrack('/');
         $analytics.eventTrack('index', { category: 'index_main', label: 'index_label' });
@@ -32,6 +33,8 @@
         $rootScope.content_type = $scope.news_content_type;
         $scope.main_index_news = [];
         $scope.main_index_topranks = [];
+
+        $scope.currentLanguage = 'jp';
 
         var services = function() {
           httpService.fetchTopRankingNews(function(data, status) {
@@ -60,7 +63,8 @@
               })
           } else {
             // main news initializer in index, needs refactoring
-            httpService.getNewsContent($rootScope.content_type, function(data, status) {
+            var params = { lang: $scope.currentLanguage }
+            httpService.getNewsContent($rootScope.content_type, params, function(data, status) {
                 $scope.main_index_news = data.reverse();
             });
           }
