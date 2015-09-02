@@ -43,6 +43,7 @@ func LatestNews(w http.ResponseWriter, r *http.Request) {
 	requestQuery := r.URL.Query()
 	utils.Info(fmt.Sprintf("%v", requestQuery["lang"]))
 
+	//insert language to query here
 	aggregatedNews, err := database.NewsMainIndexNews()
 	fmt.Println("FETCH index took: ", time.Since(start))
 	if err != nil {
