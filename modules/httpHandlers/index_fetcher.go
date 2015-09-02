@@ -27,12 +27,13 @@ type NewsIndexRequest struct {
 
 // GetIndexNews get list down the index news
 func GetIndexNews(w http.ResponseWriter, r *http.Request) {
-	aggregatedNews, err := database.NewsMainIndexNews()
+	aggregatedNews, err := database.NewsMainIndexNews(defaultLang)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	// main json data output
 	respondToJSON(w, aggregatedNews)
 }
 
@@ -44,7 +45,7 @@ func LatestNews(w http.ResponseWriter, r *http.Request) {
 	utils.Info(fmt.Sprintf("%v", requestQuery["lang"]))
 
 	//insert language to query here
-	aggregatedNews, err := database.NewsMainIndexNews()
+	aggregatedNews, err := database.NewsMainIndexNews(defaultLang)
 	fmt.Println("FETCH index took: ", time.Since(start))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -57,7 +58,7 @@ func LatestNews(w http.ResponseWriter, r *http.Request) {
 // LatestNewsJSON retrieve latest news items in JSON only
 func LatestNewsJSON(newsItems chan []byte) {
 	start := time.Now()
-	aggregatedNews, err := database.NewsMainIndexNews()
+	aggregatedNews, err := database.NewsMainIndexNews(defaultLang)
 	fmt.Println("FETCH index took: ", time.Since(start))
 	if err != nil {
 		var x []byte

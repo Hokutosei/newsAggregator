@@ -18,7 +18,8 @@ type IndexVars struct {
 }
 
 var (
-	db = database.MongodbSession
+	db          = database.MongodbSession
+	defaultLang = "jp"
 )
 
 // Index news page

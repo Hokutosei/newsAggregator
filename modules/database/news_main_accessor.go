@@ -20,7 +20,7 @@ var (
 
 // NewsMainIndexNews responder for index news query
 // NEWS MAIN GETTER
-func NewsMainIndexNews() (AggregatedNews, error) {
+func NewsMainIndexNews(language string) (AggregatedNews, error) {
 	newsIDChan := make(chan []bson.ObjectId)
 	go cache.IndexNewsIDS(RedisPool, newsIDChan)
 	sc := SessionCopy()
