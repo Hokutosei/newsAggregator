@@ -5,59 +5,12 @@
   <div class="parallax__layer parallax__layer--base">
     <br style="clear: both" />
     <div class="section news_feeds">
-        <overall_header></overall_header>
         <div id="news_category" ng-style="news_category_style">
-            <load-spinner data="main_index_news"></load-spinner>
+          <load-spinner data="main_index_news"></load-spinner>
 
-            <div id="theGrid" class="main">
-      				<section class="grid">
-      					<header class="top-bar" ng-hide="true">
-      						<h2 class="top-bar__headline">Latest articles</h2>
-      						<div class="filter">
-      							<span>Filter by:</span>
-      							<span class="dropdown">Popular</span>
-      						</div>
-      					</header>
-      					<div class="grid__item" ng-repeat="news_item in main_index_news track by $index">
-                  <div class="item_image" ng-if="news_item.image.url != ''">
-                    <div class="card">
-                      <div class="card-image">
-                        <image-loader data="news_item"></image-loader>
-                         <!-- <span class="card-title">Card Title</span> -->
-                      </div>
-                    </div>
-                  </div>
-
-                  <a ng-href="{{ absURL(news_item._id, true) }}"
-                     analytics-on="click"
-                     analytics-event="news_item_clicked"
-                     ng-click="ga_event(news_item)"
-                     class="news_item_title_link">
-                     <news-title title="{{ news_item.title }}"></news-title>
-                   </a>
-
-                  <span class="news_tag card-panel waves-effect waves-light" ng-style="news_tag_style(news_item.category.initial)">
-                    <a href="/{{ news_item.category.initial }}">{{ news_item.category.name }} </a>
-                  </span>
-
-                  <content-display content="news_item.content"></content-display>
-
-      						<div class="meta meta--preview">
-      							<p class="publisher">
-                      {{ news_item.publisher }}
-                    </p>
-      							<span class="meta__date"><i class="fa fa-calendar-o"></i>
-                      <date-format-day-month data="news_item"></date-format-day-month>
-                    </span>
-      							<!-- <span class="meta__reading-time"><i class="fa fa-clock-o"></i> 3 min read</span> -->
-      						</div>
-      					</div>
-
-      					<footer class="page-meta">
-      						<span>Load more...</span>
-      					</footer>
-      				</section>
-            </div>
+          <div id="theGrid" class="main">
+            <news-grid main-index-news="main_index_news"></news-grid>
+          </div>
         </div>
         <a href="" class="more_feeds" ng-click="feed_more(main_index_news.length)">More..</a>
     </div>
