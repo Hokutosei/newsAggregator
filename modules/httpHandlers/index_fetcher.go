@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 	"web_apps/news_aggregator/modules/database"
-	"web_apps/news_aggregator/modules/newsGetter"
+	"web_apps/news_aggregator/modules/models"
 	"web_apps/news_aggregator/modules/utils"
 )
 
@@ -38,6 +38,7 @@ func GetIndexNews(w http.ResponseWriter, r *http.Request) {
 }
 
 // LatestNews latest news getter to index page
+// MAIN LATEST NEWS GETTER
 func LatestNews(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 
@@ -98,7 +99,7 @@ func FeedMore(w http.ResponseWriter, r *http.Request) {
 
 // HeaderCategories list header topic categories
 func HeaderCategories(w http.ResponseWriter, r *http.Request) {
-	topics := newsGetter.TopicsList()
+	topics := models.TopicsList()
 
 	respondToJSON(w, topics)
 }
