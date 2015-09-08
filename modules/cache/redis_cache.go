@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	newsIndexKeySlice = []string{"index", "ids"}
+	newsIndexKeySlice = []string{"index", "ids", "jp"}
 )
 
 // IndexNewsIDS main index news ids

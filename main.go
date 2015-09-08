@@ -8,7 +8,6 @@ import (
 
 	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
-	"web_apps/news_aggregator/modules/security"
 	"web_apps/news_aggregator/modules/utils"
 )
 
@@ -43,7 +42,7 @@ func main() {
 		go database.StartRedis()
 
 		// build secure cookies and keys
-		security.BuildSecureKeys(hashKey, blockKey, cookieName)
+		// security.BuildSecureKeys(hashKey, blockKey, cookieName)
 
 		// startRoutes start all routes
 		startRoutes()

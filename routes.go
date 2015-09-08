@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	http_handlers "web_apps/news_aggregator/modules/httpHandlers"
+	"web_apps/news_aggregator/modules/security"
 )
 
 func startRoutes() {
@@ -27,6 +28,7 @@ func startRoutes() {
 	http.HandleFunc("/top_score_news", http_handlers.TopScoreNews)
 	http.HandleFunc("/top_ranking_news", http_handlers.TopRankingNews)
 	http.HandleFunc("/headlines", http_handlers.Headlines)
+	http.HandleFunc("/suggest_rand", http_handlers.SuggestRand)
 
 	http.HandleFunc("/news_item", http_handlers.NewsItemPage)
 
@@ -36,4 +38,7 @@ func startRoutes() {
 	http.HandleFunc("/header_categories", http_handlers.HeaderCategories)
 
 	http.HandleFunc("/increment_news", http_handlers.IncrementNews)
+
+	// get unique session id
+	http.HandleFunc("/get_unique_session", security.BuildHTTPObjectIDKey)
 }

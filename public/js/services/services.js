@@ -3,7 +3,7 @@
 
     var log = function(str) { console.log(str) };
 
-    app.factory('httpService', function($http) {
+    app.factory('httpService', function($http, $location) {
         return {
             getIndexNews: function(callback) {
                 $http.get('/get_index_news').success(function(data, status) {
@@ -11,8 +11,8 @@
                 })
             },
 
-            getNewsContent: function(content_type, callback) {
-            	$http.get('/' + content_type).success(function(data, status) {
+            getNewsContent: function(content_type, params, callback) {
+            	$http.get('/' + content_type, {params: params}).success(function(data, status) {
             		callback(data, status)
             	})
             },
@@ -54,6 +54,20 @@
               $http.get('/headlines').success(function(data, status) {
                 callback(data);
               })
+            },
+
+            fetchUniqueSessionId: function(callback) {
+              $http.get('/get_unique_session').success(function(data) {
+                callback(data)
+              })
+            },
+
+            absURL: function(news_item_id, index_url) {
+                var protocol = $location.protocol()
+                    , port = $location.port()
+                    , urlString = protocol + '://' + location.host + '/news/' + news_item_id
+
+                return index_url == true ? urlString : urlString + '#disqus_thread';
             }
         }
 

@@ -60,6 +60,17 @@
         scope.dateStr = day + '日 ' + month + '月' + hours + ':' + minutes
       }
     }
-  })
+  });
+
+  app.factory('Utils', function() {
+    return {
+      log: function(str) {
+        console.log(str)
+      },
+      printMe: function(str) {
+        this.log("debug: " + str)
+      }
+    }
+  });
 
 }());

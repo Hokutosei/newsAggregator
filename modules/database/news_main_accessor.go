@@ -7,6 +7,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 
 	"web_apps/news_aggregator/modules/cache"
+	"web_apps/news_aggregator/modules/models"
 	"web_apps/news_aggregator/modules/utils"
 )
 
@@ -20,22 +21,31 @@ var (
 
 // NewsMainIndexNews responder for index news query
 // NEWS MAIN GETTER
-func NewsMainIndexNews() (AggregatedNews, error) {
+func NewsMainIndexNews(language string) ([]models.NewsMaster, error) {
 	newsIDChan := make(chan []bson.ObjectId)
 	go cache.IndexNewsIDS(RedisPool, newsIDChan)
+
 	sc := SessionCopy()
 	c := sc.DB(Db).C(NewsMainCollection)
 	defer sc.Close()
-	var aggregatedNews AggregatedNews
 
+	var newsMaster []models.NewsMaster
 	ids := <-newsIDChan
-	err := c.Find(bson.M{"_id": bson.M{"$in": ids}}).All(&aggregatedNews)
+	err := c.Find(bson.M{"_id": bson.M{"$in": ids}}).All(&newsMaster)
 
 	if err != nil {
-		fmt.Println(err)
-		return aggregatedNews, err
+		utils.Error(fmt.Sprintf("error getting main news index %v", err))
+		return newsMaster, err
 	}
-	return aggregatedNews, nil
+
+	categorizeNewsItems(newsMaster...)
+	return newsMaster, nil
+}
+
+func categorizeNewsItems(newsItems ...models.NewsMaster) {
+	for _, news := range newsItems {
+		fmt.Println(news.Category)
+	}
 }
 
 // NewsMainIndexNewsCached retrieve index news from cached ID

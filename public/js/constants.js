@@ -3,8 +3,9 @@
 
   // global app config
   app.constant('APP_CONFIG', {
-    'APP_NAME': 'NewsInstance',
-    'title_limit': 25
+    'APP_NAME': 'SocketNews',
+    'title_limit': 25,
+    'content_limit': 70
   })
 
 }());
