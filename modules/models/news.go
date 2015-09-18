@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"gopkg.in/mgo.v2/bson"
+)
 
 // "_id" : ObjectId("55ee44fae897998f09c4cd24"),
 // 	"by" : "GoogleNews",
@@ -37,17 +41,17 @@ import "time"
 
 // NewsMaster main data struct from mongodb
 type NewsMaster struct {
-	By             string    `bson:"by" json:"by"`
-	ID             int       `bson:"_id" json:"_id"`
-	Score          int       `bson:"score" json:"score"`
-	Text           string    `bson:"text" json:"text"`
-	Time           int       `bson:"time" json:"time"`
-	Title          string    `bson:"title" json:"title"`
-	Type           string    `bson:"type" json:"type"`
-	URL            string    `bson:"url"`
-	ProviderName   string    `bson:"providername" json:"providername"`
-	ProviderURL    string    `bson:"providerurl"`
-	CreatedAt      time.Time `bson:"created_at" json:"created_at"`
+	By             string        `bson:"by" json:"by"`
+	ID             bson.ObjectId `bson:"_id" json:"_id"`
+	Score          int           `bson:"score" json:"score"`
+	Text           string        `bson:"text" json:"text"`
+	Time           int           `bson:"time" json:"time"`
+	Title          string        `bson:"title" json:"title"`
+	Type           string        `bson:"type" json:"type"`
+	URL            string        `bson:"url"`
+	ProviderName   string        `bson:"providername" json:"providername"`
+	ProviderURL    string        `bson:"providerurl"`
+	CreatedAt      time.Time     `bson:"created_at" json:"created_at"`
 	RelatedStories []RelatedStories
 	Category       TopicIdentity `json:"category"`
 	Image          interface{}   `json:"image"`

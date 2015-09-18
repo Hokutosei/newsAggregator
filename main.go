@@ -8,7 +8,8 @@ import (
 
 	"web_apps/news_aggregator/modules/config"
 	"web_apps/news_aggregator/modules/database"
-	"web_apps/news_aggregator/modules/utils"
+
+	utils "github.com/Hokutosei/hokutoseiUtils"
 )
 
 var (

@@ -14,6 +14,11 @@
         scope.news_tag_style = function(object) {
           return scope.$parent.news_tag_style(object)
         }
+
+        scope.absURL = function(news_item_id, index_url) {
+          Utils.log(news_item_id, index_url)
+          return scope.$parent.absURL(news_item_id, index_url)
+        }
       }
     }
   })

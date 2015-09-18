@@ -7,6 +7,7 @@ import (
 	"time"
 	"web_apps/news_aggregator/modules/config"
 
+	utils "github.com/Hokutosei/hokutoseiUtils"
 	"github.com/garyburd/redigo/redis"
 )
 
@@ -27,13 +28,13 @@ type Rstring struct {
 
 // StartRedis start connecting to redis
 func StartRedis() {
-	fmt.Println("starting redis..")
+	utils.Info(fmt.Sprintf("connecting to redis"))
 	redisHost := make(chan string)
 	go GetRedisHost(redisHost)
 
 	s := <-redisHost
 	RedisPool = NewPool(s)
-	fmt.Println("connected to redis..")
+	utils.Info(fmt.Sprintf("connected to redis!"))
 }
 
 // NewPool create redis pool servers

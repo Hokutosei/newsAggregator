@@ -7,6 +7,8 @@ import (
 	mongodb "gopkg.in/mgo.v2"
 
 	"web_apps/news_aggregator/modules/config"
+
+	utils "github.com/Hokutosei/hokutoseiUtils"
 )
 
 var (
@@ -30,7 +32,7 @@ func GetMongodbCluster(host chan string) {
 
 // MongodbStart start connecting to mongodb
 func MongodbStart() {
-	fmt.Println("starting mongodb..")
+	utils.Info(fmt.Sprintf("starting and connecting to mongodb.."))
 
 	mongodbCluster := make(chan string)
 	go GetMongodbCluster(mongodbCluster)
@@ -47,7 +49,7 @@ func MongodbStart() {
 		// fmt.Println(err)
 		panic(err)
 	}
-	fmt.Println("connected to mongodb...")
+	utils.Info(fmt.Sprintf("connected to mongodb!"))
 	MongodbSession = session
 	// MongodbSession.SetMode(mongodb.Monotonic, true)
 }
